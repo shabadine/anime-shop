@@ -4,12 +4,21 @@
 
 {% block body %}
 <!-- Hero Section -->
-<div class="hero-section py-5" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
-    <div class="container text-center">
-        <h1 style="font-size: 4rem; color: white;">Bienvenue sur Anime Shop</h1>
-        <p class="lead" style="font-size: 1.5rem;">Les meilleurs goodies de vos animes préférés</p>
-        <a href="#" class="btn btn-primary btn-lg mt-3">Découvrir le catalogue</a>
-    </div>
+<div class="hero-section py-5 position-relative text-white"
+     style="background: url('{{ asset('images/hero-anime.jpg') }}') center/cover no-repeat;">
+  <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark opacity-50"></div>
+  <div class="container position-relative z-1 text-center">
+    <h1 style="font-size: 4.5rem; font-family: 'Bangers', cursive; text-shadow: 3px 3px 0 #000;">
+       Anime Goodies Shop 
+    </h1>
+    <p class="lead fs-2 mb-4" style="text-shadow: 2px 2px 0 #000;">
+      Les goodies officiels de tes animes préférés, livrés en 48h !
+    </p>
+    <a href="{{ path('app_catalog') }}" class="btn btn-lg px-5 py-3"
+       style="background: #FF6B6B; border: none; border-radius: 50px; font-size: 1.3rem; box-shadow: 0 4px 15px rgba(0,0,0,.35);">
+       Voir le catalogue
+    </a>
+  </div>
 </div>
 
 <!-- Meilleures ventes -->
@@ -34,7 +43,7 @@
                             <p class="card-text text-truncate">{{ product.description|slice(0, 80) }}...</p>
                             <div class="d-flex justify-content-between align-items-center">
                                 <span class="h4 mb-0" style="color: #FF6B6B;">{{ product.price }}€</span>
-                                <a href="#" class="btn btn-primary btn-sm">Voir</a>
+                                <a href="{{ path('app_product_show', {slug: product.slug}) }}" class="btn btn-primary btn-sm">Voir</a>
                             </div>
                         </div>
                     </div>
@@ -53,7 +62,7 @@
     <div class="container text-center">
         <h2 style="color: #333;">Envie de découvrir plus de produits ?</h2>
         <p class="lead">Explorez notre catalogue complet</p>
-        <a href="#" class="btn btn-dark btn-lg">Voir tout le catalogue</a>
+        <a href="{{ path('app_catalog') }}" class="btn btn-dark btn-lg">Voir tout le catalogue</a>
     </div>
 </section>
 {% endblock %}

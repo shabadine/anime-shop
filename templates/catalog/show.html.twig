@@ -1,0 +1,158 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ product.name }} - Anime Shop{% endblock %}
+
+{% block body %}
+<div class="container py-5">
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('app_home') }}">Accueil</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('app_catalog') }}">Catalogue</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('app_catalog', {category: product.category.id}) }}">{{ product.category.name }}</a></li>
+            <li class="breadcrumb-item active">{{ product.name }}</li>
+        </ol>
+    </nav>
+
+    <div class="row">
+        <!-- Images du produit -->
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-body p-0">
+                    {% if product.image %}
+                        <img src="{{ asset('uploads/products/' ~ product.image) }}" 
+                             alt="{{ product.name }}" 
+                             class="img-fluid w-100"
+                             style="max-height: 500px; object-fit: contain;">
+                    {% else %}
+                        <div class="bg-light d-flex align-items-center justify-content-center" style="height: 500px;">
+                            <span class="text-muted">Pas d'image disponible</span>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Détails du produit -->
+        <div class="col-md-6">
+            <div class="mb-3">
+                <span class="badge bg-secondary fs-6">{{ product.category.name }}</span>
+                {% if product.featured %}
+                    <span class="badge bg-warning fs-6"> Coup de cœur</span>
+                {% endif %}
+            </div>
+
+            <h1 class="display-5 mb-3">{{ product.name }}</h1>
+            
+            <p class="lead text-muted mb-4">
+                <i class="bi bi-film"></i> Anime : <strong>{{ product.animeName }}</strong>
+            </p>
+
+            <div class="card mb-4" style="background-color: #fff9e6; border-left: 4px solid #FFE66D;">
+                <div class="card-body">
+                    <h2 class="display-4 mb-0" style="color: #FF6B6B;">{{ product.price }}€</h2>
+                </div>
+            </div>
+
+            <!-- Stock -->
+            <div class="mb-4">
+                {% if product.stock > 0 %}
+                    <div class="alert alert-success">
+                        <strong> En stock</strong> - {{ product.stock }} disponible(s)
+                    </div>
+                {% else %}
+                    <div class="alert alert-danger">
+                        <strong> Rupture de stock</strong> - Produit indisponible
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Formulaire ajout au panier -->
+            {% if product.stock > 0 %}
+                <form method="post" action="#" id="add-to-cart-form">
+                    <div class="row mb-4">
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold">Quantité</label>
+                            <div class="input-group">
+                                <button class="btn btn-outline-secondary" type="button" onclick="decreaseQty()">-</button>
+                                <input type="number" class="form-control text-center" id="quantity" name="quantity" value="1" min="1" max="{{ product.stock }}">
+                                <button class="btn btn-outline-secondary" type="button" onclick="increaseQty()">+</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-lg w-100 mb-3">
+                         Ajouter au panier
+                    </button>
+                </form>
+            {% else %}
+                <button class="btn btn-secondary btn-lg w-100 mb-3" disabled>
+                    Produit indisponible
+                </button>
+            {% endif %}
+
+            <!-- Description -->
+            <div class="card shadow-sm mt-4">
+                <div class="card-header" style="background-color: #4ECDC4; color: white;">
+                    <h5 class="mb-0">📝 Description</h5>
+                </div>
+                <div class="card-body">
+                    <p>{{ product.description }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Produits similaires -->
+    {% if similarProducts %}
+        <section class="mt-5">
+            <h2 class="mb-4">Produits similaires</h2>
+            <div class="row g-4">
+                {% for similarProduct in similarProducts %}
+                    <div class="col-md-3">
+                        <div class="card h-100 shadow-sm">
+                            <div class="card-img-top bg-light" style="height: 200px; overflow: hidden;">
+                                {% if similarProduct.image %}
+                                    <img src="{{ asset('uploads/products/' ~ similarProduct.image) }}" 
+                                         alt="{{ similarProduct.name }}" 
+                                         class="img-fluid w-100 h-100" 
+                                         style="object-fit: cover;">
+                                {% else %}
+                                    <div class="d-flex align-items-center justify-content-center h-100 text-muted">
+                                        <span>Pas d'image</span>
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <div class="card-body">
+                                <h6 class="card-title">{{ similarProduct.name }}</h6>
+                                <p class="text-muted small">{{ similarProduct.animeName }}</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="fw-bold" style="color: #FF6B6B;">{{ similarProduct.price }}€</span>
+                                    <a href="{{ path('app_product_show', {slug: similarProduct.slug}) }}" class="btn btn-sm btn-primary">Voir</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+    {% endif %}
+</div>
+
+<script>
+    function increaseQty() {
+        const input = document.getElementById('quantity');
+        const max = parseInt(input.getAttribute('max'));
+        if (parseInt(input.value) < max) {
+            input.value = parseInt(input.value) + 1;
+        }
+    }
+
+    function decreaseQty() {
+        const input = document.getElementById('quantity');
+        if (parseInt(input.value) > 1) {
+            input.value = parseInt(input.value) - 1;
+        }
+    }
+</script>
+{% endblock %}
