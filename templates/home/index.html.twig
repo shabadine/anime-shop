@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil - Anime Goodies Shop{% endblock %}
+
+{% block body %}
+<!-- Hero Section -->
+<div class="hero-section py-5" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+    <div class="container text-center">
+        <h1 style="font-size: 4rem; color: white;">Bienvenue sur Anime Shop</h1>
+        <p class="lead" style="font-size: 1.5rem;">Les meilleurs goodies de vos animes préférés</p>
+        <a href="#" class="btn btn-primary btn-lg mt-3">Découvrir le catalogue</a>
+    </div>
+</div>
+
+<!-- Meilleures ventes -->
+<section class="py-5">
+    <div class="container">
+        <h2 class="text-center mb-5"> Meilleures ventes</h2>
+        
+        <div class="row g-4">
+            {% for product in featuredProducts %}
+                <div class="col-md-3">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-img-top bg-secondary" style="height: 200px; display: flex; align-items: center; justify-content: center; color: white;">
+                            {% if product.image %}
+                                <img src="{{ asset('uploads/products/' ~ product.image) }}" alt="{{ product.name }}" class="img-fluid">
+                            {% else %}
+                                <span>Image produit</span>
+                            {% endif %}
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">{{ product.name }}</h5>
+                            <p class="text-muted small">{{ product.animeName }}</p>
+                            <p class="card-text text-truncate">{{ product.description|slice(0, 80) }}...</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="h4 mb-0" style="color: #FF6B6B;">{{ product.price }}€</span>
+                                <a href="#" class="btn btn-primary btn-sm">Voir</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <div class="col-12">
+                    <p class="text-center">Aucun produit en vedette pour le moment.</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action -->
+<section class="py-5" style="background-color: #FFE66D;">
+    <div class="container text-center">
+        <h2 style="color: #333;">Envie de découvrir plus de produits ?</h2>
+        <p class="lead">Explorez notre catalogue complet</p>
+        <a href="#" class="btn btn-dark btn-lg">Voir tout le catalogue</a>
+    </div>
+</section>
+{% endblock %}
