@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ isEdit ? 'Modifier' : 'Nouvelle' }} adresse{% endblock %}
+
+{% block body %}
+<div class="container py-5">
+    <h1 class="mb-4">{{ isEdit ? 'Modifier' : 'Nouvelle' }} adresse</h1>
+
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    {{ form_start(form) }}
+                        {{ form_row(form.fullName) }}
+                        {{ form_row(form.street) }}
+                        
+                        <div class="row">
+                            <div class="col-md-4">
+                                {{ form_row(form.zipCode) }}
+                            </div>
+                            <div class="col-md-8">
+                                {{ form_row(form.city) }}
+                            </div>
+                        </div>
+
+                        {{ form_row(form.country) }}
+                        {{ form_row(form.type) }}
+
+                        <div class="d-flex gap-2 mt-3">
+                            <button type="submit" class="btn btn-primary">Enregistrer</button>
+                            <a href="{{ path('app_account_addresses') }}" class="btn btn-secondary">Annuler</a>
+                        </div>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

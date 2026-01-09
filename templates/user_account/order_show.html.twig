@@ -1,0 +1,115 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Commande {{ order.orderNumber }}{% endblock %}
+
+{% block body %}
+<div class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Commande <span class="text-primary">#{{ order.orderNumber }}</span></h1>
+        <a href="{{ path('app_account_orders') }}" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left"></i> Retour à mes commandes
+        </a>
+    </div>
+
+    <div class="row">
+        <!-- Liste des produits -->
+        <div class="col-md-8">
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-dark text-white">
+                    <h5 class="mb-0">Articles de la commande</h5>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-align-middle mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Produit</th>
+                                    <th>Détails</th>
+                                    <th class="text-center">Quantité</th>
+                                    <th class="text-end">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in order.orderItems %}
+                                    <tr>
+                                        <td style="width: 100px;">
+                                            {% if item.product.image %}
+                                                <img src="{{ asset('uploads/products/' ~ item.product.image) }}" 
+                                                     alt="{{ item.product.name }}" 
+                                                     class="img-thumbnail" 
+                                                     style="width: 80px; height: 80px; object-fit: cover;">
+                                            {% else %}
+                                                <div class="bg-light d-flex align-items-center justify-content-center border" style="width: 80px; height: 80px;">
+                                                    <small class="text-muted text-center">No image</small>
+                                                </div>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            <h6 class="mb-1">{{ item.product.name }}</h6>
+                                            <small class="text-muted">{{ item.product.animeName }}</small><br>
+                                            <small>{{ item.unitPrice|number_format(2, ',', ' ') }} € / unité</small>
+                                        </td>
+                                        <td class="text-center">x{{ item.quantity }}</td>
+                                        <td class="text-end fw-bold">{{ item.total|number_format(2, ',', ' ') }} €</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Résumé et Statut -->
+        <div class="col-md-4">
+            <div class="card shadow-sm mb-4 border-info">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0">Suivi de commande</h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label class="text-muted small d-block">Statut actuel</label>
+                        {% if order.status == 'en_attente' %}
+                            <span class="badge bg-warning text-dark p-2 w-100">En attente de paiement</span>
+                        {% elseif order.status == 'validee' %}
+                            <span class="badge bg-info p-2 w-100">Commande validée</span>
+                        {% elseif order.status == 'expediee' %}
+                            <span class="badge bg-primary p-2 w-100">En cours de livraison</span>
+                        {% elseif order.status == 'livree' %}
+                            <span class="badge bg-success p-2 w-100">Livrée le {{ order.updatedAt|date('d/m/Y') }}</span>
+                        {% endif %}
+                    </div>
+                    <hr>
+                    <p class="mb-1 small"><strong>Date d'achat :</strong> {{ order.createdAt|date('d/m/Y à H:i') }}</p>
+                    <p class="mb-0 small"><strong>Référence :</strong> {{ order.orderNumber }}</p>
+                </div>
+            </div>
+
+            <div class="card shadow-sm border-warning">
+                <div class="card-header bg-warning">
+                    <h5 class="mb-0">Récapitulatif financier</h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Sous-total HT</span>
+                        <span>{{ (order.totalAmount / 1.2)|number_format(2, ',', ' ') }} €</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2 text-muted small">
+                        <span>TVA (20%)</span>
+                        <span>{{ (order.totalAmount - (order.totalAmount / 1.2))|number_format(2, ',', ' ') }} €</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Frais de port</span>
+                        <span class="text-success">Gratuit</span>
+                    </div>
+                    <hr>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="h5 mb-0">TOTAL TTC</span>
+                        <span class="h4 mb-0 text-danger font-weight-bold">{{ order.totalAmount|number_format(2, ',', ' ') }} €</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
