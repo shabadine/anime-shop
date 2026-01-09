@@ -76,7 +76,7 @@
                         </li>
                         {% if is_granted('ROLE_ADMIN') %}
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Admin</a>
+                                <a class="nav-link" href="{{ path('admin_dashboard') }}">Admin</a>
                             </li>
                         {% endif %}
                         <li class="nav-item">
@@ -92,10 +92,7 @@
                     {% endif %}
                     <li class="nav-item">
                     <a class="nav-link" href="{{ path('app_cart_index') }}">
-                         Panier ({{ cart_item_count() }})
-                         
-
-                         
+                         Panier ({{ cart_item_count() }})                  
                     </a>
                 </li>
                 </ul>

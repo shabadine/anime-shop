@@ -16,28 +16,28 @@ class OrderRepository extends ServiceEntityRepository
         parent::__construct($registry, Order::class);
     }
 
-//    /**
-//     * @return Order[] Returns an array of Order objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('o')
-//            ->andWhere('o.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('o.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+     public function getTotalRevenue(): float
+{
+    $result = $this->createQueryBuilder('o')
+        ->select('SUM(o.totalAmount)')
+        ->where('o.status != :cancelled')
+        ->setParameter('cancelled', 'annulee')
+        ->getQuery()
+        ->getSingleScalarResult();
 
-//    public function findOneBySomeField($value): ?Order
-//    {
-//        return $this->createQueryBuilder('o')
-//            ->andWhere('o.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    return $result ?? 0;
+}
+    public function findTopSelling(int $max = 5): array
+    {
+        return $this->createQueryBuilder('o')
+            ->select('p as product', 'SUM(oi.quantity) as qty')
+            ->join('o.items', 'oi')
+            ->join('oi.product', 'p')
+            ->groupBy('p.id')
+            ->orderBy('qty', 'DESC')
+            ->setMaxResults($max)
+            ->getQuery()
+            ->getResult();
+    }
+
 }

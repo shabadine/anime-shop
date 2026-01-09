@@ -1,0 +1,34 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Commandes{% endblock %}
+
+{% block admin_content %}
+<h1>Liste des commandes</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Client</th>
+            <th>Date</th>
+            <th>Total</th>
+            <th>Statut</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for order in orders %}
+            <tr>
+                <td>{{ order.orderNumber }}</td>
+                <td>{{ order.user.email }}</td>
+                <td>{{ order.createdAt|date('d/m/Y') }}</td>
+                <td>{{ order.totalAmount|number_format(2) }} €</td>
+                <td>{{ order.status }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">Aucune commande</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
