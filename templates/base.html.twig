@@ -18,7 +18,7 @@
             color: #FF6B6B;
         }
         .navbar {
-        background: linear-gradient(135deg, #e65c5c 0%, #e67e22 100%); /* moins saturé */
+        background: linear-gradient(135deg, #e65c5c 0%, #e67e22 100%); 
     }
     /* liens blancs = OK, mais hover plus doux */
     .navbar-dark .navbar-nav .nav-link {
@@ -28,7 +28,7 @@
     .navbar-dark .navbar-nav .nav-link:hover,
     .navbar-dark .navbar-nav .nav-link:focus {
         color: #fff;
-        text-shadow: 0 0 4px rgba(255,255,255,.45); /* halo discret */
+        text-shadow: 0 0 4px rgba(255,255,255,.45); */
     }
         .btn-primary {
             background-color: #FF6B6B;
@@ -53,7 +53,9 @@
 <body>
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark">
+    
         <div class="container">
+            <img src="{{ asset('images/logo.svg') }}" alt="anime shop" width="49" height="40" loading="lazy">
             <a class="navbar-brand" href="{{ path('app_home') }}" style="font-family: 'Bangers', cursive; font-size: 1.8rem;">
                 ANIME SHOP
             </a>
@@ -118,6 +120,13 @@
     <!-- Footer -->
     <footer class="bg-dark text-white mt-5 py-4">
         <div class="container text-center">
+        <!-- Logo -->
+            <div class="col-md-2 text-center">
+              <img src="{{ asset('images/logo.svg') }}" alt="anime shop" width="49" height="40" loading="lazy">
+              <a class="navbar-brand" href="{{ path('app_home') }}" style="font-family: 'Bangers', cursive; font-size: 1.8rem;">
+                ANIME SHOP
+            </a>
+            </div>
             <p>&copy; 2025 Anime Goodies Shop - Tous droits réservés</p>
             <p>Projet DWWM - Shabadine Bah</p>
         </div>
