@@ -58,11 +58,11 @@
                             </td>
                             <td>
                                 <div class="btn-group btn-group-sm">
-                                    <a href="{{ path('admin_product_show', {id: product.id}) }}" class="btn btn-info"></a>
-                                    <a href="{{ path('admin_product_edit', {id: product.id}) }}" class="btn btn-warning"></a>
+                                    <a href="{{ path('admin_product_show', {id: product.id}) }}" class="btn btn-info">Voir</a>
+                                    <a href="{{ path('admin_product_edit', {id: product.id}) }}" class="btn btn-warning">Modifier</a>
                                     <form method="post" action="{{ path('admin_product_delete', {id: product.id}) }}" onsubmit="return confirm('Supprimer ce produit ?');" style="display: inline;">
                                         <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ product.id) }}">
-                                        <button class="btn btn-danger"></button>
+                                        <button class="btn btn-danger">Supprimer</button>
                                     </form>
                                 </div>
                             </td>

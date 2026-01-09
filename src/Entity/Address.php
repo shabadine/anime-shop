@@ -30,6 +30,7 @@ class Address
 
     #[ORM\Column(length: 20)]
     private ?string $type = null; // 'livraison' ou 'facturation'
+
     #[ORM\Column(type: 'datetime_immutable')]
     private ?\DateTimeImmutable $createdAt = null;
 
@@ -37,7 +38,11 @@ class Address
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
-    // Getters et setters...
+    
+    public function __construct()
+    {
+        $this->createdAt = new \DateTimeImmutable();
+    }
 
     public function getId(): ?int
     {
@@ -120,16 +125,17 @@ class Address
         $this->user = $user;
         return $this;
     }
+
     public function getCreatedAt(): ?\DateTimeImmutable
     {
-    return $this->createdAt;
+        return $this->createdAt;
     }
 
     public function setCreatedAt(\DateTimeImmutable $createdAt): static
     {
         $this->createdAt = $createdAt;
         return $this;
-}
+    }
 
     public function __toString(): string
     {

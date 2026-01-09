@@ -17,6 +17,32 @@ class CartService
     }
 
     /**
+     * Ajoute $quantity exemplaires du produit $id
+    */
+    public function add(int $id, int $quantity = 1): void
+    {
+        $session = $this->requestStack->getSession();
+        $cart = $session->get('cart', []);
+        $cart[$id] = ($cart[$id] ?? 0) + $quantity;
+        $session->set('cart', $cart);
+    }
+
+    /**
+     * Retire $quantity exemplaires du produit $id (supprime la ligne si qty <= 0)
+     */
+    public function remove(int $id, int $quantity = 1): void
+    {
+        $session = $this->requestStack->getSession();
+        $cart = $session->get('cart', []);
+        if (!isset($cart[$id])) return;
+
+        $cart[$id] -= $quantity;
+        if ($cart[$id] <= 0) unset($cart[$id]);
+
+        $session->set('cart', $cart);
+    }
+
+    /**
      * Récupère le panier détaillé avec les objets Produits depuis la BDD
      */
     public function getFullCart(): array
@@ -40,6 +66,22 @@ class CartService
         }
 
         return $cartDetailed;
+    }
+    /**
+    * Met à jour la quantité d’un produit dans le panier
+    */
+    public function updateQuantity(int $id, int $quantity): void
+    {
+        $session = $this->requestStack->getSession();
+        $cart = $session->get('cart', []);
+
+        if ($quantity <= 0) {
+            unset($cart[$id]);
+        } else {
+            $cart[$id] = $quantity;
+        }
+
+        $session->set('cart', $cart);
     }
 
     /**
