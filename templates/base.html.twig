@@ -46,6 +46,18 @@
             background-color: #45b8b0;
             border-color: #45b8b0;
         }
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .navbar-brand {
+                font-size: 1.3rem;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+            .card {
+                margin-bottom: 1rem;
+            }
+        }
     </style>
     
     {% block stylesheets %}{% endblock %}
@@ -72,7 +84,7 @@
                     </li>
                     {% if app.user %}
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Mon compte</a>
+                            <a class="nav-link" href="{{ path('app_account') }}">Mon compte</a>
                         </li>
                         {% if is_granted('ROLE_ADMIN') %}
                             <li class="nav-item">
