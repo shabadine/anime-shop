@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Paiement - Anime Shop{% endblock %}
+
+{% block body %}
+<div class="container py-5">
+    <h1 class="mb-4"> Paiement</h1>
+
+    <div class="alert alert-warning">
+        <strong> Simulation de paiement</strong><br>
+        Aucun paiement réel ne sera effectué. Cliquez sur "Confirmer" pour valider votre commande.
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-body p-4">
+                    <h5 class="mb-4">Informations de paiement (factice)</h5>
+
+                    <form method="post" action="{{ path('app_order_confirm') }}">
+                        <div class="mb-3">
+                            <label class="form-label">Numéro de carte</label>
+                            <input type="text" class="form-control" placeholder="1234 5678 9012 3456" disabled>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Date d'expiration</label>
+                                <input type="text" class="form-control" placeholder="MM/AA" disabled>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">CVV</label>
+                                <input type="text" class="form-control" placeholder="123" disabled>
+                            </div>
+                        </div>
+
+                        <hr class="my-4">
+
+                        <div class="d-flex justify-content-between mb-3">
+                            <strong>Montant à payer :</strong>
+                            <strong style="color: #FF6B6B; font-size: 1.5rem;">{{ (total + 5)|number_format(2) }}€</strong>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100 btn-lg">
+                             Confirmer la commande
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

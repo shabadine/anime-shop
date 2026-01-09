@@ -91,10 +91,13 @@
                         </li>
                     {% endif %}
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
-                             Panier (0)
-                        </a>
-                    </li>
+                    <a class="nav-link" href="{{ path('app_cart_index') }}">
+                         Panier ({{ cart_item_count() }})
+                         
+
+                         
+                    </a>
+                </li>
                 </ul>
             </div>
         </div>

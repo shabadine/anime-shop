@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Commande confirmée - Anime Shop{% endblock %}
+
+{% block body %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center">
+            <div class="card shadow-sm">
+                <div class="card-body p-5">
+                    <div class="mb-4" style="font-size: 5rem;">✅</div>
+                    
+                    <h1 class="mb-3">Commande confirmée !</h1>
+                    
+                    <p class="lead">Merci pour votre achat !</p>
+                    
+                    <div class="alert alert-success my-4">
+                        <strong>Numéro de commande :</strong><br>
+                        <h3 class="mb-0">{{ order.orderNumber }}</h3>
+                    </div>
+
+                    <p>Vous recevrez un email de confirmation sous peu.</p>
+                    <p>Votre commande sera expédiée dans les plus brefs délais.</p>
+
+                    <hr class="my-4">
+
+                    <div class="d-flex justify-content-center gap-3">
+                        <a href="{{ path('app_home') }}" class="btn btn-primary">
+                            Retour à l'accueil
+                        </a>
+                        <a href="{{ path('app_catalog') }}" class="btn btn-outline-primary">
+                            Continuer mes achats
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

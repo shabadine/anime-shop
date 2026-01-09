@@ -1,0 +1,157 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon Panier - Anime Shop{% endblock %}
+
+{% block body %}
+<div class="container py-5">
+    <h1 class="mb-4"> Mon Panier</h1>
+
+    {% if items is empty %}
+        <div class="alert alert-info text-center py-5">
+            <h3>Votre panier est vide</h3>
+            <p class="lead">Découvrez nos produits et ajoutez vos coups de cœur !</p>
+            <a href="{{ path('app_catalog') }}" class="btn btn-primary btn-lg mt-3">
+                Voir le catalogue
+            </a>
+        </div>
+    {% else %}
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="card shadow-sm mb-4">
+                    <div class="card-body">
+                        <table class="table align-middle">
+                            <thead>
+                                <tr>
+                                    <th>Produit</th>
+                                    <th class="text-center">Prix unitaire</th>
+                                    <th class="text-center">Quantité</th>
+                                    <th class="text-center">Total</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in items %}
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div class="me-3" style="width: 80px; height: 80px;">
+                                                    {% if item.product.image %}
+                                                        <img src="{{ asset('uploads/products/' ~ item.product.image) }}" 
+                                                             alt="{{ item.product.name }}" 
+                                                             class="img-fluid rounded"
+                                                             style="object-fit: cover; width: 100%; height: 100%;">
+                                                    {% else %}
+                                                        <div class="bg-light rounded d-flex align-items-center justify-content-center" style="width: 100%; height: 100%;">
+                                                            <span class="text-muted small">Pas d'image</span>
+                                                        </div>
+                                                    {% endif %}
+                                                </div>
+                                                <div>
+                                                    <h6 class="mb-1">
+                                                        <a href="{{ path('app_product_show', {slug: item.product.slug}) }}" class="text-decoration-none text-dark">
+                                                            {{ item.product.name }}
+                                                        </a>
+                                                    </h6>
+                                                    <small class="text-muted">{{ item.product.animeName }}</small>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="text-center">
+                                            <strong>{{ item.product.price }}€</strong>
+                                        </td>
+                                        <td class="text-center">
+                                            <form method="post" action="{{ path('app_cart_update', {id: item.product.id}) }}" class="d-inline">
+                                                <div class="input-group" style="max-width: 120px; margin: 0 auto;">
+                                                    <button type="button" class="btn btn-outline-secondary btn-sm" onclick="decreaseQty{{ item.product.id }}()">-</button>
+                                                    <input type="number" name="quantity" id="qty{{ item.product.id }}" value="{{ item.quantity }}" min="1" max="{{ item.product.stock }}" class="form-control text-center" style="max-width: 50px;">
+                                                    <button type="button" class="btn btn-outline-secondary btn-sm" onclick="increaseQty{{ item.product.id }}()">+</button>
+                                                </div>
+                                                <button type="submit" class="btn btn-link btn-sm text-decoration-none">Mettre à jour</button>
+                                            </form>
+                                            <script>
+                                                function increaseQty{{ item.product.id }}() {
+                                                    const input = document.getElementById('qty{{ item.product.id }}');
+                                                    if (parseInt(input.value) < parseInt(input.max)) {
+                                                        input.value = parseInt(input.value) + 1;
+                                                    }
+                                                }
+                                                function decreaseQty{{ item.product.id }}() {
+                                                    const input = document.getElementById('qty{{ item.product.id }}');
+                                                    if (parseInt(input.value) > 1) {
+                                                        input.value = parseInt(input.value) - 1;
+                                                    }
+                                                }
+                                            </script>
+                                        </td>
+                                        <td class="text-center">
+                                            <strong style="color: #FF6B6B;">{{ (item.product.price * item.quantity)|number_format(2, '.', '') }}€</strong>
+                                        </td>
+                                        <td class="text-center">
+                                            <a href="{{ path('app_cart_remove', {id: item.product.id}) }}" class="btn btn-outline-danger btn-sm" onclick="return confirm('Retirer ce produit du panier ?')">
+                                                <i class="bi bi-trash"></i> Supprimer
+                                            </a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+
+                        <div class="text-end mt-3">
+                            <a href="{{ path('app_cart_clear') }}" class="btn btn-outline-secondary" onclick="return confirm('Vider le panier ?')">
+                                Vider le panier
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="{{ path('app_catalog') }}" class="btn btn-outline-primary">
+                    ← Continuer mes achats
+                </a>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="card shadow-sm sticky-top" style="top: 20px;">
+                    <div class="card-header" style="background-color: #FFE66D;">
+                        <h5 class="mb-0"> Récapitulatif</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Sous-total :</span>
+                            <strong>{{ total|number_format(2, '.', '') }}€</strong>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Livraison :</span>
+                            <strong>5.00€</strong>
+                        </div>
+                        <hr>
+                        <div class="d-flex justify-content-between mb-3">
+                            <strong style="font-size: 1.2rem;">TOTAL :</strong>
+                            <strong style="font-size: 1.2rem; color: #FF6B6B;">{{ (total + 5)|number_format(2, '.', '') }}€</strong>
+                        </div>
+
+                        {% if app.user %}
+                            <a href="{{ path('app_order_prepare') }}" class="btn btn-primary w-100 btn-lg">
+                                Passer commande →
+                            </a>
+                        {% else %}
+                            <a href="{{ path('app_login') }}" class="btn btn-primary w-100 btn-lg">
+                                Se connecter pour commander
+                            </a>
+                            <p class="text-center mt-2 mb-0 small text-muted">
+                                Pas de compte ? <a href="{{ path('app_register') }}">S'inscrire</a>
+                            </p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="card shadow-sm mt-3">
+                    <div class="card-body">
+                        <h6> Modes de paiement acceptés</h6>
+                        <p class="text-muted small mb-0">Carte bancaire (simulation)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
