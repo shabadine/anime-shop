@@ -1,11 +1,135 @@
 /* =================================
-   ADMIN PANEL - Styles
+   ADMIN PANEL 
    ================================= */
+
+/* Variables locales (dégradés) */
+:root {
+    --gradient-revenue: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --gradient-orders:   linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    --gradient-products: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    --gradient-users:     linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+    --dark-color: #2c3e50;
+}
+
+/* 1. TYPOGRAPHIE & COULEURS DES TITRES */
+
+/* Titres GÉNÉRAUX dans le contenu (hors cartes colorées) en NOIR */
+.main-content h1, 
+.main-content h2, 
+.main-content h3, 
+.main-content h4, 
+.main-content h5, 
+.main-content h6 {
+    color: var(--dark-color) !important;
+}
+
+/* Titres et chiffres DANS les cartes COLORÉES uniquement en BLANC */
+.admin-stat-revenue h2, .admin-stat-revenue h6,
+.admin-stat-orders h2, .admin-stat-orders h6,
+.admin-stat-products h2, .admin-stat-products h6,
+.admin-stat-users h2, .admin-stat-users h6,
+.admin-card-header h5, 
+.admin-cat-header h5,
+.card-body h6, 
+.card-body h5 {
+    color: white !important;
+}
+.admin-form-header {
+    background: var(--gradient-secondary);
+    color: white;
+}
+.admin-form-header h5 {
+    color: white !important;
+}
+/* Boutons larges + hover */
+.btn-lg {
+    transition: transform 0.2s;
+}
+.btn-lg:hover {
+    transform: translateY(-2px);
+}
+
+/* Image upload */
+input[type="file"].form-control:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(255, 107, 107, 0.25);
+}
+
+.admin-product-header {
+    background: var(--gradient-secondary);
+    color: white;
+}
+.admin-product-header h5 {
+    color: white !important;
+}
+
+.admin-product-header {
+    background: var(--gradient-secondary);
+    color: white;
+}
+.admin-product-header h5 {
+    color: white !important;
+}
+
+/* Boutons actions */
+.d-flex.gap-1 .btn {
+    width: 36px;
+    height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.admin-detail-header {
+    background: var(--gradient-secondary);
+    color: white;
+}
+.admin-detail-header h5 {
+    color: white !important;
+}
+
+.admin-product-form-header {
+    background: var(--gradient-secondary);
+    color: white;
+}
+.admin-product-form-header h5 {
+    color: white !important;
+}
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(255, 107, 107, 0.25);
+}
+
+.admin-order-header {
+    background: var(--gradient-secondary);
+    color: white;
+}
+.admin-order-header h5 {
+    color: white !important;
+}
+/* Boutons actions */
+.d-flex.gap-1 .btn {
+    width: 36px;
+    height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+/* 2. LAYOUT (SIDEBAR & CONTENU) */
 
 .sidebar {
     min-height: 100vh;
     background: #2c3e50;
     color: white;
+}
+
+.sidebar h1 {
+    font-family: 'Bangers', cursive;
+    font-size: 1.5rem;
+    color: white !important;
+    padding: 20px;
+    margin: 0;
 }
 
 .sidebar .nav-link {
@@ -28,23 +152,63 @@
     background-color: #f8f9fa;
 }
 
-.admin-stat-card {
+/* 3. CARTES DE STATISTIQUES */
+
+.admin-stat-revenue,
+.admin-stat-orders,
+.admin-stat-products,
+.admin-stat-users {
     border-radius: 10px;
     padding: 20px;
     color: white;
     transition: transform 0.3s;
+    margin-bottom: 20px;
 }
 
-.admin-stat-card:hover {
+.admin-stat-revenue   { background: var(--gradient-revenue); }
+.admin-stat-orders    { background: var(--gradient-orders); }
+.admin-stat-products  { background: var(--gradient-products); }
+.admin-stat-users     { background: var(--gradient-users); }
+
+.admin-stat-revenue:hover,
+.admin-stat-orders:hover,
+.admin-stat-products:hover,
+.admin-stat-users:hover {
     transform: translateY(-5px);
 }
 
-/* Responsive Admin */
+/* 4. EN-TÊTES DE CARTES & CATÉGORIES */
+
+.admin-card-header,
+.admin-cat-header {
+    background: var(--gradient-secondary, #6c757d); /* Utilise gradient-secondary ou gris par défaut */
+    color: white;
+    padding: 15px;
+    border-radius: 8px 8px 0 0;
+}
+
+/* 5. TABLEAUX ET COMPOSANTS */
+
+.admin-table-hover tbody tr:hover {
+    background-color: rgba(0, 0, 0, 0.03);
+}
+
+.admin-badge-warning { background-color: #ffc107; color: #212529; }
+.admin-badge-info    { background-color: #17a2b8; color: white; }
+.admin-badge-primary { background-color: #007bff; color: white; }
+.admin-badge-success { background-color: #28a745; color: white; }
+
+.admin-top-products .list-group-item {
+    border: none;
+    padding: 0.75rem 0;
+}
+
+/* 6. RESPONSIVE */
+
 @media (max-width: 768px) {
     .sidebar {
         min-height: auto;
     }
-    
     .main-content {
         padding: 15px;
     }

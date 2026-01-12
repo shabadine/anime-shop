@@ -41,20 +41,22 @@ class AdminOrderController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/statut', name: 'admin_order_update_status', methods: ['POST'])]
-    public function updateStatus(Request $request, Order $order, EntityManagerInterface $em): Response
-    {
-        $newStatus = $request->request->get('status');
-        
-        $allowedStatuses = ['en_attente', 'validee', 'expediee', 'livree', 'annulee'];
-        
-        if (in_array($newStatus, $allowedStatuses)) {
-            $order->setStatus($newStatus);
-            $em->flush();
-            
-            $this->addFlash('success', 'Statut mis à jour');
-        }
-
-        return $this->redirectToRoute('admin_order_show', ['id' => $order->getId()]);
+   #[Route('/admin/order/{id}/status', name: 'admin_order_status', methods: ['POST'])]
+public function updateStatus(Order $order, Request $request, EntityManagerInterface $em): Response
+{
+    $token = $request->request->get('_token');
+    if (!$this->isCsrfTokenValid('status' . $order->getId(), $token)) {
+        throw $this->createAccessDeniedException('Token CSRF invalide.');
     }
+
+    $newStatus = $request->request->get('status');
+    if (in_array($newStatus, ['en_attente', 'validee', 'expediee', 'livree'])) {
+        $order->setStatus($newStatus);
+        $em->flush();
+        $this->addFlash('success', 'Statut mis à jour.');
+    }
+
+    return $this->redirectToRoute('admin_order_index');
+}
+    
 }

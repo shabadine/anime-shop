@@ -72,4 +72,21 @@ class CategoryAdminController extends AbstractController
 
         return $this->redirectToRoute('admin_category_index');
     }
+
+    #[Route('/admin/category/{id}/image/delete', name: 'admin_category_image_delete', methods: ['POST'])]
+    public function deleteImage(Category $category, Request $request, EntityManagerInterface $em): Response
+    {
+        $token = $request->request->get('_token');
+        if (!$this->isCsrfTokenValid('delete'.$category->getId(), $token)) {
+            throw $this->createAccessDeniedException('Token CSRF invalide.');
+        }
+
+        
+        $category->setImageFile(null);
+        $em->flush();
+
+        $this->addFlash('success', 'Image supprimée.');
+
+        return $this->redirectToRoute('admin_category_edit', ['id' => $category->getId()]);
+    }
 }

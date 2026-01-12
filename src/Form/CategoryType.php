@@ -1,6 +1,6 @@
 <?php
 
-// src/Form/CategoryType.php
+
 namespace App\Form;
 
 use App\Entity\Category;
@@ -9,6 +9,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Vich\UploaderBundle\Form\Type\VichFileType;
 
 class CategoryType extends AbstractType
 {
@@ -16,6 +17,11 @@ class CategoryType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, ['label' => 'Nom'])
+            ->add('imageFile', VichFileType::class, [
+                        'required' => false,
+                        'label' => 'Image de la catégorie',
+                        'attr' => ['class' => 'form-control'],
+                    ])
             ->add('slug', TextType::class, ['label' => 'Slug'])
             ->add('description', TextareaType::class, ['label' => 'Description']);
     }

@@ -4,44 +4,55 @@
 
 {% block admin_content %}
 <div class="d-flex justify-content-between align-items-center mb-4">
-    <h1> Gestion des catégories</h1>
-    <a href="{{ path('admin_category_new') }}" class="btn btn-primary"> Nouvelle catégorie</a>
+    <h1><i class="bi bi-folder-fill me-2"></i> Gestion des catégories</h1>
+    <a href="{{ path('admin_category_new') }}" class="btn btn-primary">
+        <i class="bi bi-plus-circle me-1"></i> Nouvelle catégorie
+    </a>
 </div>
 
 <div class="card shadow-sm">
     <div class="card-body">
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nom</th>
-                    <th>Slug</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for category in categories %}
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead>
                     <tr>
-                        <td>{{ category.id }}</td>
-                        <td><strong>{{ category.name }}</strong></td>
-                        <td>{{ category.slug }}</td>
-                        <td>
-                            <div class="btn-group btn-group-sm">
-                                <a href="{{ path('admin_category_edit', {id: category.id}) }}" class="btn btn-warning">Modifier</a>
-                                <form method="post" action="{{ path('admin_category_delete', {id: category.id}) }}" onsubmit="return confirm('Supprimer cette catégorie ?');" style="display: inline;">
-                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ category.id) }}">
-                                    <button class="btn btn-danger">Supprimer</button>
-                                </form>
-                            </div>
-                        </td>
+                        <th><i class="bi bi-hash me-1"></i> ID</th>
+                        <th><i class="bi bi-tag me-1"></i> Nom</th>
+                        <th><i class="bi bi-link-45deg me-1"></i> Slug</th>
+                        <th><i class="bi bi-gear me-1"></i> Actions</th>
                     </tr>
-                {% else %}
-                    <tr>
-                        <td colspan="4" class="text-center">Aucune catégorie</td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    {% for category in categories %}
+                        <tr>
+                            <td>{{ category.id }}</td>
+                            <td><strong>{{ category.name }}</strong></td>
+                            <td><code>{{ category.slug }}</code></td>
+                            <td>
+                                <div class="d-flex gap-2">
+                                    <a href="{{ path('admin_category_edit', {id: category.id}) }}" class="btn btn-sm btn-warning">
+                                        <i class="bi bi-pencil"></i> Modifier
+                                    </a>
+                                    <form method="post" action="{{ path('admin_category_delete', {id: category.id}) }}" onsubmit="return confirm('Supprimer cette catégorie ?');">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ category.id) }}">
+                                        <button class="btn btn-sm btn-danger">
+                                            <i class="bi bi-trash"></i> Supprimer
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="4" class="text-center text-muted">
+                                <i class="bi bi-inbox display-4"></i><br>
+                                Aucune catégorie
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 {% endblock %}

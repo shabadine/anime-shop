@@ -56,7 +56,6 @@ class ProductController extends AbstractController
         ]);
     }
 
-   
     #[Route('/{id}', name: 'admin_product_show', methods: ['GET'], requirements: ['id' => '\d+'])]
     public function show(Product $product): Response
     {
@@ -75,12 +74,10 @@ class ProductController extends AbstractController
             /** @var UploadedFile $file */
             $file = $form->get('imageFile')->getData();
             
-            // Logique d'image ajoutée pour le edit : identique au new
             if ($file) {
                 $this->handleImageUpload($file, $product, $slugger);
             }
 
-            // Regénérer le slug si le nom a changé
             $slug = $slugger->slug($product->getName())->lower();
             $product->setSlug($slug);
 
@@ -96,9 +93,7 @@ class ProductController extends AbstractController
         ]);
     }
 
-    /**
-     * Méthode privée pour centraliser la logique d'upload
-     */
+   
     private function handleImageUpload(UploadedFile $file, Product $product, SluggerInterface $slugger): void
     {
         $original = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);

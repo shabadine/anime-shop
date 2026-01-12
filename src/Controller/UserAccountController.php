@@ -13,7 +13,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
-use Knp\Component\Pager\PaginatorInterface;
 
 #[Route('/compte')]
 #[IsGranted('ROLE_USER')]
@@ -57,21 +56,11 @@ class UserAccountController extends AbstractController
     }
 
     #[Route('/commandes', name: 'app_account_orders')]
-    public function orders(
-        Request $request,
-        OrderRepository $orderRepository,
-        PaginatorInterface $paginator
-    ): Response {
-        $query = $orderRepository->createQueryBuilder('o')
-            ->where('o.user = :user')
-            ->setParameter('user', $this->getUser())
-            ->orderBy('o.createdAt', 'DESC')
-            ->getQuery();
-
-        $orders = $paginator->paginate(
-            $query,
-            $request->query->getInt('page', 1),
-            10
+    public function orders(OrderRepository $orderRepository): Response
+    {
+        $orders = $orderRepository->findBy(
+            ['user' => $this->getUser()],
+            ['createdAt' => 'DESC']
         );
 
         return $this->render('user_account/orders.html.twig', [

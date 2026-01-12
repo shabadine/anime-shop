@@ -4,46 +4,53 @@
 
 {% block admin_content %}
 <div class="d-flex justify-content-between align-items-center mb-4">
-    <h1> Gestion des produits</h1>
+    <h1><i class="bi bi-box-seam me-2"></i> Gestion des produits</h1>
     <a href="{{ path('admin_product_new') }}" class="btn btn-primary">
-         Nouveau produit
+        <i class="bi bi-plus-circle me-1"></i> Nouveau produit
     </a>
 </div>
 
 <div class="card shadow-sm">
+    <div class="card-header admin-product-header">
+        <h5 class="mb-0"><i class="bi bi-list-ul me-1"></i> Liste des produits</h5>
+    </div>
     <div class="card-body">
         <div class="table-responsive">
-            <table class="table table-hover">
+            <table class="table table-hover align-middle">
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Image</th>
-                        <th>Nom</th>
-                        <th>Anime</th>
-                        <th>Catégorie</th>
-                        <th>Prix</th>
-                        <th>Stock</th>
-                        <th>En avant</th>
-                        <th>Actions</th>
+                        <th><i class="bi bi-hash me-1"></i> ID</th>
+                        <th><i class="bi bi-image me-1"></i> Image</th>
+                        <th><i class="bi bi-tag me-1"></i> Nom</th>
+                        <th><i class="bi bi-film me-1"></i> Anime</th>
+                        <th><i class="bi bi-folder me-1"></i> Catégorie</th>
+                        <th><i class="bi bi-currency-euro me-1"></i> Prix</th>
+                        <th><i class="bi bi-boxes me-1"></i> Stock</th>
+                        <th><i class="bi bi-star me-1"></i> En avant</th>
+                        <th><i class="bi bi-gear me-1"></i> Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for product in products %}
                         <tr>
-                            <td>{{ product.id }}</td>
+                            <td><strong>{{ product.id }}</strong></td>
                             <td>
                                 {% if product.image %}
                                     <img src="{{ asset('uploads/products/' ~ product.image) }}" 
                                          alt="{{ product.name }}" 
-                                         style="width: 50px; height: 50px; object-fit: cover; border-radius: 4px;">
+                                         class="rounded shadow-sm" 
+                                         style="width: 60px; height: 60px; object-fit: cover;">
                                 {% else %}
-                                    <div class="bg-light" style="width: 50px; height: 50px; border-radius: 4px;"></div>
+                                    <div class="bg-light rounded d-flex align-items-center justify-content-center shadow-sm" 
+                                         style="width: 60px; height: 60px;">
+                                        <i class="bi bi-card-image text-muted"></i>
+                                    </div>
                                 {% endif %}
                             </td>
                             <td><strong>{{ product.name }}</strong></td>
-                            <td>{{ product.animeName }}</td>
-                            <td>{{ product.category.name }}</td>
-                            <td><strong>{{ product.price }}€</strong></td>
+                            <td><span class="badge bg-secondary">{{ product.animeName }}</span></td>
+                            <td><span class="badge bg-primary">{{ product.category.name }}</span></td>
+                            <td><strong class="text-danger">{{ product.price }}€</strong></td>
                             <td>
                                 {% if product.stock > 0 %}
                                     <span class="badge bg-success">{{ product.stock }}</span>
@@ -53,23 +60,34 @@
                             </td>
                             <td>
                                 {% if product.featured %}
-                                    <span class="badge bg-warning">Oui</span>
+                                    <span class="badge bg-warning text-dark"><i class="bi bi-star-fill"></i></span>
+                                {% else %}
+                                    <span class="text-muted"><i class="bi bi-star"></i></span>
                                 {% endif %}
                             </td>
                             <td>
-                                <div class="btn-group btn-group-sm">
-                                    <a href="{{ path('admin_product_show', {id: product.id}) }}" class="btn btn-info">Voir</a>
-                                    <a href="{{ path('admin_product_edit', {id: product.id}) }}" class="btn btn-warning">Modifier</a>
-                                    <form method="post" action="{{ path('admin_product_delete', {id: product.id}) }}" onsubmit="return confirm('Supprimer ce produit ?');" style="display: inline;">
+                                <div class="d-flex gap-1">
+                                    <a href="{{ path('admin_product_show', {id: product.id}) }}" class="btn btn-sm btn-info" title="Voir">
+                                        <i class="bi bi-eye"></i>
+                                    </a>
+                                    <a href="{{ path('admin_product_edit', {id: product.id}) }}" class="btn btn-sm btn-warning" title="Modifier">
+                                        <i class="bi bi-pencil"></i>
+                                    </a>
+                                    <form method="post" action="{{ path('admin_product_delete', {id: product.id}) }}" onsubmit="return confirm('Supprimer ce produit ?');">
                                         <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ product.id) }}">
-                                        <button class="btn btn-danger">Supprimer</button>
+                                        <button class="btn btn-sm btn-danger" title="Supprimer">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
                                     </form>
                                 </div>
                             </td>
                         </tr>
                     {% else %}
                         <tr>
-                            <td colspan="9" class="text-center">Aucun produit</td>
+                            <td colspan="9" class="text-center text-muted">
+                                <i class="bi bi-inbox display-4"></i><br>
+                                Aucun produit
+                            </td>
                         </tr>
                     {% endfor %}
                 </tbody>

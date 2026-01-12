@@ -8,15 +8,15 @@
      style="background: url('{{ asset('images/hero-anime.jpg') }}') center/cover no-repeat;">
   <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark opacity-50"></div>
   <div class="container position-relative z-1 text-center">
-    <h1 style="font-size: 4.5rem; font-family: 'Bangers', cursive; text-shadow: 3px 3px 0 #000;">
-       Anime Goodies Shop 
+    <h1 class="hero-title">
+       Anime Goodies Shop
+       <img src="{{ asset('images/logo.svg') }}" alt="anime shop" width="60" height="60" loading="lazy">
     </h1>
-    <p class="lead fs-2 mb-4" style="text-shadow: 2px 2px 0 #000;">
+    <p class="hero-subtitle mb-4">
       Les goodies officiels de tes animes préférés, livrés en 48h !
     </p>
-    <a href="{{ path('app_catalog') }}" class="btn btn-lg px-5 py-3"
-       style="background: #FF6B6B; border: none; border-radius: 50px; font-size: 1.3rem; box-shadow: 0 4px 15px rgba(0,0,0,.35);">
-       Voir le catalogue
+    <a href="{{ path('app_catalog') }}" class="btn btn-lg px-5 py-3 hero-btn">
+       <i class="bi bi-arrow-right"></i> Voir le catalogue
     </a>
   </div>
 </div>
@@ -24,25 +24,31 @@
 <!-- Meilleures ventes -->
 <section class="py-5">
     <div class="container">
-        <h2 class="text-center mb-5"> Meilleures ventes</h2>
+        <h2 class="text-center section-title">Meilleures ventes <i class="bi bi-fire"></i> </h2>
         
         <div class="row g-4">
             {% for product in featuredProducts %}
                 <div class="col-md-3">
-                    <div class="card h-100 shadow-sm">
-                        <div class="card-img-top bg-secondary" style="height: 200px; display: flex; align-items: center; justify-content: center; color: white;">
-                            {% if product.image %}
-                                <img src="{{ asset('uploads/products/' ~ product.image) }}" alt="{{ product.name }}" class="img-fluid">
-                            {% else %}
+                    <div class="card h-100 shadow-sm product-card">
+                        <!-- IMAGE -->
+                        {% if product.image %}
+                            <img src="{{ asset('uploads/products/' ~ product.image) }}" alt="{{ product.name }}" class="card-img-top">
+                        {% else %}
+                            <div class="bg-secondary text-white d-flex align-items-center justify-content-center" style="height: 200px;">
                                 <span>Image produit</span>
-                            {% endif %}
+                            </div>
+                        {% endif %}
+
+                        <!-- BANDEAU TITRE -->
+                        <div class="bg-dark text-white p-2">
+                            <h5 class="card-title mb-0 text-center">{{ product.name }}</h5>
                         </div>
+
                         <div class="card-body">
-                            <h5 class="card-title">{{ product.name }}</h5>
                             <p class="text-muted small">{{ product.animeName }}</p>
                             <p class="card-text text-truncate">{{ product.description|slice(0, 80) }}...</p>
                             <div class="d-flex justify-content-between align-items-center">
-                                <span class="h4 mb-0" style="color: #e93939;">{{ product.price }}€</span>
+                                <span class="h4 mb-0 product-price">{{ product.price }}€</span>
                                 <a href="{{ path('app_product_show', {slug: product.slug}) }}" class="btn btn-primary btn-sm">Voir</a>
                             </div>
                         </div>
@@ -58,9 +64,9 @@
 </section>
 
 <!-- Call to Action -->
-<section class="py-5" style="background-color: #FFE66D;">
+<section class="py-5 cta-section">
     <div class="container text-center">
-        <h2 style="color: #333;">Envie de découvrir plus de produits ?</h2>
+        <h2>Envie de découvrir plus de produits ?</h2>
         <p class="lead">Explorez notre catalogue complet</p>
         <a href="{{ path('app_catalog') }}" class="btn btn-dark btn-lg">Voir tout le catalogue</a>
     </div>

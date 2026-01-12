@@ -10,13 +10,13 @@
         <div class="col-lg-8">
             <!-- Adresses -->
             <div class="card shadow-sm mb-4">
-                <div class="card-header" style="background-color: #4ECDC4; color: white;">
-                    <h5 class="mb-0">Adresse de livraison</h5>
+                 <div class="card-header order-section-header">
+                    <h5 class="mb-0">Adresse de livraison <i class="bi bi-truck"></i></h5>
                 </div>
                 <div class="card-body">
                     {% if addresses is empty %}
-                        <p>Vous n'avez pas d'adresse enregistrée.</p>
-                        <a href="#" class="btn btn-primary">Ajouter une adresse</a>
+                        <p>Vous n'avez pas d'adresse enregistrée. <i class="bi bi-exclamation-triangle"></i></p>
+                        <a href="#" class="btn btn-primary">Ajouter une adresse <i class="bi bi-plus-circle"></i></a>
                     {% else %}
                         {% for address in addresses %}
                             <div class="form-check mb-3">
@@ -35,8 +35,8 @@
 
             <!-- Récapitulatif produits -->
             <div class="card shadow-sm">
-                <div class="card-header" style="background-color: #4ECDC4; color: white;">
-                    <h5 class="mb-0">Récapitulatif des produits</h5>
+                 <div class="card-header order-section-header">
+                    <h5 class="mb-0">Récapitulatif des produits <i class="bi bi-cart"></i></h5>
                 </div>
                 <div class="card-body">
                     <table class="table">
@@ -56,7 +56,7 @@
         <div class="col-lg-4">
             <div class="card shadow-sm">
                 <div class="card-header" style="background-color: #FFE66D;">
-                    <h5 class="mb-0">💰 Total</h5>
+                    <h5 class="mb-0">Total <i class="bi bi-currency-dollar"></i></h5>
                 </div>
                 <div class="card-body">
                     <div class="d-flex justify-content-between mb-2">
@@ -70,11 +70,11 @@
                     <hr>
                     <div class="d-flex justify-content-between mb-3">
                         <strong>TOTAL :</strong>
-                        <strong style="color: #FF6B6B; font-size: 1.3rem;">{{ (total + 5)|number_format(2) }}€</strong>
+                       <strong class="order-total-price">{{ (total + 5)|number_format(2) }}€</strong>
                     </div>
 
-                    <a href="{{ path('app_order_payment') }}" class="btn btn-primary w-100 btn-lg">
-                        Paiement →
+                    <a href="{{ path('app_order_payment') }}" class="btn btn-primary w-100 btn-lg order-payment-btn">
+                        Paiement <i class="bi bi-credit-card-2-front"></i>
                     </a>
                 </div>
             </div>

@@ -5,13 +5,14 @@
 /* Variables CSS */
 :root {
     --primary-color: #FF6B6B;
-    --secondary-color: #4ECDC4;
+    --secondary-color: #ff8e53;
     --accent-color: #FFE66D;
     --dark-color: #333333;
     --gray-color: #666666;
     --light-bg: #f5f5f5;
     --gradient-hero: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%);
     --gradient-purple: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --gradient-secondary: linear-gradient(135deg, #ff5555 0%, #ff8e53 100%);
 }
 
 /* Typography */
@@ -23,6 +24,12 @@ body {
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Bangers', cursive;
     color: var(--primary-color);
+}
+/*  */
+.admin-card-header h5,
+.admin-form-header h5,
+.admin-detail-header h5 {
+    color: white !important;
 }
 
 /* Navbar */
@@ -284,4 +291,406 @@ footer {
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
     }
+}
+
+/* =================================
+   HOMEPAGE SPECIFIC STYLES
+   ================================= */
+
+/* Hero Section */
+.hero-section {
+    background: var(--gradient-hero);
+    color: white;
+}
+
+.hero-title {
+    font-size: 4.5rem;
+    font-family: 'Bangers', cursive;
+    text-shadow: 3px 3px 0 #000;
+}
+
+.hero-subtitle {
+    font-size: 1.75rem;
+    text-shadow: 2px 2px 0 #000;
+}
+
+.hero-btn {
+    background-color: var(--primary-color);
+    border: none;
+    border-radius: 50px;
+    font-size: 1.3rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.35);
+    transition: all 0.3s ease;
+}
+
+.hero-btn:hover {
+    background-color: #ff5555;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+}
+
+/* Section Meilleures Ventes */
+.section-title {
+    margin-bottom: 4rem; 
+}
+/* Featured Products */
+.product-price {
+    color: #e93939;
+}
+
+/* Overlay lisible sur image */
+.card-img-overlay {
+    background: rgba(0, 0, 0, 0.45); 
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 1rem;
+    border-radius: 0.25rem 0.25rem 0 0;
+}
+
+/* CTA Section */
+.cta-section {
+    background-color: var(--accent-color);
+    color: var(--dark-color);
+}
+
+/* =================================
+   CATALOGUE - Sidebar & Cards
+   ================================= */
+
+/* Sidebar */
+/* ENTÊTE de la carte */
+.catalog-sidebar .card-header {
+    background: var(--gradient-secondary); 
+    color: white;
+    border: none;                    
+}
+
+/* Titre DANS l’entête  */
+.catalog-sidebar .card-header h5 {
+    color: white !important;
+    margin: 0;               
+    line-height: 1.2;        
+}
+.catalog-sidebar .btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.catalog-sidebar .btn-primary:hover {
+    background-color: #ff5555;
+    border-color: #ff5555;
+}
+
+/* Filtres actifs */
+.catalog-filters-info {
+    background-color: var(--accent-color);
+    color: var(--dark-color);
+    border-left: 4px solid var(--secondary-color);
+}
+
+/* Cartes produits */
+.catalog-price {
+    color: var(--primary-color);
+}
+
+.catalog-badge-stock {
+    background-color: var(--secondary-color);
+}
+
+.catalog-badge-out {
+    background-color: var(--primary-color);
+}
+
+/* Hover carte */
+.catalog-card {
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.catalog-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+/* =================================
+   CATALOG / CATEGORY
+   ================================= */
+
+/* Header catégorie */
+.category-header {
+    background: var(--gradient-purple);
+    color: white;
+}
+
+.category-header h1 {
+    color: white;
+}
+
+.category-header .lead {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* Cartes produits */
+.category-price {
+    color: var(--primary-color);
+}
+
+/* Autres catégories */
+.category-hover-card {
+    transition: all 0.3s;
+}
+
+.category-hover-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* =================================
+   CATALOG SHOW
+   ================================= */
+
+/* Image */
+.product-image-box {
+    max-height: 500px;
+    object-fit: contain;
+    background-color: #fff;
+}
+
+.product-no-image {
+    height: 500px;
+    background-color: var(--light-bg);
+}
+
+/* Badges */
+.product-badge-category {
+    background-color: var(--gray-color);
+}
+
+.product-badge-featured {
+    background-color: var(--accent-color);
+    color: var(--dark-color);
+}
+
+/* Prix */
+.product-price-box {
+    background-color: #fff3cd;   
+    border-left: 4px solid var(--accent-color);
+}
+.product-price-text {
+    color: var(--primary-color);
+}
+
+/* Stock */
+.product-in-stock {
+    background-color: #d4edda;
+    color: #155724;
+    border-color: #c3e6cb;
+}
+
+.product-out-of-stock {
+    background-color: #f8d7da;
+    color: #721c24;
+    border-color: #f5c6cb;
+}
+
+/* Description */
+.product-description-header {
+    background: var(--secondary-color);
+    color: white;
+}
+
+/* Cartes similaires */
+.product-similar-price {
+    color: var(--primary-color);
+}
+
+/* =================================
+   CART / PANIER
+   ================================= */
+
+/* Carte vide */
+.cart-empty-alert {
+    background-color: var(--light-bg);
+    border-color: var(--accent-color);
+    color: var(--dark-color);
+}
+
+/* Tableau */
+.cart-table img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+}
+
+.cart-no-image {
+    width: 80px;
+    height: 80px;
+    background-color: var(--light-bg);
+}
+
+.cart-total-price {
+    color: var(--primary-color);
+}
+
+/* Boutons */
+.cart-btn-update {
+    font-size: 0.8rem;
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.cart-btn-remove {
+    font-size: 0.8rem;
+}
+
+/* Récapitulatif */
+.cart-summary-header {
+    background: var(--gradient-secondary);
+    color: white;
+}
+
+.cart-summary-total {
+    color: var(--primary-color);
+    font-size: 1.2rem;
+}
+
+.cart-payment-info {
+    background-color: var(--light-bg);
+}
+
+/* =================================
+   ORDER / PREPARE
+   ================================= */
+
+/* Adresse & Récapitulatif */
+.order-section-header {
+    background: var(--gradient-secondary);
+    color: white;
+}
+
+.order-section-header h5 {
+    color: white !important;
+}
+
+/* Total */
+.order-total-header {
+    background-color: var(--accent-color);
+    color: var(--dark-color);
+}
+
+
+.order-total-price {
+    color: var(--primary-color);
+    font-size: 1.3rem;
+}
+
+/* Bouton */
+.order-payment-btn {
+    background-color: var(--primary-color);
+    border: none;
+    transition: all 0.3s;
+}
+
+.order-payment-btn:hover {
+    background-color: #ff5555;
+    transform: translateY(-2px);
+}
+
+
+/* =================================
+   ORDER / PAYMENT
+   ================================= */
+
+/* Alerte simulation */
+.payment-alert {
+    background-color: var(--accent-color);
+    color: var(--dark-color);
+    border-left: 4px solid var(--primary-color);
+}
+
+/* Montant */
+.payment-amount {
+    color: var(--primary-color);
+    font-size: 1.5rem;
+}
+
+/* Bouton */
+.payment-confirm-btn {
+    background-color: var(--primary-color);
+    border: none;
+    transition: all 0.3s;
+}
+
+.payment-confirm-btn:hover {
+    background-color: #ff5555;
+    transform: translateY(-2px);
+}
+
+/* =================================
+   USER ACCOUNT – ORDER SHOW
+   ================================= */
+
+/* En-têtes de cartes */
+.user-order-header-dark {
+    background: var(--dark-color);
+    color: white;
+}
+
+.user-order-header-info {
+    background: var(--secondary-color);
+    color: white;
+}
+
+.user-order-header-warning {
+    background: var(--accent-color);
+    color: var(--dark-color);
+}
+
+/* Badges statut */
+.user-badge-status {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    width: 100%;
+    display: inline-block;
+    text-align: center;
+}
+
+.user-badge-warning { background: var(--accent-color); color: var(--dark-color); }
+.user-badge-info    { background: var(--secondary-color); color: white; }
+.user-badge-primary { background: var(--primary-color); color: white; }
+.user-badge-success { background: #28a745; color: white; }
+
+/* Prix client */
+.user-price-total {
+    color: var(--primary-color);
+    font-weight: 700;
+}
+
+/* Tableau */
+.user-order-table {
+    border: none;
+}
+.user-order-table thead {
+    background: var(--light-bg);
+}
+.user-order-table tbody tr:hover {
+    background: rgba(0,0,0,.02);
+}
+
+
+/* On annule la règle générale qui forçait le blanc partout */
+.card-header h5 {
+    color: inherit; /* remet la couleur par défaut */
+}
+
+
+/* Titres BLANCS sur fonds FONCÉS (client) */
+.user-order-header-dark h5 {
+    color: white !important;
+}
+
+/* Titres NOIRS sur fonds CLAIRS (client) */
+.user-order-header-info h5,
+.user-order-header-warning h5 {
+    color: var(--dark-color) !important;
 }

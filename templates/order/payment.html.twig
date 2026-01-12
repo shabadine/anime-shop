@@ -4,10 +4,10 @@
 
 {% block body %}
 <div class="container py-5">
-    <h1 class="mb-4"> Paiement</h1>
+    <h1 class="mb-4"> Paiement <i class="bi bi-credit-card-2-front"></i></h1>
 
-    <div class="alert alert-warning">
-        <strong> Simulation de paiement</strong><br>
+    <div class="alert payment-alert">
+        <strong>Simulation de paiement</strong><br>
         Aucun paiement réel ne sera effectué. Cliquez sur "Confirmer" pour valider votre commande.
     </div>
 
@@ -38,11 +38,11 @@
 
                         <div class="d-flex justify-content-between mb-3">
                             <strong>Montant à payer :</strong>
-                            <strong style="color: #FF6B6B; font-size: 1.5rem;">{{ (total + 5)|number_format(2) }}€</strong>
+                          <strong class="payment-amount">{{ (total + 5)|number_format(2) }}€</strong>
                         </div>
 
-                        <button type="submit" class="btn btn-primary w-100 btn-lg">
-                             Confirmer la commande
+                        <button type="submit" class="btn btn-primary w-100 btn-lg payment-confirm-btn">
+                            Confirmer la commande
                         </button>
                     </form>
                 </div>

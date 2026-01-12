@@ -5,10 +5,12 @@ namespace App\Entity;
 use App\Repository\CategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
+#[Vich\Uploadable]
 class Category
 {
     #[ORM\Id]
@@ -19,18 +21,23 @@ class Category
     #[ORM\Column(length: 100)]
     private ?string $name = null;
 
-    #[ORM\Column(length: 100)]
+    #[ORM\Column(length: 100, unique: true)]
     private ?string $slug = null;
 
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[ORM\Column(type: 'text', nullable: true)]
     private ?string $description = null;
 
-    /**
-     * @var Collection<int, Product>
-     */
     #[ORM\OneToMany(targetEntity: Product::class, mappedBy: 'category')]
     private Collection $products;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $image = null; // C'est le nom du fichier en BDD
 
+    // Cette propriété ne sera PAS en BDD (pas d'annotation ORM Column)
+    #[Vich\UploadableField(mapping: 'category_images', fileNameProperty: 'image')]
+    private ?File $imageFile = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $updatedAt = null;
     public function __construct()
     {
         $this->products = new ArrayCollection();
@@ -49,7 +56,6 @@ class Category
     public function setName(string $name): static
     {
         $this->name = $name;
-
         return $this;
     }
 
@@ -61,7 +67,6 @@ class Category
     public function setSlug(string $slug): static
     {
         $this->slug = $slug;
-
         return $this;
     }
 
@@ -73,37 +78,46 @@ class Category
     public function setDescription(?string $description): static
     {
         $this->description = $description;
-
         return $this;
     }
 
-    /**
-     * @return Collection<int, Product>
-     */
     public function getProducts(): Collection
     {
         return $this->products;
     }
+   
 
-    public function addProduct(Product $product): static
+    public function setImageFile(?File $imageFile = null): void
     {
-        if (!$this->products->contains($product)) {
-            $this->products->add($product);
-            $product->setCategory($this);
-        }
+        $this->imageFile = $imageFile;
 
+        if (null !== $imageFile) {
+            // Indique à Doctrine que l'entité a changé pour forcer l'update
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+    }
+
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+    
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): self
+    {
+        $this->image = $image;
         return $this;
     }
 
-    public function removeProduct(Product $product): static
-    {
-        if ($this->products->removeElement($product)) {
-            // set the owning side to null (unless already changed)
-            if ($product->getCategory() === $this) {
-                $product->setCategory(null);
-            }
-        }
 
-        return $this;
+    public function __toString(): string
+    {
+        return $this->name;
     }
 }
