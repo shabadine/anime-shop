@@ -3,92 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Anime Goodies Shop - Les meilleurs produits dérivés de vos animes préférés">
     <title>{% block title %}Anime Goodies Shop{% endblock %}</title>
     
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
     
-    <style>
-        body {
-            font-family: 'Roboto', sans-serif;
-        }
-        h1, h2, h3 {
-            font-family: 'Bangers', cursive;
-            color: #FF6B6B;
-        }
-        .navbar {
-        background: linear-gradient(135deg, #e65c5c 0%, #e67e22 100%); 
-    }
-    /* liens blancs = OK, mais hover plus doux */
-    .navbar-dark .navbar-nav .nav-link {
-        color: rgba(255,255,255,.85);
-        transition: color .2s;
-    }
-    .navbar-dark .navbar-nav .nav-link:hover,
-    .navbar-dark .navbar-nav .nav-link:focus {
-        color: #fff;
-        text-shadow: 0 0 4px rgba(255,255,255,.45); */
-    }
-        .btn-primary {
-            background-color: #FF6B6B;
-            border-color: #FF6B6B;
-        }
-        .btn-primary:hover {
-            background-color: #ff5555;
-            border-color: #ff5555;
-        }
-        .btn-secondary {
-            background-color: #4ECDC4;
-            border-color: #4ECDC4;
-        }
-        .btn-secondary:hover {
-            background-color: #45b8b0;
-            border-color: #45b8b0;
-        }
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            .navbar-brand {
-                font-size: 1.3rem;
-            }
-            h1 {
-                font-size: 1.8rem;
-            }
-            .card {
-                margin-bottom: 1rem;
-            }
-        }
-    </style>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ asset('css/main.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/accessibility.css') }}">
     
     {% block stylesheets %}{% endblock %}
 </head>
 <body>
+    <!-- Skip to main content (accessibilité) -->
+    <a href="#main-content" class="skip-to-main">Aller au contenu principal</a>
+
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark">
-    
+    <nav class="navbar navbar-expand-lg navbar-dark" role="navigation" aria-label="Navigation principale">
         <div class="container">
-            <img src="{{ asset('images/logo.svg') }}" alt="anime shop" width="49" height="40" loading="lazy">
-            <a class="navbar-brand" href="{{ path('app_home') }}" style="font-family: 'Bangers', cursive; font-size: 1.8rem;">
+             <img src="{{ asset('images/logo.svg') }}" alt="anime shop" width="49" height="40" loading="lazy">
+            <a class="navbar-brand" href="{{ path('app_home') }}" aria-label="Retour à l'accueil">
                 ANIME SHOP
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Basculer la navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_home') }}">Accueil</a>
+                        <a class="nav-link" href="{{ path('app_home') }}" {% if app.request.get('_route') == 'app_home' %}aria-current="page"{% endif %}>Accueil</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_catalog') }}">Catalogue</a>
+                        <a class="nav-link" href="{{ path('app_catalog') }}" {% if app.request.get('_route') starts with 'app_catalog' %}aria-current="page"{% endif %}>Catalogue</a>
                     </li>
                     {% if app.user %}
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ path('app_account') }}">Mon compte</a>
+                            <a class="nav-link" href="{{ path('app_account') }}" {% if app.request.get('_route') starts with 'app_account' %}aria-current="page"{% endif %}>Mon compte</a>
                         </li>
                         {% if is_granted('ROLE_ADMIN') %}
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ path('admin_dashboard') }}">Admin</a>
+                                <a class="nav-link" href="{{ path('admin_dashboard') }}" {% if app.request.get('_route') starts with 'admin' %}aria-current="page"{% endif %}>Admin</a>
                             </li>
                         {% endif %}
                         <li class="nav-item">
@@ -103,10 +60,10 @@
                         </li>
                     {% endif %}
                     <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_cart_index') }}">
-                         Panier ({{ cart_item_count() }})                  
-                    </a>
-                </li>
+                        <a class="nav-link" href="{{ path('app_cart_index') }}" aria-label="Panier avec {{ cart_item_count() }} articles">
+                            Panier (<span class="cart-count">{{ cart_item_count() }}</span>)
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -118,34 +75,39 @@
             {% for message in messages %}
                 <div class="alert alert-{{ label }} alert-dismissible fade show" role="alert">
                     {{ message }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fermer"></button>
                 </div>
             {% endfor %}
         </div>
     {% endfor %}
 
-    <!-- Content -->
-    <main>
+    <!-- Main Content -->
+    <main id="main-content" role="main">
         {% block body %}{% endblock %}
     </main>
 
     <!-- Footer -->
-    <footer class="bg-dark text-white mt-5 py-4">
+    <footer class="bg-dark text-white mt-5 py-4" role="contentinfo">
         <div class="container text-center">
-        <!-- Logo -->
-            <div class="col-md-2 text-center">
-              <img src="{{ asset('images/logo.svg') }}" alt="anime shop" width="49" height="40" loading="lazy">
-              <a class="navbar-brand" href="{{ path('app_home') }}" style="font-family: 'Bangers', cursive; font-size: 1.8rem;">
-                ANIME SHOP
-            </a>
-            </div>
-            <p>&copy; 2025 Anime Goodies Shop - Tous droits réservés</p>
-            <p>Projet DWWM - Shabadine Bah</p>
+             <img src="{{ asset('images/logo.svg') }}" alt="anime shop" width="49" height="40" loading="lazy">
+            <p class="mb-2">&copy; {{ "now"|date("Y") }} Anime Goodies Shop - Tous droits réservés</p>
+            <p class="mb-0 small">Projet DWWM - Shabadine Bah</p>
+            <nav aria-label="Navigation secondaire">
+                <ul class="list-inline mt-3">
+                    <li class="list-inline-item"><a href="#" class="text-white">Mentions légales</a></li>
+                    <li class="list-inline-item"><a href="#" class="text-white">CGV</a></li>
+                    <li class="list-inline-item"><a href="#" class="text-white">Contact</a></li>
+                </ul>
+            </nav>
         </div>
     </footer>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JS -->
+    <script src="{{ asset('js/main.js') }}"></script>
+    
     {% block javascripts %}{% endblock %}
 </body>
 </html>

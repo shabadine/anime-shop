@@ -1,0 +1,96 @@
+/* =================================
+   Améliorations d'accessibilité
+   ================================= */
+
+/* Texte lisible */
+body {
+    line-height: 1.6;
+    font-size: 16px;
+}
+
+/* Liens visibles */
+a {
+    text-decoration: underline;
+}
+
+a:hover,
+a:focus {
+    text-decoration: none;
+}
+
+/* Indicateurs de focus visibles */
+*:focus {
+    outline: 3px solid #FF6B6B;
+    outline-offset: 2px;
+}
+
+/* Textes des boutons clairs */
+.btn {
+    font-weight: 600;
+    min-height: 44px; /* Taille tactile minimum */
+    padding: 0.75rem 1.5rem;
+}
+
+/* Images avec texte alternatif */
+img:not([alt]) {
+    border: 2px solid red; /* Dev only - à retirer en prod */
+}
+
+/* Labels de formulaires toujours visibles */
+.form-label {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+/* Erreurs de formulaire claires */
+.invalid-feedback {
+    display: block;
+    font-weight: 600;
+}
+
+/* États désactivés visibles */
+:disabled,
+[aria-disabled="true"] {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Lecteurs d'écran uniquement */
+.sr-only,
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Tableaux accessibles */
+table {
+    border-collapse: collapse;
+}
+
+th {
+    text-align: left;
+    font-weight: 700;
+}
+
+/* Navigation au clavier visible */
+.navbar-nav .nav-link:focus {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Contenu caché accessible */
+[hidden] {
+    display: none !important;
+}
+
+/* Indicateurs de chargement */
+.loading,
+[aria-busy="true"] {
+    cursor: wait;
+}

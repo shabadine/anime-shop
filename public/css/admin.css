@@ -1,0 +1,51 @@
+/* =================================
+   ADMIN PANEL - Styles
+   ================================= */
+
+.sidebar {
+    min-height: 100vh;
+    background: #2c3e50;
+    color: white;
+}
+
+.sidebar .nav-link {
+    color: #ecf0f1;
+    padding: 12px 20px;
+    border-radius: 8px;
+    margin: 5px 10px;
+    transition: all 0.3s;
+}
+
+.sidebar .nav-link:hover,
+.sidebar .nav-link:focus,
+.sidebar .nav-link.active {
+    background: #34495e;
+    color: white;
+}
+
+.main-content {
+    padding: 30px;
+    background-color: #f8f9fa;
+}
+
+.admin-stat-card {
+    border-radius: 10px;
+    padding: 20px;
+    color: white;
+    transition: transform 0.3s;
+}
+
+.admin-stat-card:hover {
+    transform: translateY(-5px);
+}
+
+/* Responsive Admin */
+@media (max-width: 768px) {
+    .sidebar {
+        min-height: auto;
+    }
+    
+    .main-content {
+        padding: 15px;
+    }
+}
