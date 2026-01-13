@@ -69,17 +69,17 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // Loading state pour les boutons submit
-    const submitButtons = document.querySelectorAll('button[type="submit"]');
-    submitButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const form = this.closest('form');
-            if (form && form.checkValidity()) {
-                this.disabled = true;
-                this.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Traitement...';
-            }
-        });
+    document.querySelectorAll('form').forEach(form => {
+    form.addEventListener('submit', function () {
+        const submitBtn = form.querySelector('button[type="submit"]');
+        if (submitBtn) {
+            submitBtn.disabled = true;
+            submitBtn.innerHTML =
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Traitement...';
+        }
     });
 });
+    });
 
 // Fonction pour mettre à jour le compteur du panier
 function updateCartCount() {

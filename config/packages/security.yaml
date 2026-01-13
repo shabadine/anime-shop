@@ -1,15 +1,23 @@
 security:
-    # Stratégie de hachage des mots de passe
+    # ===============================
+    # Hashage des mots de passe
+    # ===============================
     password_hashers:
-        Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
+        App\Entity\User:
+            algorithm: auto
 
-    # Configuration du fournisseur d'utilisateurs (User Provider)
+    # ===============================
+    # User Provider (par email)
+    # ===============================
     providers:
         app_user_provider:
             entity:
                 class: App\Entity\User
                 property: email
 
+    # ===============================
+    # Firewalls
+    # ===============================
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -18,25 +26,26 @@ security:
         main:
             lazy: true
             provider: app_user_provider
-            
-            # Configuration de la connexion par formulaire
-            form_login:
-                login_path: app_login
-                check_path: app_login
-                enable_csrf: true
-                username_parameter: _username
-                password_parameter: _password
-            
-            # Configuration de la déconnexion
+
+            # 👉 Authenticator PERSONNALISÉ
+            custom_authenticator: App\Security\AppAuthenticator
+
+            # Déconnexion
             logout:
                 path: app_logout
                 target: app_home
 
-    # Contrôle d'accès basé sur les URL et les rôles
+    # ===============================
+    # Contrôle d'accès
+    # ===============================
     access_control:
+        - { path: ^/login, roles: PUBLIC_ACCESS }
+        - { path: ^/register, roles: PUBLIC_ACCESS }
         - { path: ^/admin, roles: ROLE_ADMIN }
         - { path: ^/compte, roles: ROLE_USER }
 
+    # ===============================
     # Hiérarchie des rôles
+    # ===============================
     role_hierarchy:
         ROLE_ADMIN: ROLE_USER
