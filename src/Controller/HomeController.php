@@ -15,8 +15,12 @@ class HomeController extends AbstractController
         // Récupérer les produits en vedette
         $featuredProducts = $productRepository->findBy(['featured' => true], null, 8);
         
+        // Récupérer les best-sellers 
+        $bestSellers = $productRepository->findBy(['featured' => true], ['createdAt' => 'DESC'], 4);
+        
         return $this->render('home/index.html.twig', [
             'featuredProducts' => $featuredProducts,
+            'bestSellers' => $bestSellers,
         ]);
     }
 }
