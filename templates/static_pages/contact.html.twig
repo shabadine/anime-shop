@@ -1,0 +1,184 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contact{% endblock %}
+
+{% block body %}
+<div class="container py-5">
+    <h1 class="mb-4">Contactez-nous</h1>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h2 class="h4 mb-4">
+                        <i class="bi bi-envelope-fill text-primary"></i> 
+                        Informations de contact
+                    </h2>
+                    
+                    <div class="mb-3">
+                        <h3 class="h6">
+                            <i class="bi bi-envelope"></i> Email
+                        </h3>
+                        <p>
+                            <a href="mailto:contact@anime-shop.fr">contact@anime-shop.fr</a>
+                        </p>
+                    </div>
+
+                    <div class="mb-3">
+                        <h3 class="h6">
+                            <i class="bi bi-telephone"></i> Téléphone
+                        </h3>
+                        <p>+33 (0)1 23 45 67 89</p>
+                        <p class="small text-muted">Du lundi au vendredi, 9h-18h</p>
+                    </div>
+
+                    <div class="mb-3">
+                        <h3 class="h6">
+                            <i class="bi bi-geo-alt"></i> Adresse
+                        </h3>
+                        <p>
+                            Anime Goodies Shop<br>
+                            12 rue du succes<br>
+                            31200 Toulouse<br>
+                            France
+                        </p>
+                    </div>
+
+                    <hr>
+
+                    <div class="mb-3">
+                        <h3 class="h6">
+                            <i class="bi bi-clock"></i> Horaires
+                        </h3>
+                        <p>
+                            <strong>Support client :</strong><br>
+                            Lundi - Vendredi : 9h - 18h<br>
+                            Samedi : 10h - 17h<br>
+                            Dimanche : Fermé
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h2 class="h4 mb-4">
+                        <i class="bi bi-chat-dots-fill text-primary"></i> 
+                        Formulaire de contact
+                    </h2>
+                    
+                    <div class="alert alert-warning">
+                        <i class="bi bi-info-circle"></i> 
+                        <strong>Note :</strong> Ce formulaire est fictif (projet académique). 
+                        Les messages ne sont pas envoyés.
+                    </div>
+
+                    <form>
+                        <div class="mb-3">
+                            <label for="name" class="form-label">
+                                <i class="bi bi-person"></i> Nom complet
+                            </label>
+                            <input type="text" class="form-control" id="name" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="email" class="form-label">
+                                <i class="bi bi-envelope"></i> Email
+                            </label>
+                            <input type="email" class="form-control" id="email" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="subject" class="form-label">
+                                <i class="bi bi-tag"></i> Sujet
+                            </label>
+                            <select class="form-select" id="subject" required>
+                                <option value="">Choisir un sujet...</option>
+                                <option value="question">Question produit</option>
+                                <option value="commande">Suivi de commande</option>
+                                <option value="retour">Retour / SAV</option>
+                                <option value="autre">Autre</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="message" class="form-label">
+                                <i class="bi bi-chat-text"></i> Message
+                            </label>
+                            <textarea class="form-control" id="message" rows="5" required></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100" disabled>
+                            <i class="bi bi-send"></i> Envoyer (inactif - démo)
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h2 class="h4 mb-4">
+                        <i class="bi bi-question-circle-fill text-primary"></i> 
+                        Questions fréquentes
+                    </h2>
+                    
+                    <div class="accordion" id="faqAccordion">
+                        <div class="accordion-item">
+                            <h3 class="accordion-header">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                                    Comment passer une commande ?
+                                </button>
+                            </h3>
+                            <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Ajoutez vos produits au panier, puis suivez les étapes du tunnel d'achat : 
+                                    identification, choix de l'adresse, validation du paiement.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <h3 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                    Quels sont les délais de livraison ?
+                                </button>
+                            </h3>
+                            <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Les commandes sont expédiées sous 24-48h et livrées en 3 à 5 jours ouvrés.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <h3 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                                    Puis-je retourner un produit ?
+                                </button>
+                            </h3>
+                            <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Oui, vous disposez de 14 jours pour exercer votre droit de rétractation. 
+                                    Consultez nos CGV pour plus d'informations.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center mt-5">
+        <a href="{{ path('app_home') }}" class="btn btn-primary">
+            <i class="bi bi-arrow-left"></i> Retour à l'accueil
+        </a>
+    </div>
+</div>
+{% endblock %}

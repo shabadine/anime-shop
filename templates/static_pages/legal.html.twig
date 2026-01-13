@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mentions légales{% endblock %}
+
+{% block body %}
+<div class="container py-5">
+    <h1 class="mb-4">Mentions légales</h1>
+
+    <section class="mb-4">
+        <h2 class="h4"><i class="bi bi-building"></i> Éditeur du site</h2>
+        <p>
+            <strong>Anime Goodies Shop</strong><br>
+            Site e-commerce de produits dérivés d'anime<br>
+            Projet académique - Titre Professionnel DWWM
+        </p>
+        <p>
+            <strong>Responsable de publication :</strong> Shabadine BAH<br>
+            <strong>Email :</strong> contact@anime-shop.fr
+        </p>
+    </section>
+
+    <section class="mb-4">
+        <h2 class="h4"><i class="bi bi-server"></i> Hébergeur</h2>
+        <p>
+            Le site est hébergé par :<br>
+            [Nom de l'hébergeur]<br>
+            [Adresse]<br>
+            [Pays]
+        </p>
+    </section>
+
+    <section class="mb-4">
+        <h2 class="h4"><i class="bi bi-shield-check"></i> Protection des données</h2>
+        <p>
+            Conformément à la loi "Informatique et Libertés" du 6 janvier 1978 modifiée et au 
+            Règlement Général sur la Protection des Données (RGPD), vous disposez d'un droit 
+            d'accès, de rectification et de suppression des données vous concernant.
+        </p>
+        <p>
+            Pour exercer ce droit, vous pouvez nous contacter à : 
+            <a href="mailto:contact@anime-shop.fr">contact@anime-shop.fr</a>
+        </p>
+    </section>
+
+    <section class="mb-4">
+        <h2 class="h4"><i class="bi bi-cookie"></i> Cookies</h2>
+        <p>
+            Ce site utilise des cookies techniques nécessaires à son bon fonctionnement 
+            (session utilisateur, panier). Aucun cookie publicitaire n'est utilisé.
+        </p>
+    </section>
+
+    <section class="mb-4">
+        <h2 class="h4"><i class="bi bi-c-circle"></i> Propriété intellectuelle</h2>
+        <p>
+            L'ensemble du contenu de ce site (textes, images, logos) est protégé par le 
+            droit d'auteur. Toute reproduction sans autorisation est interdite.
+        </p>
+        <p>
+            Les images de produits et logos d'anime sont la propriété de leurs auteurs 
+            respectifs et sont utilisés à des fins illustratives uniquement.
+        </p>
+    </section>
+
+    <div class="text-center mt-5">
+        <a href="{{ path('app_home') }}" class="btn btn-primary">
+            <i class="bi bi-arrow-left"></i> Retour à l'accueil
+        </a>
+    </div>
+</div>
+{% endblock %}

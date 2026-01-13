@@ -1,0 +1,108 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Conditions Générales de Vente{% endblock %}
+
+{% block body %}
+<div class="container py-5">
+    <h1 class="mb-4">Conditions Générales de Vente</h1>
+    
+    <div class="alert alert-info">
+        <i class="bi bi-info-circle"></i> 
+        <strong>Note :</strong> Ce site est un projet académique. Les transactions sont simulées.
+    </div>
+
+    <section class="mb-4">
+        <h2 class="h4">Article 1 - Objet</h2>
+        <p>
+            Les présentes Conditions Générales de Vente (CGV) régissent les relations 
+            contractuelles entre Anime Goodies Shop et tout client souhaitant effectuer 
+            un achat sur le site.
+        </p>
+    </section>
+
+    <section class="mb-4">
+        <h2 class="h4">Article 2 - Prix</h2>
+        <p>
+            Les prix sont indiqués en euros (€) toutes taxes comprises (TTC). 
+            Anime Goodies Shop se réserve le droit de modifier ses prix à tout moment, 
+            mais les produits seront facturés sur la base des tarifs en vigueur au moment 
+            de la validation de la commande.
+        </p>
+    </section>
+
+    <section class="mb-4">
+        <h2 class="h4">Article 3 - Commande</h2>
+        <p>
+            Le client passe commande en suivant le processus suivant :
+        </p>
+        <ol>
+            <li>Sélection des produits et ajout au panier</li>
+            <li>Validation du panier</li>
+            <li>Identification ou création de compte</li>
+            <li>Choix de l'adresse de livraison</li>
+            <li>Validation du paiement (simulé)</li>
+            <li>Confirmation de commande</li>
+        </ol>
+    </section>
+
+    <section class="mb-4">
+        <h2 class="h4">Article 4 - Paiement</h2>
+        <p>
+            <strong>Paiement simulé <i class="bi bi-credit-card"></i> :</strong> Ce site étant un projet académique, 
+            aucun paiement réel n'est effectué. Le processus de paiement est uniquement 
+            à titre démonstratif.
+        </p>
+    </section>
+
+    <section class="mb-4">
+        <h2 class="h4">Article 5 - Livraison</h2>
+        <p>
+            Les produits sont livrés à l'adresse indiquée par le client lors de la commande. 
+            Le délai de livraison est de 3 à 5 jours ouvrés après validation de la commande.
+        </p>
+        <p>
+            <strong>Frais de port :</strong> 5,00€ pour toute commande.
+        </p>
+    </section>
+
+    <section class="mb-4">
+        <h2 class="h4">Article 6 - Droit de rétractation</h2>
+        <p>
+            Conformément à la législation en vigueur, le client dispose d'un délai de 
+            14 jours à compter de la réception du produit pour exercer son droit de 
+            rétractation sans avoir à justifier de motifs.
+        </p>
+    </section>
+
+    <section class="mb-4">
+        <h2 class="h4">Article 7 - Garanties</h2>
+        <p>
+            Tous les produits bénéficient de la garantie légale de conformité et de la 
+            garantie contre les vices cachés.
+        </p>
+    </section>
+
+    <section class="mb-4">
+        <h2 class="h4">Article 8 - Données personnelles</h2>
+        <p>
+            Les données collectées sont nécessaires au traitement de votre commande. 
+            Conformément au RGPD, vous disposez d'un droit d'accès, de rectification 
+            et de suppression de vos données.
+        </p>
+    </section>
+
+    <section class="mb-4">
+        <h2 class="h4">Article 9 - Litiges</h2>
+        <p>
+            Les présentes CGV sont soumises au droit français. En cas de litige, les 
+            tribunaux français seront seuls compétents.
+        </p>
+    </section>
+
+    <div class="text-center mt-5">
+        <a href="{{ path('app_home') }}" class="btn btn-primary">
+            <i class="bi bi-arrow-left"></i> Retour à l'accueil
+        </a>
+    </div>
+</div>
+{% endblock %}
