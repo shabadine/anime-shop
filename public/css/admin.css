@@ -49,6 +49,11 @@
     transform: translateY(-2px);
 }
 
+.btn-outline-secondary {
+    color: #000000 !important;
+    border-color: #6c757d !important;
+}
+
 /* Image upload */
 input[type="file"].form-control:focus {
     border-color: var(--primary-color);

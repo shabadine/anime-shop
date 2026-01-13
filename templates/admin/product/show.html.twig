@@ -15,15 +15,17 @@
     <div class="col-md-5">
         <div class="card shadow-sm">
             <div class="card-header admin-detail-header">
-                <h5 class="mb-0"><i class="bi bi-image me-1"></i> Image produit</h5>
+                <h2 class="h5 mb-0"><i class="bi bi-image me-1"></i> Image produit</h2>
             </div>
             <div class="card-body text-center">
                 {% if product.image %}
                     <img src="{{ asset('uploads/products/' ~ product.image) }}" 
-                         alt="{{ product.name }}" 
-                         class="img-fluid rounded shadow-lg">
+                         alt="image : {{ product.name }}" 
+                         class="img-fluid rounded shadow-lg"
+                         width="400"
+                         height="300">
                 {% else %}
-                    <div class="bg-light rounded d-flex align-items-center justify-content-center" style="height: 300px;">
+                    <div class="bg-light rounded d-flex align-items-center justify-content-center" style="height: 300px; width: 400px;">
                         <span class="text-muted"><i class="bi bi-card-image display-1"></i><br>Aucune image</span>
                     </div>
                 {% endif %}
@@ -35,7 +37,7 @@
     <div class="col-md-7">
         <div class="card shadow-sm">
             <div class="card-header admin-detail-header">
-                <h5 class="mb-0"><i class="bi bi-info-circle me-1"></i> Informations</h5>
+                <h2 class="h5 mb-0"><i class="bi bi-info-circle me-1"></i> Informations</h2>
             </div>
             <div class="card-body">
                 <div class="row mb-3">
