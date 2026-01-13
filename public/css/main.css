@@ -253,6 +253,19 @@ h1, h2, h3, h4, h5, h6 {
     color: var(--primary-color) !important;
 }
 
+/* Intitulé "Description du produit" produit/show.html.twig */
+.accordion-header button.accordion-button {
+    font-size: 1.4rem !important; 
+    font-family: 'Bangers', cursive; 
+    color: var(--dark-color) !important;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+
+.accordion-button:not(.collapsed) {
+    color: var(--primary-color) !important;
+}
 /* Animations & Accessibilité */
 .bi-fire {
     color: #ff6f00;
