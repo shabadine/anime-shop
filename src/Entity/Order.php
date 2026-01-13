@@ -16,6 +16,9 @@ class Order
     #[ORM\Column]
     private ?int $id = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $updatedAt = null;
+
     #[ORM\Column(length: 50, unique: true)]
     private ?string $orderNumber = null;
 
@@ -54,8 +57,17 @@ class Order
         return 'CMD-' . strtoupper(uniqid());
     }
 
-    // Getters et setters...
+    // Getters et setters
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->updatedAt;
+    }
 
+    public function setUpdatedAt(?\DateTimeImmutable $updatedAt): static
+    {
+        $this->updatedAt = $updatedAt;
+        return $this;
+    }
     public function getId(): ?int
     {
         return $this->id;
