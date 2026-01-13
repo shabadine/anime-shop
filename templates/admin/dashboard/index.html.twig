@@ -18,7 +18,7 @@
     <div class="col-md-3">
         <div class="card shadow-sm border-0 admin-stat-revenue">
             <div class="card-body">
-                <h6 class="text-uppercase mb-2">Chiffre d'affaires</h6>
+                <h2 class="h6 text-uppercase mb-2">Chiffre d'affaires</h2>
                 <h2 class="mb-0">{{ totalRevenue|number_format(2) }} €</h2>
             </div>
         </div>
@@ -27,7 +27,7 @@
     <div class="col-md-3">
         <div class="card shadow-sm border-0 admin-stat-orders">
             <div class="card-body">
-                <h6 class="text-uppercase mb-2">Commandes</h6>
+                <h2 class="h6 text-uppercase mb-2">Commandes</h2>
                 <h2 class="mb-0">{{ totalOrders }}</h2>
             </div>
         </div>
@@ -36,7 +36,7 @@
     <div class="col-md-3">
         <div class="card shadow-sm border-0 admin-stat-products">
             <div class="card-body">
-                <h6 class="text-uppercase mb-2">Produits</h6>
+                <h2 class="h6 text-uppercase mb-2">Produits</h2>
                 <h2 class="mb-0">{{ totalProducts }}</h2>
             </div>
         </div>
@@ -45,7 +45,7 @@
     <div class="col-md-3">
         <div class="card shadow-sm border-0 admin-stat-users">
             <div class="card-body">
-                <h6 class="text-uppercase mb-2">Utilisateurs</h6>
+                <h2 class="h6 text-uppercase mb-2">Utilisateurs</h2>
                 <h2 class="mb-0">{{ totalUsers }}</h2>
             </div>
         </div>
@@ -58,7 +58,7 @@
     <div class="col-md-12">
         <div class="card shadow-sm">
             <div class="card-header admin-card-header">
-                <h5 class="mb-0">Commandes par statut</h5>
+                <h3 class="h5 mb-0">Commandes par statut</h3>
             </div>
             <div class="card-body">
                 <div class="row text-center">
@@ -96,7 +96,7 @@
     <div class="col-md-8">
         <div class="card shadow-sm">
             <div class="card-header admin-card-header">
-                <h5 class="mb-0">Dernières commandes</h5>
+                <h3 class="h5 mb-0">Dernières commandes</h3>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -131,7 +131,8 @@
                                     </td>
                                     <td>
                                         <a href="{{ path('admin_order_show', { id: order.id }) }}"
-                                           class="btn btn-sm btn-primary">
+                                        class="btn btn-sm btn-primary"
+                                        aria-label="Voir la commande {{ order.orderNumber }}">
                                             Voir
                                         </a>
                                     </td>
@@ -154,7 +155,7 @@
     <div class="col-md-4">
         <div class="card shadow-sm">
             <div class="card-header admin-card-header">
-                <h5 class="mb-0">Top produits</h5>
+                <h3 class="h5 mb-0">Top produits</h3>
             </div>
             <div class="card-body">
                 <ul class="list-group list-group-flush admin-top-products">

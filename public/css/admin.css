@@ -116,6 +116,14 @@ input[type="file"].form-control:focus {
     align-items: center;
     justify-content: center;
 }
+
+.admin-order-detail-header {
+    background: var(--gradient-secondary);
+    color: white;
+}
+.admin-order-detail-header h5 {
+    color: white !important;
+}
 /* 2. LAYOUT (SIDEBAR & CONTENU) */
 
 .sidebar {
@@ -181,7 +189,7 @@ input[type="file"].form-control:focus {
 
 .admin-card-header,
 .admin-cat-header {
-    background: var(--gradient-secondary, #6c757d); /* Utilise gradient-secondary ou gris par défaut */
+    background: var(--gradient-secondary, #6c757d);
     color: white;
     padding: 15px;
     border-radius: 8px 8px 0 0;
@@ -193,10 +201,10 @@ input[type="file"].form-control:focus {
     background-color: rgba(0, 0, 0, 0.03);
 }
 
-.admin-badge-warning { background-color: #ffc107; color: #212529; }
-.admin-badge-info    { background-color: #17a2b8; color: white; }
-.admin-badge-primary { background-color: #007bff; color: white; }
-.admin-badge-success { background-color: #28a745; color: white; }
+.admin-badge-info    { background: #17a2b8; color: #000 !important; font-weight: 600; }
+.admin-badge-primary { background: #007bff; color: #fff !important; font-weight: 600; }
+.admin-badge-success { background: #28a745; color: #fff !important; font-weight: 600; }
+.admin-badge-warning { background: #ffc107; color: #000 !important; font-weight: 600; }
 
 .admin-top-products .list-group-item {
     border: none;
@@ -212,4 +220,34 @@ input[type="file"].form-control:focus {
     .main-content {
         padding: 15px;
     }
+}
+/* ========== CONTRASTE ACCESSIBILITÉ ========== */
+.admin-badge-info,
+.badge.bg-info {
+    color: #000000 !important;     
+    font-weight: 600;
+}
+
+.admin-badge-primary,
+.badge.bg-primary,
+.admin-badge-primary {
+    color:  #000000 !important;     
+    font-weight: 600;
+}
+
+.admin-badge-success,
+.badge.bg-success,
+.admin-badge-success {
+    color: #000000 !important;    
+}
+
+.admin-badge-warning,
+.badge.bg-warning {
+    color: #000000 !important;     
+    font-weight: 600;
+}
+/* Au survol  */
+.admin-badge-primary:hover,
+.admin-badge-success:hover {
+    color: #ffffff !important;
 }
