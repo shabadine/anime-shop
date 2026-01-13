@@ -5,70 +5,57 @@
 {% block body %}
 <div class="container py-5">
     
-    <h1 class="mb-4 text-dark">Catalogue de produits</h1>
+    <h1 class="mb-4 section-title text-start">Catalogue de produits</h1>
 
     <div class="row">
         <aside class="col-md-3 catalog-sidebar" role="search">
-            <div class="card shadow-sm mb-4">
-                <div class="card-header bg-dark text-white">
-                    
-                    <h2 class="h5 mb-0">Filtres</h2>
+            <div class="card shadow-sm border-0 mb-4">
+                <div class="card-header bg-dark text-white p-3">
+                    <h2 class="h5 mb-0 text-white"><i class="bi bi-filter-left me-2"></i>Filtres</h2>
                 </div>
-                <div class="card-body">
+                <div class="card-body p-4">
                     <form method="get" action="{{ path('app_catalog') }}" class="mb-4">
                         <div class="mb-3">
-                            <label for="search-input" class="form-label fw-bold">Rechercher</label>
+                            <label for="search-input" class="form-label fw-bold text-dark">Rechercher</label>
                             <input type="text" id="search-input" name="search" class="form-control" placeholder="Nom, anime..." value="{{ currentSearch }}">
                         </div>
                        
-                        <button type="submit" class="btn btn-dark w-100">
+                        <button type="submit" class="btn btn-dark w-100 fw-bold">
                             Rechercher <i class="bi bi-search ms-2"></i>
                         </button>
                     </form>
 
-                    <hr>
+                    <hr class="opacity-10">
 
                     <nav class="mb-4" aria-label="Filtres par catégories">
-                        <span class="d-block form-label fw-bold mb-2">Catégories</span>
+                        <span class="d-block form-label fw-bold mb-3 text-dark">Catégories</span>
                         <ul class="list-unstyled">
                             <li class="mb-2">
-                                <a href="{{ path('app_catalog') }}" class="text-decoration-none {% if not currentCategory %}fw-bold text-dark{% else %}text-muted{% endif %}">
+                                <a href="{{ path('app_catalog') }}" class="text-decoration-none d-flex justify-content-between align-items-center {% if not currentCategory %}fw-bold text-danger{% else %}text-muted{% endif %}">
                                     Toutes les catégories
                                 </a>
                             </li>
                             {% for category in categories %}
                                 <li class="mb-2">
                                     <a href="{{ path('app_catalog', {category: category.id}) }}" 
-                                    class="text-decoration-none {% if currentCategory == category.id %}fw-bold text-danger{% else %}text-muted{% endif %}">
-                                        {{ category.name }} ({{ category.products|length }})
+                                    class="text-decoration-none d-flex justify-content-between align-items-center {% if currentCategory == category.id %}fw-bold text-danger{% else %}text-muted{% endif %}">
+                                        <span>{{ category.name }}</span>
+                                        <span class="badge rounded-pill bg-light text-dark border">{{ category.products|length }}</span>
                                     </a>
                                 </li>
                             {% endfor %}
                         </ul>
                     </nav>
 
-                    <hr>
+                    <hr class="opacity-10">
 
                     <div>
-                        <label for="sort-select" class="form-label fw-bold">Trier par</label>
-                        
+                        <label for="sort-select" class="form-label fw-bold text-dark">Trier par</label>
                         <select id="sort-select" class="form-select" onchange="window.location.href=this.value">
-                            <option value="{{ path('app_catalog', {category: currentCategory, search: currentSearch, sort: 'name', order: 'asc'}) }}" 
-                                    {% if currentSort == 'name' %}selected{% endif %}>
-                                Nom A-Z
-                            </option>
-                            <option value="{{ path('app_catalog', {category: currentCategory, search: currentSearch, sort: 'price', order: 'asc'}) }}" 
-                                    {% if currentSort == 'price' and currentOrder == 'asc' %}selected{% endif %}>
-                                Prix croissant
-                            </option>
-                            <option value="{{ path('app_catalog', {category: currentCategory, search: currentSearch, sort: 'price', order: 'desc'}) }}" 
-                                    {% if currentSort == 'price' and currentOrder == 'desc' %}selected{% endif %}>
-                                Prix décroissant
-                            </option>
-                            <option value="{{ path('app_catalog', {category: currentCategory, search: currentSearch, sort: 'date', order: 'desc'}) }}" 
-                                    {% if currentSort == 'date' %}selected{% endif %}>
-                                Nouveautés
-                            </option>
+                            <option value="{{ path('app_catalog', {category: currentCategory, search: currentSearch, sort: 'name', order: 'asc'}) }}" {% if currentSort == 'name' %}selected{% endif %}>Nom A-Z</option>
+                            <option value="{{ path('app_catalog', {category: currentCategory, search: currentSearch, sort: 'price', order: 'asc'}) }}" {% if currentSort == 'price' and currentOrder == 'asc' %}selected{% endif %}>Prix croissant</option>
+                            <option value="{{ path('app_catalog', {category: currentCategory, search: currentSearch, sort: 'price', order: 'desc'}) }}" {% if currentSort == 'price' and currentOrder == 'desc' %}selected{% endif %}>Prix décroissant</option>
+                            <option value="{{ path('app_catalog', {category: currentCategory, search: currentSearch, sort: 'date', order: 'desc'}) }}" {% if currentSort == 'date' %}selected{% endif %}>Nouveautés</option>
                         </select>
                     </div>
                 </div>
@@ -77,61 +64,65 @@
 
         <main class="col-md-9">
             {% if currentSearch or currentCategory %}
-                <div class="alert alert-light border shadow-sm mb-4">
-                    <strong>Filtres actifs :</strong>
+                <div class="alert alert-white border shadow-sm mb-4 d-flex align-items-center">
+                    <span class="me-3"><strong>Filtres :</strong></span>
                     {% if currentSearch %}
-                        <span class="badge bg-dark">Recherche: "{{ currentSearch }}"</span>
+                        <span class="badge bg-dark me-2">"{{ currentSearch }}"</span>
                     {% endif %}
                     {% if currentCategory %}
                         {% for category in categories %}
                             {% if category.id == currentCategory %}
-                                <span class="badge bg-danger">Catégorie: {{ category.name }}</span>
+                                <span class="badge bg-danger me-2">{{ category.name }}</span>
                             {% endif %}
                         {% endfor %}
                     {% endif %}
-                    <a href="{{ path('app_catalog') }}" class="btn btn-sm btn-outline-secondary ms-2">Réinitialiser</a>
+                    <a href="{{ path('app_catalog') }}" class="btn btn-sm btn-link text-muted ms-auto">Réinitialiser</a>
                 </div>
             {% endif %}
 
             <div class="row g-4 mb-4">
             {% for product in products %}
             <div class="col-md-4">
-                <article class="card h-100 shadow-sm catalog-card" aria-labelledby="prod-title-{{ product.id }}">
-                    <div class="card-img-top bg-light" style="height: 250px; overflow: hidden;">
+                <article class="card h-100 shadow-sm catalog-card border-0" aria-labelledby="prod-title-{{ product.id }}">
+                    <div class="bg-dark text-white p-2 text-center">
+                        <span class="small fw-bold text-uppercase" style="letter-spacing: 1px;">{{ product.category.name }}</span>
+                    </div>
+
+                    <div class="card-img-top p-0" style="height: 250px; overflow: hidden; position: relative;">
                         {% if product.image %}
                             <img src="{{ asset('uploads/products/' ~ product.image) }}" 
                                 alt="{{ product.name }}" 
-                                class="img-fluid w-100 h-100" 
+                                class="w-100 h-100" 
                                 style="object-fit: cover;"
-                                width="300" height="250"
                                 loading="lazy">
                         {% else %}
-                            <div class="d-flex align-items-center justify-content-center h-100 text-muted">
+                            <div class="d-flex align-items-center justify-content-center h-100 bg-light text-muted">
                                 <span>Pas d'image</span>
                             </div>
                         {% endif %}
                     </div>
-                    <div class="card-body d-flex flex-column">
-                        <span class="badge bg-dark mb-2 align-self-start">{{ product.category.name }}</span>
-                        <h2 class="h5 card-title" id="prod-title-{{ product.id }}">{{ product.name }}</h2>
-                        <p class="text-muted small mb-2">
-                            <i>{{ product.animeName }}</i>
-                        </p>
-                        <p class="card-text text-truncate">{{ product.description|slice(0, 80) }}...</p>
+
+                    <div class="card-body d-flex flex-column p-4">
+                        <h2 class="h5 card-title mb-1" id="prod-title-{{ product.id }}">{{ product.name }}</h2>
+                        <p class="text-muted small mb-3"><i>{{ product.animeName }}</i></p>
+                        
                         <div class="mt-auto">
-                             <div class="d-flex align-items-center gap-2">
+                            <div class="d-flex align-items-center flex-wrap gap-2 mb-3">
                                 {% if product.pricePromotion %}
                                     <span class="h4 mb-0 text-danger fw-bold">{{ product.pricePromotion }}€</span>
+                                    
                                     <span class="text-muted text-decoration-line-through small">{{ product.price }}€</span>
-                                    <span class="badge bg-warning text-dark small">-{{ ((1 - (product.pricePromotion / product.price)) * 100)|round }}%</span>
+                                    
+                                    <span class="badge bg-warning text-dark rounded-pill small fw-bold">
+                                        -{{ ((1 - (product.pricePromotion / product.price)) * 100)|round }}%
+                                    </span>
                                 {% else %}
                                     <span class="h4 mb-0 text-danger fw-bold">{{ product.price }}€</span>
                                 {% endif %}
                             </div>
                             
                             <a href="{{ path('app_product_show', {slug: product.slug}) }}" 
-                               class="btn btn-danger w-100"
-                               aria-label="Voir les détails de {{ product.name }}">
+                            class="btn btn-danger w-100 fw-bold rounded-pill shadow-sm">
                                 Voir le produit
                             </a>
                         </div>
@@ -139,16 +130,15 @@
                 </article>
             </div>
             {% else %}
-                <div class="col-12">
-                    <div class="alert alert-warning text-center" role="status">
-                        <h2 class="h4">Aucun produit trouvé</h2>
-                        <p>Essayez de modifier vos critères de recherche.</p>
-                    </div>
+                <div class="col-12 py-5 text-center">
+                    <i class="bi bi-search text-muted display-1 mb-3"></i>
+                    <h2 class="h4">Aucun produit trouvé</h2>
+                    <p class="text-muted">Modifiez vos filtres pour trouver votre bonheur.</p>
                 </div>
             {% endfor %}
             </div>
 
-            <nav class="d-flex justify-content-center mt-5" aria-label="Pagination des produits">
+            <nav class="d-flex justify-content-center mt-5">
                 {{ knp_pagination_render(products, '@KnpPaginator/Pagination/bootstrap_v5_pagination.html.twig') }}
             </nav>
         </main>

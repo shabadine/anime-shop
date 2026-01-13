@@ -195,6 +195,34 @@ h1, h2, h3, h4, h5, h6 {
     text-shadow: 3px 3px 0 #000;
 }
 
+/* Sidebar du Catalogue */
+.catalog-sidebar .card {
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.catalog-sidebar .form-control, .catalog-sidebar .form-select {
+    border-radius: 10px;
+    border: 1px solid #eee;
+    padding: 10px 15px;
+}
+
+.catalog-sidebar .form-control:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.25rem rgba(229, 57, 53, 0.1);
+}
+
+.catalog-sidebar .list-unstyled li a {
+    transition: all 0.2s ease;
+    display: block;
+    padding: 5px 0;
+}
+
+.catalog-sidebar .list-unstyled li a:hover {
+    padding-left: 5px;
+    color: var(--primary-color) !important;
+}
+
 /* Animations & Accessibilité */
 .bi-fire {
     color: #ff6f00;
