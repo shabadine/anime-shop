@@ -119,13 +119,13 @@
                         </p>
                         <p class="card-text text-truncate">{{ product.description|slice(0, 80) }}...</p>
                         <div class="mt-auto">
-                            <div class="d-flex justify-content-between align-items-center mb-2">
-                                
-                                <span class="h4 mb-0 text-danger fw-bold">{{ product.price }}€</span>
-                                {% if product.stock > 0 %}
-                                    <span class="badge bg-success">En stock</span>
+                             <div class="d-flex align-items-center gap-2">
+                                {% if product.pricePromotion %}
+                                    <span class="h4 mb-0 text-danger fw-bold">{{ product.pricePromotion }}€</span>
+                                    <span class="text-muted text-decoration-line-through small">{{ product.price }}€</span>
+                                    <span class="badge bg-warning text-dark small">-{{ ((1 - (product.pricePromotion / product.price)) * 100)|round }}%</span>
                                 {% else %}
-                                    <span class="badge bg-secondary">Rupture</span>
+                                    <span class="h4 mb-0 text-danger fw-bold">{{ product.price }}€</span>
                                 {% endif %}
                             </div>
                             

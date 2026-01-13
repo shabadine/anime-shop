@@ -36,7 +36,7 @@
                 
                 <span class="badge bg-dark fs-6">{{ product.category.name }}</span>
                 {% if product.featured %}
-                    <span class="badge bg-danger fs-6">Coup de cœur <i class="bi bi-heart-fill ms-2"" aria-hidden="true"></i></span>
+                    <span class="badge bg-danger fs-6">Coup de cœur <i class="bi bi-heart-fill ms-2" aria-hidden="true"></i></span>
                 {% endif %}
             </div>
 
@@ -50,9 +50,23 @@
             <div class="card mb-4 border-0">
                 <div class="card-body p-0">
                     
-                    <h2 class="display-4 mb-0 text-danger fw-bold" aria-label="Prix : {{ product.price }} Euros">
-                        {{ product.price }}€
-                    </h2>
+                                        <div class="d-flex align-items-baseline gap-3 mb-3">
+                        {% if product.pricePromotion %}
+                            <h2 class="display-4 mb-0 text-danger fw-bold">
+                                {{ product.pricePromotion }}€
+                            </h2>
+                            <span class="h3 text-muted text-decoration-line-through">
+                                {{ product.price }}€
+                            </span>
+                            <span class="badge bg-warning text-dark fs-5">
+                                PROMO -{{ ((1 - (product.pricePromotion / product.price)) * 100)|round }}%
+                            </span>
+                        {% else %}
+                            <h2 class="display-4 mb-0 text-danger fw-bold">
+                                {{ product.price }}€
+                            </h2>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
 
@@ -132,7 +146,14 @@
                                 <p class="text-muted small">{{ similarProduct.animeName }}</p>
                                 <div class="mt-auto d-flex justify-content-between align-items-center">
                                    
-                                    <span class="fw-bold text-danger">{{ similarProduct.price }}€</span>
+                                   {% if similarProduct.pricePromotion %}
+                                        <div>
+                                            <span class="fw-bold text-danger">{{ similarProduct.pricePromotion }}€</span>
+                                            <span class="text-muted text-decoration-line-through small">{{ similarProduct.price }}€</span>
+                                        </div>
+                                    {% else %}
+                                        <span class="fw-bold text-danger">{{ similarProduct.price }}€</span>
+                                    {% endif %}
                                     <a href="{{ path('app_product_show', {slug: similarProduct.slug}) }}" class="btn btn-sm btn-danger" aria-label="Voir les détails de {{ similarProduct.name }}">Voir</a>
                                 </div>
                             </div>
