@@ -54,6 +54,7 @@ h1, h2, h3, h4, h5, h6 {
     border-color: var(--primary-color);
     font-weight: 600;
     transition: all 0.3s ease;
+    color: #000000 !important;
 }
 
 .btn-primary:hover, .btn-primary:focus {
@@ -61,6 +62,7 @@ h1, h2, h3, h4, h5, h6 {
     border-color: #c62828;
     transform: translateY(-2px);
     box-shadow: 0 4px 15px rgba(229, 57, 53, 0.3);
+    color: #000000 !important;
 }
 
 .btn-secondary {
@@ -68,6 +70,7 @@ h1, h2, h3, h4, h5, h6 {
     border-color: var(--secondary-color);
     font-weight: 600;
     transition: all 0.3s ease;
+    color: #000000 !important;
 }
 
 .btn-secondary:hover {
@@ -211,7 +214,7 @@ footer {
     padding: 0.75rem 1rem;
 }
 
-/* Titres dynamiques selon le fond */
+/* Titre carte admin et user order */
 .admin-card-header h5, .user-order-header-dark h5 {
     color: white !important;
 }
@@ -224,7 +227,7 @@ footer {
     border: none;
 }
 
-/* Liens contrastés pour l'accessibilité (Ratio > 4.5:1) */
+/* Liens contrastés  */
 .user-auth-form a {
     color: #1565c0 !important;
     font-weight: 600; 
