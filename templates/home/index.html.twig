@@ -3,7 +3,6 @@
 {% block title %}Accueil - Anime Goodies Shop{% endblock %}
 
 {% block body %}
-
 <header class="hero-section py-5 position-relative text-white" role="banner"
       style="background: url('{{ asset('images/hero-anime.jpg') }}') center/cover no-repeat;">
   <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark opacity-50"></div>
@@ -19,21 +18,19 @@
     <p class="hero-subtitle mb-4">
       Les goodies officiels de tes animes préférés, livrés en 48h !
     </p>
-    
-    <a href="{{ path('app_catalog') }}" class="btn btn-lg px-5 py-3 btn-danger fw-bold" aria-label="Voir le catalogue des produits">
-        <i class="bi bi-arrow-right"></i> Voir le catalogue
+    <a href="{{ path('app_catalog') }}" class="btn btn-lg px-5 py-3 btn-danger fw-bold">
+        <i class="bi bi-arrow-right" aria-hidden="true"></i> Découvrir le catalogue
     </a>
   </div>
 </header>
 
 <section class="py-5" aria-labelledby="section-featured">
     <div class="container">
-        <h2 id="section-featured" class="text-center section-title text-danger mb-5">Notre Sélection <i class="bi bi-fire"></i></h2>
-        
+        <h2 id="section-featured" class="text-center section-title text-danger mb-5">Notre Sélection <i class="bi bi-fire" aria-hidden="true"></i></h2>
         <div class="row g-4">
             {% for product in featuredProducts %}
                 <div class="col-md-3">
-                    <article class="card h-100 shadow-sm product-card position-relative" aria-labelledby="product-featured-{{ product.id }}">
+                    <article class="card h-100 shadow-sm product-card position-relative">
                         {% if product.pricePromotion %}
                             <span class="badge bg-danger position-absolute top-0 start-0 m-2 z-1">
                                 -{{ ((1 - (product.pricePromotion / product.price)) * 100)|round }}%
@@ -45,13 +42,11 @@
                                  alt="{{ product.name }}" 
                                  class="card-img-top"
                                  width="300" height="300"
-                                 style="object-fit: cover;">
+                                 style="object-fit: contain;">
                         {% endif %}
 
                         <div class="bg-dark text-white p-2">
-                            <h3 id="product-featured-{{ product.id }}" class="h5 card-title text-center mb-0">
-                                {{ product.name }}
-                            </h3>
+                            <h3 class="h5 card-title text-center mb-0">{{ product.name }}</h3>
                         </div>
 
                         <div class="card-body d-flex flex-column">
@@ -67,7 +62,7 @@
                                 </div>
                                 <a href="{{ path('app_product_show', {slug: product.slug}) }}" 
                                    class="btn btn-outline-danger btn-sm"
-                                   aria-label="Détails de {{ product.name }}">Voir</a>
+                                   aria-label="Voir les détails de {{ product.name }}">Voir</a>
                             </div>
                         </div>
                     </article>
@@ -77,13 +72,13 @@
     </div>
 </section>
 
-<section class="py-5 bg-light" aria-labelledby="section-bestsellers">
+<section id="promo-home-section" class="py-5 bg-light" aria-labelledby="section-bestsellers">
     <div class="container">
         <h2 id="section-bestsellers" class="text-center mb-5"> Promotions <i class="bi bi-tag ms-2 text-danger"></i></h2>
         <div class="row g-4">
             {% for product in bestSellers %}
                 <div class="col-md-3">
-                    <div class="card shadow-sm h-100 position-relative">
+                    <article class="card shadow-sm h-100 position-relative">
                         {% if product.pricePromotion %}
                             <span class="badge bg-danger position-absolute top-0 start-0 m-2 z-1">PROMO</span>
                         {% endif %}
@@ -92,31 +87,39 @@
                              alt="{{ product.name }}" 
                              class="card-img-top" 
                              style="height: 200px; object-fit: cover;">
-                        <div class="card-body text-center">
-                            <h5 class="card-title">{{ product.name }}</h5>
+                        
+                        <div class="card-body text-center d-flex flex-column">
+                            <h3 class="h5 card-title">{{ product.name }}</h3>
                             
-                            {% if product.pricePromotion %}
-                                <p class="mb-0 text-muted text-decoration-line-through small">{{ product.price }} €</p>
-                                <p class="text-danger fw-bold fs-5">{{ product.pricePromotion }} €</p>
-                            {% else %}
-                                <p class="text-danger fw-bold fs-5">{{ product.price }} €</p>
-                            {% endif %}
+                            <div class="mb-2">
+                                {% if product.pricePromotion %}
+                                    <p class="mb-0 text-muted text-decoration-line-through small">{{ product.price }} €</p>
+                                    <p class="text-danger fw-bold fs-5">{{ product.pricePromotion }} €</p>
+                                {% else %}
+                                    <p class="text-danger fw-bold fs-5">{{ product.price }} €</p>
+                                {% endif %}
+                            </div>
 
                              <a href="{{ path('app_product_show', {slug: product.slug}) }}" 
-                                class="btn btn-danger btn-sm">Voir l'article</a>
+                                class="btn btn-danger btn-sm mt-auto"
+                                aria-label="Voir l'article {{ product.name }}">Voir l'article</a>
                         </div>
-                    </div>
+                    </article>
                 </div>
             {% endfor %}
         </div>
     </div>
 </section>
-
-<section class="py-5 bg-white border-top" role="region" aria-label="Appel à l'action">
-    <div class="container text-center">
-        <h2 class="h3">Envie de découvrir plus de produits ?</h2>
-        <p class="lead">Explorez notre catalogue complet</p>
-        <a href="{{ path('app_catalog') }}" class="btn btn-dark btn-lg">Voir tout le catalogue</a>
+<section class="call-to-action-section" role="region" aria-label="Appel à l'action pour le catalogue complet">
+    <div class="container">
+        <h2>Découvre TOUS nos trésors cachés !</h2>
+        <p class="lead">
+            Ne rate aucune figurine, aucun manga rare ou vêtement stylé. <br>
+            Ton prochain coup de cœur t'attend dans notre collection complète.
+        </p>
+        <a href="{{ path('app_catalog') }}" class="btn">
+            Voir tout le catalogue
+        </a>
     </div>
 </section>
 {% endblock %}
