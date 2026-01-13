@@ -249,6 +249,47 @@ footer {
 .user-badge-info    { background: var(--secondary-color); color: white; }
 .user-badge-success { background: #28a745; color: white; }
 
+
+/* =================================
+   ACCESSIBILITY - user_account/orders.html.twig
+   ================================= */
+
+/* Uniformisation de la taille pour la lisibilité */
+.badge {
+    font-size: 0.85rem;
+    padding: 0.5em 0.8em;
+    font-weight: 600;
+}
+
+/* Bleu Info (Validée)  */
+.badge.bg-info {
+    background-color: #087990 !important;
+    color: #ffffff !important;
+}
+
+/* Bleu Primaire (Expédiée) */
+.badge.bg-primary {
+    background-color: #0d6efd !important;
+    color: #ffffff !important;
+}
+
+/* Rouge (Annulée)  */
+.badge.bg-danger {
+    background-color: #c62828 !important; 
+    color: #ffffff !important;
+}
+
+/* Jaune (En attente) */
+.badge.bg-warning {
+    background-color: #ffb300 !important; 
+    color: #212121 !important;
+}
+
+/* Vert (Livrée) */
+.badge.bg-success {
+    background-color: #2e7d32 !important;
+    color: #ffffff !important;
+}
 /* Personnalisation de la pagination KNP */
 .pagination {
     margin-top: 2rem;
@@ -301,6 +342,41 @@ footer {
 .breadcrumb-item.active {
     color: #6c757d;
     font-weight: 400;
+}
+
+/* =================================
+    ACCESSIBILITY - user_account/order_show.html.twig
+   ================================= */
+
+/* Bouton "Retour à mes commandes" */
+.btn-outline-secondary {
+    color: #4b5257 !important; 
+    border-color: #4b5257 !important;
+}
+.btn-outline-secondary:hover {
+    background-color: #4b5257 !important;
+    color: #ffffff !important;
+}
+
+/* Titre "Articles de la commande" */
+.user-order-header-dark {
+    background-color: #1a1a1a !important; 
+}
+
+/*Poster Demon Slayer" */
+h6.mb-1 {
+    color: #b71c1c !important;
+}
+
+/* Badge "Livrée" */
+.user-badge-success {
+    background-color: #1e7e34 !important;
+    color: #ffffff !important;
+}
+
+/*Textes secondaires (Muted) */
+.text-muted {
+    color: #555555 !important;
 }
 /* =================================
    RESPONSIVE & ACCESSIBILITY
