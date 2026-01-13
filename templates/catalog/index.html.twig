@@ -4,55 +4,55 @@
 
 {% block body %}
 <div class="container py-5">
-    <h1 class="mb-4">Catalogue de produits</h1>
+    
+    <h1 class="mb-4 text-dark">Catalogue de produits</h1>
 
     <div class="row">
-        <!-- Sidebar Filtres -->
-        <div class="col-md-3 catalog-sidebar">
+        <aside class="col-md-3 catalog-sidebar" role="search">
             <div class="card shadow-sm mb-4">
-                <div class="card-header">
-                    <h5 class="mb-0">Filtres</h5>
+                <div class="card-header bg-dark text-white">
+                    
+                    <h2 class="h5 mb-0">Filtres</h2>
                 </div>
                 <div class="card-body">
-                    <!-- Recherche -->
                     <form method="get" action="{{ path('app_catalog') }}" class="mb-4">
                         <div class="mb-3">
-                            <label class="form-label fw-bold">Rechercher</label>
-                            <input type="text" name="search" class="form-control" placeholder="Nom, anime..." value="{{ currentSearch }}">
+                            <label for="search-input" class="form-label fw-bold">Rechercher</label>
+                            <input type="text" id="search-input" name="search" class="form-control" placeholder="Nom, anime..." value="{{ currentSearch }}">
                         </div>
-                        <button type="submit" class="btn btn-primary w-100">
+                       
+                        <button type="submit" class="btn btn-dark w-100">
                             Rechercher <i class="bi bi-search"></i>
                         </button>
                     </form>
 
                     <hr>
 
-                    <!-- Catégories -->
-                    <div class="mb-4">
-                        <label class="form-label fw-bold">Catégories</label>
+                    <nav class="mb-4" aria-label="Filtres par catégories">
+                        <span class="d-block form-label fw-bold mb-2">Catégories</span>
                         <ul class="list-unstyled">
                             <li class="mb-2">
-                                <a href="{{ path('app_catalog') }}" class="text-decoration-none {% if not currentCategory %}fw-bold{% endif %}">
+                                <a href="{{ path('app_catalog') }}" class="text-decoration-none {% if not currentCategory %}fw-bold text-dark{% else %}text-muted{% endif %}">
                                     Toutes les catégories
                                 </a>
                             </li>
                             {% for category in categories %}
                                 <li class="mb-2">
                                     <a href="{{ path('app_catalog', {category: category.id}) }}" 
-                                    class="text-decoration-none {% if currentCategory == category.id %}fw-bold text-primary{% endif %}">
+                                    class="text-decoration-none {% if currentCategory == category.id %}fw-bold text-danger{% else %}text-muted{% endif %}">
                                         {{ category.name }} ({{ category.products|length }})
                                     </a>
                                 </li>
                             {% endfor %}
                         </ul>
-                    </div>
+                    </nav>
 
                     <hr>
 
-                    <!-- Tri -->
                     <div>
-                        <label class="form-label fw-bold">Trier par</label>
-                        <select class="form-select" onchange="window.location.href=this.value">
+                        <label for="sort-select" class="form-label fw-bold">Trier par</label>
+                        {# Correction Accessibilité : Ajout d'un ID pour l'associer au label #}
+                        <select id="sort-select" class="form-select" onchange="window.location.href=this.value">
                             <option value="{{ path('app_catalog', {category: currentCategory, search: currentSearch, sort: 'name', order: 'asc'}) }}" 
                                     {% if currentSort == 'name' %}selected{% endif %}>
                                 Nom A-Z
@@ -73,36 +73,38 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </aside>
 
-        <!-- Liste des produits -->
-        <div class="col-md-9">
+        <main class="col-md-9">
             {% if currentSearch or currentCategory %}
-                <div class="alert catalog-filters-info">
+                <div class="alert alert-light border shadow-sm mb-4">
                     <strong>Filtres actifs :</strong>
                     {% if currentSearch %}
-                        Recherche: "{{ currentSearch }}"
+                        <span class="badge bg-dark">Recherche: "{{ currentSearch }}"</span>
                     {% endif %}
                     {% if currentCategory %}
                         {% for category in categories %}
                             {% if category.id == currentCategory %}
-                                Catégorie: {{ category.name }}
+                                <span class="badge bg-danger">Catégorie: {{ category.name }}</span>
                             {% endif %}
                         {% endfor %}
                     {% endif %}
                     <a href="{{ path('app_catalog') }}" class="btn btn-sm btn-outline-secondary ms-2">Réinitialiser</a>
                 </div>
             {% endif %}
-           <div class="row g-4 mb-4">
+
+            <div class="row g-4 mb-4">
             {% for product in products %}
             <div class="col-md-4">
-                <div class="card h-100 shadow-sm catalog-card">
+                <article class="card h-100 shadow-sm catalog-card" aria-labelledby="prod-title-{{ product.id }}">
                     <div class="card-img-top bg-light" style="height: 250px; overflow: hidden;">
                         {% if product.image %}
                             <img src="{{ asset('uploads/products/' ~ product.image) }}" 
                                 alt="{{ product.name }}" 
                                 class="img-fluid w-100 h-100" 
-                                style="object-fit: cover;">
+                                style="object-fit: cover;"
+                                width="300" height="250"
+                                loading="lazy">
                         {% else %}
                             <div class="d-flex align-items-center justify-content-center h-100 text-muted">
                                 <span>Pas d'image</span>
@@ -110,44 +112,46 @@
                         {% endif %}
                     </div>
                     <div class="card-body d-flex flex-column">
-                        <span class="badge bg-secondary mb-2 align-self-start">{{ product.category.name }}</span>
-                        <h5 class="card-title">{{ product.name }}</h5>
+                        <span class="badge bg-dark mb-2 align-self-start">{{ product.category.name }}</span>
+                        <h2 class="h5 card-title" id="prod-title-{{ product.id }}">{{ product.name }}</h2>
                         <p class="text-muted small mb-2">
                             <i>{{ product.animeName }}</i>
                         </p>
                         <p class="card-text text-truncate">{{ product.description|slice(0, 80) }}...</p>
                         <div class="mt-auto">
                             <div class="d-flex justify-content-between align-items-center mb-2">
-                                <span class="h4 mb-0 catalog-price">{{ product.price }}€</span>
+                                
+                                <span class="h4 mb-0 text-danger fw-bold">{{ product.price }}€</span>
                                 {% if product.stock > 0 %}
-                                    <span class="badge catalog-badge-stock">En stock</span>
+                                    <span class="badge bg-success">En stock</span>
                                 {% else %}
-                                    <span class="badge catalog-badge-out">Rupture</span>
+                                    <span class="badge bg-secondary">Rupture</span>
                                 {% endif %}
                             </div>
-                            <a href="{{ path('app_product_show', {slug: product.slug}) }}" class="btn btn-primary w-100">
+                            
+                            <a href="{{ path('app_product_show', {slug: product.slug}) }}" 
+                               class="btn btn-danger w-100"
+                               aria-label="Voir les détails de {{ product.name }}">
                                 Voir le produit
                             </a>
                         </div>
                     </div>
-                </div>
+                </article>
             </div>
-                            {% else %}
-                                <div class="col-12">
-                                    <div class="alert alert-warning text-center">
-                                        <h4>Aucun produit trouvé</h4>
-                                        <p>Essayez de modifier vos critères de recherche.</p>
-                                    </div>
-                                </div>
-                            {% endfor %}
-                        </div>
-
-                        <!-- Pagination -->
-                        <div class="d-flex justify-content-center">
-                            {{ knp_pagination_render(products) }}
-                        </div>
+            {% else %}
+                <div class="col-12">
+                    <div class="alert alert-warning text-center" role="status">
+                        <h2 class="h4">Aucun produit trouvé</h2>
+                        <p>Essayez de modifier vos critères de recherche.</p>
                     </div>
                 </div>
+            {% endfor %}
             </div>
 
+            <nav class="d-flex justify-content-center" aria-label="Pagination des produits">
+                {{ knp_pagination_render(products) }}
+            </nav>
+        </main>
+    </div>
+</div>
 {% endblock %}

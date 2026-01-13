@@ -1,50 +1,65 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Connexion{% endblock %}
+{% block title %}Connexion - Anime Shop{% endblock %}
 
 {% block body %}
 <div class="container py-5">
     <div class="row justify-content-center">
         <div class="col-md-5">
-            <div class="card shadow">
-                <div class="card-body p-5">
-                    <h1 class="text-center mb-4">Connexion</h1>
+           
+            <div class="card shadow user-auth-form">
+                <div class="card-body p-4 p-md-5">
+                    <h1 class="text-center mb-4">
+                        <i class="bi bi-box-arrow-in-right user-auth-icon me-2"></i>Connexion
+                    </h1>
                     
                     {% if error %}
-                        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                        <div class="alert alert-danger" role="alert">
+                            {{ error.messageKey|trans(error.messageData, 'security') }}
+                        </div>
                     {% endif %}
 
                     {% if app.user %}
                         <div class="alert alert-info">
-                            Vous êtes connecté en tant que {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Se déconnecter</a>
+                            Vous êtes connecté en tant que <strong>{{ app.user.userIdentifier }}</strong>, 
+                            <a href="{{ path('app_logout') }}" class="alert-link">Se déconnecter</a>
                         </div>
                     {% endif %}
 
                     <form method="post">
                         <div class="mb-3">
-                            <label for="username" class="form-label">Email</label>
-                            <input type="email" value="{{ last_username }}" name="_username" id="username" class="form-control" required autofocus>
+                            <label for="username" class="form-label fw-bold">Email</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light"><i class="bi bi-envelope text-muted"></i></span>
+                                <input type="email" value="{{ last_username }}" name="_username" id="username" class="form-control" autocomplete="email" required autofocus placeholder="nom@exemple.com">
+                            </div>
                         </div>
 
                         <div class="mb-3">
-                            <label for="password" class="form-label">Mot de passe</label>
-                            <input type="password" name="_password" id="password" class="form-control" required>
+                            <label for="password" class="form-label fw-bold">Mot de passe</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light"><i class="bi bi-lock text-muted"></i></span>
+                                <input type="password" name="_password" id="password" class="form-control" autocomplete="current-password" required placeholder="••••••••">
+                            </div>
                         </div>
 
                         <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
-                        <div class="mb-3 form-check">
+                        <div class="mb-4 form-check">
                             <input type="checkbox" name="_remember_me" class="form-check-input" id="remember_me">
                             <label class="form-check-label" for="remember_me">Se souvenir de moi</label>
                         </div>
 
-                        <button class="btn btn-primary w-100" type="submit">Se connecter</button>
+                        
+                        <button class="btn btn-danger btn-lg w-100 mb-3 fw-bold" type="submit">
+                            Se connecter <i class="bi bi-check-circle-fill ms-1"></i>
+                        </button>
                     </form>
 
                     <hr class="my-4">
                     
-                    <p class="text-center">
-                        Pas encore de compte ? <a href="{{ path('app_register') }}">S'inscrire</a>
+                    <p class="text-center text-dark mb-0">
+                        Pas encore de compte ? <a href="{{ path('app_register') }}" class="fw-bold">S'inscrire</a>
                     </p>
                 </div>
             </div>

@@ -2,37 +2,93 @@
    ANIME SHOP - Main Styles
    ================================= */
 
-/* Variables CSS */
+/* Variables CSS - Optimisées pour l'accessibilité (Contraste WCAG) */
 :root {
-    --primary-color: #FF6B6B;
-    --secondary-color: #ff8e53;
-    --accent-color: #FFE66D;
-    --dark-color: #333333;
-    --gray-color: #666666;
-    --light-bg: #f5f5f5;
-    --gradient-hero: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%);
+    --primary-color: #e53935;   /* Rouge soutenu */
+    --secondary-color: #ff6f00; /* Orange soutenu */
+    --accent-color: #ffb300;    /* Jaune soutenu */
+    --dark-color: #212121;      /* Noir profond */
+    --gray-color: #555555;      /* Gris foncé */
+    --light-bg: #fafafa;        /* Fond clair */
+    --gradient-hero: linear-gradient(135deg, #e53935 0%, #ff6f00 100%);
     --gradient-purple: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    --gradient-secondary: linear-gradient(135deg, #ff5555 0%, #ff8e53 100%);
+    --gradient-secondary: linear-gradient(135deg, #e53935 0%, #ff6f00 100%);
 }
 
-/* Typography */
+/* =================================
+   BASE & TYPOGRAPHY
+   ================================= */
 body {
     font-family: 'Roboto', sans-serif;
     color: var(--dark-color);
+    background-color: var(--light-bg);
 }
 
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Bangers', cursive;
     color: var(--primary-color);
 }
-/*  */
-.admin-card-header h5,
-.admin-form-header h5,
-.admin-detail-header h5 {
-    color: white !important;
+
+/* Skip to main content (A11y) */
+.skip-to-main {
+    position: absolute;
+    left: -9999px;
+    z-index: 999;
+    padding: 1rem;
+    background-color: var(--primary-color);
+    color: white;
+    text-decoration: none;
 }
 
-/* Navbar */
+.skip-to-main:focus {
+    left: 50%;
+    transform: translateX(-50%);
+    top: 10px;
+}
+
+/* =================================
+   COMPONENTS (Buttons, Alerts, Badges)
+   ================================= */
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover, .btn-primary:focus {
+    background-color: #c62828;
+    border-color: #c62828;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(229, 57, 53, 0.3);
+}
+
+.btn-secondary {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(255, 111, 0, 0.3);
+}
+
+.badge {
+    font-weight: 600;
+    padding: 0.5em 0.8em;
+}
+
+.alert { border-left: 4px solid; }
+.alert-success { border-left-color: #28a745; }
+.alert-danger { border-left-color: #dc3545; }
+.alert-warning { border-left-color: #ffc107; }
+.alert-info { border-left-color: #17a2b8; }
+
+/* =================================
+   LAYOUT (Navbar, Hero, Footer)
+   ================================= */
 .navbar {
     background: var(--gradient-hero);
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -50,262 +106,23 @@ h1, h2, h3, h4, h5, h6 {
     transition: color 0.3s;
 }
 
-.navbar-dark .navbar-nav .nav-link:hover,
-.navbar-dark .navbar-nav .nav-link:focus {
+.navbar-dark .navbar-nav .nav-link:hover {
     color: white;
     text-decoration: underline;
 }
 
-/* Buttons */
-.btn-primary {
-    background-color: var(--primary-color);
-    border-color: var(--primary-color);
-    font-weight: 600;
-    transition: all 0.3s;
-}
-
-.btn-primary:hover,
-.btn-primary:focus {
-    background-color: #ff5555;
-    border-color: #ff5555;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
-}
-
-.btn-secondary {
-    background-color: var(--secondary-color);
-    border-color: var(--secondary-color);
-    font-weight: 600;
-    transition: all 0.3s;
-}
-
-.btn-secondary:hover,
-.btn-secondary:focus {
-    background-color: #45b8b0;
-    border-color: #45b8b0;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(78, 205, 196, 0.3);
-}
-
-/* Focus states for accessibility */
-a:focus,
-button:focus,
-input:focus,
-select:focus,
-textarea:focus {
-    outline: 3px solid var(--primary-color);
-    outline-offset: 2px;
-}
-
-/* Skip to main content link */
-.skip-to-main {
-    position: absolute;
-    left: -9999px;
-    z-index: 999;
-    padding: 1rem;
-    background-color: var(--primary-color);
-    color: white;
-    text-decoration: none;
-}
-
-.skip-to-main:focus {
-    left: 50%;
-    transform: translateX(-50%);
-    top: 10px;
-}
-
-/* Hero Section */
 .hero-section {
     background: var(--gradient-hero);
+    color: white;
     min-height: 400px;
     display: flex;
     align-items: center;
-    background-size: cover;
-    background-position: center;
     position: relative;
-}
-
-.hero-section::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.3);
-}
-
-.hero-section .container {
-    position: relative;
-    z-index: 1;
-}
-
-/* Product Cards */
-.product-card {
-    transition: transform 0.3s, box-shadow 0.3s;
-    border: 1px solid #e0e0e0;
-}
-
-.product-card:hover,
-.product-card:focus-within {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-}
-
-.product-card img {
-    transition: transform 0.3s;
-}
-
-.product-card:hover img {
-    transform: scale(1.05);
-}
-
-/* Loading State */
-.loading {
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    border: 3px solid rgba(255, 255, 255, 0.3);
-    border-radius: 50%;
-    border-top-color: white;
-    animation: spin 1s ease-in-out infinite;
-}
-
-@keyframes spin {
-    to { transform: rotate(360deg); }
-}
-
-/* Alerts with icons */
-.alert {
-    border-left: 4px solid;
-}
-
-.alert-success {
-    border-left-color: #28a745;
-}
-
-.alert-danger {
-    border-left-color: #dc3545;
-}
-
-.alert-warning {
-    border-left-color: #ffc107;
-}
-
-.alert-info {
-    border-left-color: #17a2b8;
-}
-
-/* Footer */
-footer {
-    background-color: #2c3e50;
-}
-
-/* Badges */
-.badge {
-    font-weight: 600;
-    padding: 0.5em 0.8em;
-}
-
-/* Form validation */
-.form-control:invalid:focus {
-    border-color: #dc3545;
-    box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
-}
-
-.form-control:valid:focus {
-    border-color: #28a745;
-    box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    .navbar-brand {
-        font-size: 1.3rem;
-    }
-    
-    h1 {
-        font-size: 1.8rem;
-    }
-    
-    .hero-section {
-        min-height: 300px;
-    }
-    
-    .card {
-        margin-bottom: 1rem;
-    }
-    
-    .btn-lg {
-        padding: 0.8rem 1.5rem;
-        font-size: 1rem;
-    }
-}
-
-@media (max-width: 576px) {
-    h1 {
-        font-size: 1.5rem;
-    }
-    
-    .hero-section h1 {
-        font-size: 2rem;
-    }
-    
-    .table {
-        font-size: 0.9rem;
-    }
-}
-
-/* Print Styles */
-@media print {
-    .navbar,
-    .btn,
-    footer,
-    .alert {
-        display: none;
-    }
-    
-    .card {
-        border: 1px solid #ddd;
-        box-shadow: none;
-    }
-}
-
-/* High Contrast Mode Support */
-@media (prefers-contrast: high) {
-    :root {
-        --primary-color: #ff0000;
-        --secondary-color: #0000ff;
-    }
-    
-    .btn-primary,
-    .btn-secondary {
-        border: 2px solid black;
-    }
-}
-
-/* Reduced Motion Support */
-@media (prefers-reduced-motion: reduce) {
-    * {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-    }
-}
-
-/* =================================
-   HOMEPAGE SPECIFIC STYLES
-   ================================= */
-
-/* Hero Section */
-.hero-section {
-    background: var(--gradient-hero);
-    color: white;
+    padding: 3rem 0;
 }
 
 .hero-title {
     font-size: 4.5rem;
-    font-family: 'Bangers', cursive;
     text-shadow: 3px 3px 0 #000;
 }
 
@@ -313,384 +130,146 @@ footer {
     font-size: 1.75rem;
     text-shadow: 2px 2px 0 #000;
 }
-
-.hero-btn {
-    background-color: var(--primary-color);
+/* Bouton rouge du hero – accessible */
+.hero-btn-red {
+    background: var(--primary-color);
     border: none;
+    color: rgb(0, 0, 0);
+    font-weight: 600;
     border-radius: 50px;
-    font-size: 1.3rem;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.35);
+    box-shadow: 0 4px 15px rgba(0,0,0,.35);
     transition: all 0.3s ease;
 }
 
-.hero-btn:hover {
-    background-color: #ff5555;
+.hero-btn-red:hover {
+    background: #c62828;
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
 }
-
-/* Section Meilleures Ventes */
-.section-title {
-    margin-bottom: 4rem; 
-}
-/* Featured Products */
-.product-price {
-    color: #e93939;
-}
-
-/* Overlay lisible sur image */
-.card-img-overlay {
-    background: rgba(0, 0, 0, 0.45); 
+footer {
+    background-color: #2c3e50;
     color: white;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding: 1rem;
-    border-radius: 0.25rem 0.25rem 0 0;
-}
-
-/* CTA Section */
-.cta-section {
-    background-color: var(--accent-color);
-    color: var(--dark-color);
 }
 
 /* =================================
-   CATALOGUE - Sidebar & Cards
+   CATALOG & PRODUCTS
    ================================= */
-
-/* Sidebar */
-/* ENTÊTE de la carte */
-.catalog-sidebar .card-header {
-    background: var(--gradient-secondary); 
-    color: white;
-    border: none;                    
+.product-card, .catalog-card {
+    transition: transform 0.3s, box-shadow 0.3s;
+    border: 1px solid #e0e0e0;
 }
 
-/* Titre DANS l’entête  */
+.product-card:hover, .catalog-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.product-price, .catalog-price, .product-price-text, .product-similar-price {
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+/* Sidebar Catalog */
+.catalog-sidebar .card-header {
+    background: var(--gradient-secondary);
+    border: none;
+}
+
 .catalog-sidebar .card-header h5 {
     color: white !important;
-    margin: 0;               
-    line-height: 1.2;        
-}
-.catalog-sidebar .btn-primary {
-    background-color: var(--primary-color);
-    border-color: var(--primary-color);
 }
 
-.catalog-sidebar .btn-primary:hover {
-    background-color: #ff5555;
-    border-color: #ff5555;
-}
-
-/* Filtres actifs */
-.catalog-filters-info {
-    background-color: var(--accent-color);
-    color: var(--dark-color);
-    border-left: 4px solid var(--secondary-color);
-}
-
-/* Cartes produits */
-.catalog-price {
-    color: var(--primary-color);
-}
-
-.catalog-badge-stock {
-    background-color: var(--secondary-color);
-}
-
-.catalog-badge-out {
-    background-color: var(--primary-color);
-}
-
-/* Hover carte */
-.catalog-card {
-    transition: transform 0.3s, box-shadow 0.3s;
-}
-
-.catalog-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-}
-/* =================================
-   CATALOG / CATEGORY
-   ================================= */
-
-/* Header catégorie */
-.category-header {
-    background: var(--gradient-purple);
-    color: white;
-}
-
-.category-header h1 {
-    color: white;
-}
-
-.category-header .lead {
-    color: rgba(255, 255, 255, 0.9);
-}
-
-/* Cartes produits */
-.category-price {
-    color: var(--primary-color);
-}
-
-/* Autres catégories */
-.category-hover-card {
-    transition: all 0.3s;
-}
-
-.category-hover-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-}
-
-/* =================================
-   CATALOG SHOW
-   ================================= */
-
-/* Image */
+/* Product Detail (Show) */
 .product-image-box {
     max-height: 500px;
     object-fit: contain;
     background-color: #fff;
 }
 
-.product-no-image {
-    height: 500px;
-    background-color: var(--light-bg);
-}
-
-/* Badges */
-.product-badge-category {
-    background-color: var(--gray-color);
-}
-
-.product-badge-featured {
-    background-color: var(--accent-color);
-    color: var(--dark-color);
-}
-
-/* Prix */
 .product-price-box {
-    background-color: #fff3cd;   
+    background-color: #fff3cd;
     border-left: 4px solid var(--accent-color);
 }
-.product-price-text {
-    color: var(--primary-color);
-}
 
-/* Stock */
-.product-in-stock {
-    background-color: #d4edda;
-    color: #155724;
-    border-color: #c3e6cb;
-}
-
-.product-out-of-stock {
-    background-color: #f8d7da;
-    color: #721c24;
-    border-color: #f5c6cb;
-}
-
-/* Description */
 .product-description-header {
     background: var(--secondary-color);
     color: white;
 }
 
-/* Cartes similaires */
-.product-similar-price {
-    color: var(--primary-color);
-}
-
 /* =================================
-   CART / PANIER
+   USER ACCOUNT & AUTH
    ================================= */
-
-/* Carte vide */
-.cart-empty-alert {
-    background-color: var(--light-bg);
-    border-color: var(--accent-color);
-    color: var(--dark-color);
+.user-auth-form {
+    background: var(--light-bg);
+    border: 1px solid #ddd;
+    border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    padding: 3rem 2.5rem;
 }
 
-/* Tableau */
-.cart-table img {
-    width: 80px;
-    height: 80px;
-    object-fit: cover;
+.user-auth-form .form-control {
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
 }
 
-.cart-no-image {
-    width: 80px;
-    height: 80px;
-    background-color: var(--light-bg);
+/* Titres dynamiques selon le fond */
+.admin-card-header h5, .user-order-header-dark h5 {
+    color: white !important;
 }
 
-.cart-total-price {
-    color: var(--primary-color);
+.user-order-header-info h5, .user-order-header-warning h5 {
+    color: var(--dark-color) !important;
+}
+.user-auth-form .btn-primary {
+    background: #d32f2f; 
+    border: none;
 }
 
-/* Boutons */
-.cart-btn-update {
-    font-size: 0.8rem;
-    color: var(--primary-color);
+/* Liens contrastés pour l'accessibilité (Ratio > 4.5:1) */
+.user-auth-form a {
+    color: #1565c0 !important;
+    font-weight: 600; 
+    text-decoration: underline;
+}
+
+.user-auth-form a:hover {
+    color: #0d47a1 !important;
     text-decoration: none;
 }
-
-.cart-btn-remove {
-    font-size: 0.8rem;
-}
-
-/* Récapitulatif */
-.cart-summary-header {
-    background: var(--gradient-secondary);
-    color: white;
-}
-
-.cart-summary-total {
-    color: var(--primary-color);
-    font-size: 1.2rem;
-}
-
-.cart-payment-info {
-    background-color: var(--light-bg);
-}
-
-/* =================================
-   ORDER / PREPARE
-   ================================= */
-
-/* Adresse & Récapitulatif */
-.order-section-header {
-    background: var(--gradient-secondary);
-    color: white;
-}
-
-.order-section-header h5 {
-    color: white !important;
-}
-
-/* Total */
-.order-total-header {
-    background-color: var(--accent-color);
-    color: var(--dark-color);
-}
-
-
-.order-total-price {
-    color: var(--primary-color);
-    font-size: 1.3rem;
-}
-
-/* Bouton */
-.order-payment-btn {
-    background-color: var(--primary-color);
-    border: none;
-    transition: all 0.3s;
-}
-
-.order-payment-btn:hover {
-    background-color: #ff5555;
-    transform: translateY(-2px);
-}
-
-
-/* =================================
-   ORDER / PAYMENT
-   ================================= */
-
-/* Alerte simulation */
-.payment-alert {
-    background-color: var(--accent-color);
-    color: var(--dark-color);
-    border-left: 4px solid var(--primary-color);
-}
-
-/* Montant */
-.payment-amount {
-    color: var(--primary-color);
-    font-size: 1.5rem;
-}
-
-/* Bouton */
-.payment-confirm-btn {
-    background-color: var(--primary-color);
-    border: none;
-    transition: all 0.3s;
-}
-
-.payment-confirm-btn:hover {
-    background-color: #ff5555;
-    transform: translateY(-2px);
-}
-
-/* =================================
-   USER ACCOUNT – ORDER SHOW
-   ================================= */
-
-/* En-têtes de cartes */
-.user-order-header-dark {
-    background: var(--dark-color);
-    color: white;
-}
-
-.user-order-header-info {
-    background: var(--secondary-color);
-    color: white;
-}
-
-.user-order-header-warning {
-    background: var(--accent-color);
-    color: var(--dark-color);
-}
-
-/* Badges statut */
+/* Statut d'ordre */
 .user-badge-status {
     padding: 0.5rem 1rem;
-    font-size: 0.9rem;
-    width: 100%;
     display: inline-block;
     text-align: center;
+    border-radius: 5px;
 }
-
 .user-badge-warning { background: var(--accent-color); color: var(--dark-color); }
 .user-badge-info    { background: var(--secondary-color); color: white; }
-.user-badge-primary { background: var(--primary-color); color: white; }
 .user-badge-success { background: #28a745; color: white; }
 
-/* Prix client */
-.user-price-total {
-    color: var(--primary-color);
-    font-weight: 700;
+/* =================================
+   RESPONSIVE & ACCESSIBILITY
+   ================================= */
+@media (max-width: 768px) {
+    .hero-title { font-size: 2.5rem; }
+    .hero-section { min-height: 300px; }
 }
 
-/* Tableau */
-.user-order-table {
-    border: none;
-}
-.user-order-table thead {
-    background: var(--light-bg);
-}
-.user-order-table tbody tr:hover {
-    background: rgba(0,0,0,.02);
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+    }
 }
 
-
-/* On annule la règle générale qui forçait le blanc partout */
-.card-header h5 {
-    color: inherit; /* remet la couleur par défaut */
+@keyframes spin {
+    to { transform: rotate(360deg); }
 }
 
-
-/* Titres BLANCS sur fonds FONCÉS (client) */
-.user-order-header-dark h5 {
-    color: white !important;
-}
-
-/* Titres NOIRS sur fonds CLAIRS (client) */
-.user-order-header-info h5,
-.user-order-header-warning h5 {
-    color: var(--dark-color) !important;
+.loading {
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: white;
+    animation: spin 1s ease-in-out infinite;
 }

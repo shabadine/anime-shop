@@ -4,131 +4,139 @@
 
 {% block body %}
 <div class="container py-5">
-    <!-- Breadcrumb -->
-    <nav aria-label="breadcrumb">
+    <nav aria-label="Fil d'Ariane">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ path('app_home') }}">Accueil</a></li>
             <li class="breadcrumb-item"><a href="{{ path('app_catalog') }}">Catalogue</a></li>
             <li class="breadcrumb-item"><a href="{{ path('app_catalog', {category: product.category.id}) }}">{{ product.category.name }}</a></li>
-            <li class="breadcrumb-item active">{{ product.name }}</li>
+            <li class="breadcrumb-item active" aria-current="page">{{ product.name }}</li>
         </ol>
     </nav>
 
     <div class="row">
-        <!-- Images du produit -->
         <div class="col-md-6">
             <div class="card shadow-sm">
                 <div class="card-body p-0">
                     {% if product.image %}
                     <img src="{{ asset('uploads/products/' ~ product.image) }}" 
-                        alt="{{ product.name }}" 
-                        class="img-fluid w-100 product-image-box">
+                        alt="Photo de {{ product.name }}" 
+                        class="img-fluid w-100 product-image-box"
+                        width="600" height="600">
                 {% else %}
-                    <div class="d-flex align-items-center justify-content-center text-muted product-no-image">
-                        <span>Pas d'image disponible</span>
+                    <div class="d-flex align-items-center justify-content-center text-muted product-no-image" role="img" aria-label="Aucune image disponible pour ce produit" style="height: 400px; background: #f8f9fa;">
+                        <span aria-hidden="true">Pas d'image disponible</span>
                     </div>
                 {% endif %}
                 </div>
             </div>
         </div>
 
-        <!-- Détails du produit -->
         <div class="col-md-6">
             <div class="mb-3">
-                <span class="badge product-badge-category fs-6">{{ product.category.name }}</span>
+                
+                <span class="badge bg-dark fs-6">{{ product.category.name }}</span>
                 {% if product.featured %}
-                    <span class="badge product-badge-featured fs-6">Coup de cœur <i class="bi bi-heart-fill"></i></span>
+                    <span class="badge bg-danger fs-6">Coup de cœur <i class="bi bi-heart-fill" aria-hidden="true"></i></span>
                 {% endif %}
             </div>
 
-            <h1 class="display-5 mb-3">{{ product.name }}</h1>
+           
+            <h1 class="display-5 mb-3 text-dark">{{ product.name }}</h1>
             
             <p class="lead text-muted mb-4">
-                <i class="bi bi-film"></i> Anime : <strong>{{ product.animeName }}</strong>
+                <i class="bi bi-film" aria-hidden="true"></i> Anime : <strong>{{ product.animeName }}</strong>
             </p>
 
-            <div class="card mb-4 product-price-box">
-                <div class="card-body">
-                    <h2 class="display-4 mb-0 product-price-text">{{ product.price }}€</h2>
+            <div class="card mb-4 border-0">
+                <div class="card-body p-0">
+                    
+                    <h2 class="display-4 mb-0 text-danger fw-bold" aria-label="Prix : {{ product.price }} Euros">
+                        {{ product.price }}€
+                    </h2>
                 </div>
             </div>
 
-            <!-- Stock -->
-            {% if product.stock > 0 %}
-                <div class="alert product-in-stock">
-                    <strong>En stock</strong> - {{ product.stock }} disponible(s) <i class="bi bi-check-circle-fill"></i>
-                </div>
-            {% else %}
-                <div class="alert product-out-of-stock">
-                    <strong>Rupture de stock</strong> - Produit indisponible <i class="bi bi-x-circle-fill"></i>
-                </div>
-            {% endif %}
+            <div class="mb-4">
+                {% if product.stock > 0 %}
+                    <div class="alert alert-success d-flex align-items-center" role="status">
+                        <i class="bi bi-check-circle-fill me-2" aria-hidden="true"></i>
+                        <strong>En stock</strong>&nbsp;- {{ product.stock }} disponible(s)
+                    </div>
+                {% else %}
+                    <div class="alert alert-secondary d-flex align-items-center" role="status">
+                        <i class="bi bi-x-circle-fill me-2" aria-hidden="true"></i>
+                        <strong>Rupture de stock</strong>&nbsp;- Produit indisponible
+                    </div>
+                {% endif %}
+            </div>
 
-            <!-- Formulaire ajout au panier -->
             {% if product.stock > 0 %}
                 <form method="post" action="{{ path('app_cart_add', {id: product.id}) }}">
-            <div class="row mb-4">
-                <div class="col-md-4">
-                    <label class="form-label fw-bold">Quantité</label>
-                    <div class="input-group">
-                        <button class="btn btn-outline-secondary" type="button" onclick="decreaseQty()">-</button>
-                        <input type="number" class="form-control text-center" id="quantity" name="quantity" value="1" min="1" max="{{ product.stock }}">
-                        <button class="btn btn-outline-secondary" type="button" onclick="increaseQty()">+</button>
+                    <div class="row mb-4">
+                        <div class="col-md-4">
+                            <label for="quantity" class="form-label fw-bold">Quantité</label>
+                            <div class="input-group">
+                                <button class="btn btn-outline-dark" type="button" onclick="decreaseQty()" aria-label="Diminuer la quantité"><i class="bi bi-dash"></i></button>
+                                <input type="number" class="form-control text-center" id="quantity" name="quantity" value="1" min="1" max="{{ product.stock }}" aria-live="polite">
+                                <button class="btn btn-outline-dark" type="button" onclick="increaseQty()" aria-label="Augmenter la quantité"><i class="bi bi-plus"></i></button>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
 
-            <button type="submit" class="btn btn-primary btn-lg w-100 mb-3">
-              Ajouter au panier  <i class="bi bi-cart-plus"></i> 
-            </button>
-            </form>
+                    
+                    <button type="submit" class="btn btn-danger btn-lg w-100 mb-3 shadow-sm">
+                        Ajouter au panier <i class="bi bi-cart-plus" aria-hidden="true"></i> 
+                    </button>
+                </form>
             {% else %}
                 <button class="btn btn-secondary btn-lg w-100 mb-3" disabled>
-                    Produit indisponible <i class="bi bi-cart-x"></i>
+                    Produit indisponible <i class="bi bi-cart-x" aria-hidden="true"></i>
                 </button>
             {% endif %}
 
-            <!-- Description -->
-            <div class="card shadow-sm mt-4">
-                 <div class="card-header product-description-header">
-                    <h5 class="mb-0">Description <i class="bi bi-info-circle"></i></h5>
+            <section class="card shadow-sm mt-4" aria-labelledby="desc-title">
+                 <div class="card-header bg-white">
+                   
+                    <h2 class="h5 mb-0" id="desc-title">Description <i class="bi bi-info-circle" aria-hidden="true"></i></h2>
                 </div>
                 <div class="card-body">
-                    <p>{{ product.description }}</p>
+                    <p class="mb-0 text-dark">{{ product.description }}</p>
                 </div>
-            </div>
+            </section>
         </div>
     </div>
 
-    <!-- Produits similaires -->
     {% if similarProducts %}
-        <section class="mt-5">
-            <h2 class="mb-4">Produits similaires</h2>
+        <section class="mt-5" aria-labelledby="similar-title">
+            <h2 class="mb-4 text-dark border-bottom pb-2" id="similar-title">Produits similaires</h2>
             <div class="row g-4">
                 {% for similarProduct in similarProducts %}
                     <div class="col-md-3">
-                        <div class="card h-100 shadow-sm">
+                        <article class="card h-100 shadow-sm" aria-labelledby="sim-prod-{{ similarProduct.id }}">
                             <div class="card-img-top bg-light" style="height: 200px; overflow: hidden;">
                                 {% if similarProduct.image %}
                                     <img src="{{ asset('uploads/products/' ~ similarProduct.image) }}" 
-                                         alt="{{ similarProduct.name }}" 
+                                         alt="Photo de {{ similarProduct.name }}" 
                                          class="img-fluid w-100 h-100" 
-                                         style="object-fit: cover;">
+                                         style="object-fit: cover;"
+                                         width="250" height="200"
+                                         loading="lazy">
                                 {% else %}
-                                    <div class="d-flex align-items-center justify-content-center h-100 text-muted">
-                                        <span>Pas d'image</span>
+                                    <div class="d-flex align-items-center justify-content-center h-100 text-muted" role="img" aria-label="Image non disponible">
+                                        <span aria-hidden="true">Pas d'image</span>
                                     </div>
                                 {% endif %}
                             </div>
-                            <div class="card-body">
-                                <h6 class="card-title">{{ similarProduct.name }}</h6>
+                            <div class="card-body d-flex flex-column">
+                                <h3 class="h6 card-title text-dark" id="sim-prod-{{ similarProduct.id }}">{{ similarProduct.name }}</h3>
                                 <p class="text-muted small">{{ similarProduct.animeName }}</p>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <span class="fw-bold product-similar-price">{{ similarProduct.price }}€</span>
-                                    <a href="{{ path('app_product_show', {slug: similarProduct.slug}) }}" class="btn btn-sm btn-primary">Voir</a>
+                                <div class="mt-auto d-flex justify-content-between align-items-center">
+                                   
+                                    <span class="fw-bold text-danger">{{ similarProduct.price }}€</span>
+                                    <a href="{{ path('app_product_show', {slug: similarProduct.slug}) }}" class="btn btn-sm btn-danger" aria-label="Voir les détails de {{ similarProduct.name }}">Voir</a>
                                 </div>
                             </div>
-                        </div>
+                        </article>
                     </div>
                 {% endfor %}
             </div>
