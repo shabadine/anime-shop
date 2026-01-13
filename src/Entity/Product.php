@@ -49,6 +49,9 @@ class Product
     #[ORM\OneToMany(targetEntity: OrderItem::class, mappedBy: 'product')]
     private Collection $orderItems;
 
+   #[ORM\Column(type: 'float', nullable: true)]
+    private ?float $pricePromotion = null;
+
     public function __construct()
     {
         $this->orderItems = new ArrayCollection();
@@ -175,5 +178,17 @@ class Product
     public function __toString(): string
     {
         return $this->name;
+    }
+
+   public function getPricePromotion(): ?float
+    {
+        return $this->pricePromotion;
+    }
+
+    public function setPricePromotion(?float $pricePromotion): static
+    {
+        $this->pricePromotion = $pricePromotion;
+
+        return $this;
     }
 }

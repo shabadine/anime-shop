@@ -1,18 +1,20 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Contact{% endblock %}
+{% block title %}Contact - Anime Shop{% endblock %}
 
 {% block body %}
 <div class="container py-5">
-    <h1 class="mb-4">Contactez-nous</h1>
-
     <div class="row">
+        <div class="col-12">
+            <h1 class="mb-5 text-center">Contactez-nous</h1>
+        </div>
+    </div>
+
+    <div class="row g-4">
         <div class="col-md-6">
-            <div class="card shadow-sm mb-4">
+            <div class="card shadow-sm h-100">
                 <div class="card-body">
-                    <h2 class="h4 mb-4">
-                         Informations de contact
-                    </h2>
+                    <h2 class="h4 mb-4 text-center">Informations de contact</h2>
                     
                     <div class="mb-3">
                         <h3 class="h6">
@@ -26,7 +28,7 @@
 
                     <div class="mb-3">
                         <h3 class="h6">
-                           Téléphone
+                            Téléphone
                             <i class="bi bi-telephone ms-2"></i> 
                         </h3>
                         <p>+33 (0)1 23 45 67 89</p>
@@ -35,7 +37,7 @@
 
                     <div class="mb-3">
                         <h3 class="h6">
-                           Adresse <i class="bi bi-geo-alt ms-2"></i> 
+                            Adresse <i class="bi bi-geo-alt ms-2"></i> 
                         </h3>
                         <p>
                             Anime Goodies Shop<br>
@@ -49,8 +51,8 @@
 
                     <div class="mb-3">
                         <h3 class="h6">
-                           Horaires 
-                           <i class="bi bi-clock ms-2"></i> 
+                            Horaires 
+                            <i class="bi bi-clock ms-2"></i> 
                         </h3>
                         <p>
                             <strong>Support client :</strong><br>
@@ -64,16 +66,12 @@
         </div>
 
         <div class="col-md-6">
-            <div class="card shadow-sm">
+            <div class="card shadow-sm h-100">
                 <div class="card-body">
-                    <h2 class="h4 mb-4">
-                        Formulaire de contact
-                    </h2>
+                    <h2 class="h4 mb-4 text-center">Formulaire de contact</h2>
                     
                     <div class="alert alert-warning">
-                        
-                        <strong>Note <i class="bi bi-info-circle"></i>  :</strong> Ce formulaire est fictif (projet académique). 
-                        Les messages ne sont pas envoyés.
+                        <strong>Note <i class="bi bi-info-circle"></i> :</strong> Ce formulaire est fictif (projet académique). Les messages ne sont pas envoyés.
                     </div>
 
                     <form>
@@ -95,8 +93,8 @@
 
                         <div class="mb-3">
                             <label for="subject" class="form-label">
-                               Sujet 
-                               <i class="bi bi-tag ms-2"></i> 
+                                Sujet 
+                                <i class="bi bi-tag ms-2"></i> 
                             </label>
                             <select class="form-select" id="subject" required>
                                 <option value="">Choisir un sujet...</option>
@@ -116,8 +114,8 @@
                         </div>
 
                         <button type="submit" class="btn btn-primary w-100" disabled>
-                             Envoyer (inactif - démo)
-                             <i class="bi bi-send ms-2"></i>
+                            Envoyer (inactif - démo)
+                            <i class="bi bi-send ms-2"></i>
                         </button>
                     </form>
                 </div>
@@ -129,7 +127,7 @@
         <div class="col-12">
             <div class="card shadow-sm">
                 <div class="card-body">
-                    <h2 class="h4 mb-4">
+                    <h2 class="h4 mb-4 text-center">
                         Questions fréquentes
                         <i class="bi bi-question-circle-fill text-primary ms-2"></i> 
                     </h2>
@@ -143,8 +141,7 @@
                             </h3>
                             <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
                                 <div class="accordion-body">
-                                    Ajoutez vos produits au panier, puis suivez les étapes du tunnel d'achat : 
-                                    identification, choix de l'adresse, validation du paiement.
+                                    Ajoutez vos produits au panier, puis suivez les étapes du tunnel d'achat : identification, choix de l'adresse, validation du paiement.
                                 </div>
                             </div>
                         </div>
@@ -170,8 +167,7 @@
                             </h3>
                             <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
                                 <div class="accordion-body">
-                                    Oui, vous disposez de 14 jours pour exercer votre droit de rétractation. 
-                                    Consultez nos CGV pour plus d'informations.
+                                    Oui, vous disposez de 14 jours pour exercer votre droit de rétractation. Consultez nos CGV pour plus d'informations.
                                 </div>
                             </div>
                         </div>

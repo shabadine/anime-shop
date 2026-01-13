@@ -13,11 +13,13 @@ class HomeController extends AbstractController
     #[Route('/', name: 'app_home')]
     public function index(ProductRepository $productRepository, Request $request): Response
     {
-       $id = $request->query->get('id');
-       $id = $request->request->get('id');
-       $featuredProducts = $productRepository->findBy(['featured' => true], null, 8);
-       
-       $bestSellers = $productRepository->findBy(['featured' => true], ['createdAt' => 'DESC'], 4);
+        $featuredProducts = $productRepository->findBy(['featured' => true], null, 8);
+        
+        $bestSellers = $productRepository->createQueryBuilder('p')
+            ->where('p.pricePromotion IS NOT NULL')
+            ->setMaxResults(4)
+            ->getQuery()
+            ->getResult();
         
         return $this->render('home/index.html.twig', [
             'featuredProducts' => $featuredProducts,

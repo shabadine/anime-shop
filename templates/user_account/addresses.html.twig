@@ -30,13 +30,13 @@
                             <p class="mb-1">{{ address.zipCode }} {{ address.city }}</p>
                             <p class="mb-3">{{ address.country }}</p>
 
-                            <div class="btn-group btn-group-sm">
-                                <a href="{{ path('app_account_address_edit', {id: address.id}) }}" class="btn btn-outline-primary">
+                             <div class="d-flex gap-2">
+                                <a href="{{ path('app_account_address_edit', {id: address.id}) }}" class="btn btn-outline-primary btn-sm">
                                     <i class="bi bi-pencil"></i> Modifier
                                 </a>
                                 <form method="post" action="{{ path('app_account_address_delete', {id: address.id}) }}" onsubmit="return confirm('Supprimer cette adresse ?');" style="display: inline;">
                                     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ address.id) }}">
-                                    <button type="submit" class="btn btn-outline-danger">
+                                    <button type="submit" class="btn btn-outline-danger btn-sm">
                                         <i class="bi bi-trash"></i> Supprimer
                                     </button>
                                 </form>

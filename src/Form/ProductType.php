@@ -31,9 +31,15 @@ class ProductType extends AbstractType
                 'required' => false
             ])
             ->add('price', MoneyType::class, [
-                'label' => 'Prix (€)',
+                'label' => 'Prix normal (€)',
                 'attr' => ['class' => 'form-control'],
                 'currency' => 'EUR'
+            ])
+            ->add('pricePromotion', MoneyType::class, [
+                'label' => 'Prix promo (€) - Laisser vide si pas de promo',
+                'attr' => ['class' => 'form-control'],
+                'currency' => 'EUR',
+                'required' => false
             ])
             ->add('stock', IntegerType::class, [
                 'label' => 'Stock',

@@ -16,9 +16,6 @@ class CartService
         $this->productRepository = $productRepository;
     }
 
-    /**
-     * Ajoute $quantity exemplaires du produit $id
-    */
     public function add(int $id, int $quantity = 1): void
     {
         $session = $this->requestStack->getSession();
@@ -27,9 +24,6 @@ class CartService
         $session->set('cart', $cart);
     }
 
-    /**
-     * Retire $quantity exemplaires du produit $id (supprime la ligne si qty <= 0)
-     */
     public function remove(int $id, int $quantity = 1): void
     {
         $session = $this->requestStack->getSession();
@@ -42,9 +36,6 @@ class CartService
         $session->set('cart', $cart);
     }
 
-    /**
-     * Récupère le panier détaillé avec les objets Produits depuis la BDD
-     */
     public function getFullCart(): array
     {
         $request = $this->requestStack->getCurrentRequest();
@@ -67,9 +58,7 @@ class CartService
 
         return $cartDetailed;
     }
-    /**
-    * Met à jour la quantité d’un produit dans le panier
-    */
+
     public function updateQuantity(int $id, int $quantity): void
     {
         $session = $this->requestStack->getSession();
@@ -84,21 +73,17 @@ class CartService
         $session->set('cart', $cart);
     }
 
-    /**
-     * Calcule le montant total financier du panier
-     */
     public function getTotal(): float
     {
         $total = 0;
         foreach ($this->getFullCart() as $item) {
-            $total += $item['product']->getPrice() * $item['quantity'];
+            $product = $item['product'];
+            $price = $product->getPricePromotion() ?? $product->getPrice();
+            $total += $price * $item['quantity'];
         }
         return $total;
     }
 
-    /**
-     * Retourne le nombre total d'articles (somme des quantités)
-     */
     public function getItemCount(): int
     {
         $request = $this->requestStack->getCurrentRequest();
@@ -118,10 +103,6 @@ class CartService
         }
     }
 
-    /**
-     * Vide complètement le panier en session
-     *
-     */
     public function clear(): void
     {
         $request = $this->requestStack->getCurrentRequest();
