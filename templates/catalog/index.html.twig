@@ -51,7 +51,7 @@
 
                     <div>
                         <label for="sort-select" class="form-label fw-bold">Trier par</label>
-                        {# Correction Accessibilité : Ajout d'un ID pour l'associer au label #}
+                        
                         <select id="sort-select" class="form-select" onchange="window.location.href=this.value">
                             <option value="{{ path('app_catalog', {category: currentCategory, search: currentSearch, sort: 'name', order: 'asc'}) }}" 
                                     {% if currentSort == 'name' %}selected{% endif %}>

@@ -1,15 +1,110 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin/base.html.twig' %}
 
-{% block title %}Edit Product{% endblock %}
+{% block title %}{{ product.id ? 'Modifier' : 'Nouveau' }} produit{% endblock %}
 
-{% block body %}
-    <h1>Edit Product</h1>
-
-    {{ include('product/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('app_product_index') }}">
-        <i class="bi bi-arrow-left"></i> Back to list
+{% block admin_content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1><i class="bi bi-box-seam me-2"></i> {{ product.id ? 'Modifier' : 'Nouveau' }} produit</h1>
+    <a href="{{ path('admin_product_index') }}" class="btn btn-outline-secondary">
+        <i class="bi bi-arrow-left-circle me-1"></i> Retour à la liste
     </a>
+</div>
 
-    {{ include('product/_delete_form.html.twig') }}
+<div class="card shadow-sm">
+    <div class="card-header admin-product-form-header">
+        <h5 class="mb-0">
+            <i class="bi {{ product.id ? 'bi-pencil-square' : 'bi-plus-circle' }} me-1"></i>
+            {{ product.id ? 'Éditer le produit' : 'Créer un produit' }}
+        </h5>
+    </div>
+    <div class="card-body">
+        {{ form_start(form, {'attr': {'enctype': 'multipart/form-data'}}) }}
+
+        <div class="row g-4">
+            <!-- Colonne gauche : infos principales -->
+            <div class="col-md-8">
+                <!-- Ligne 1 : Nom + Anime -->
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold"><i class="bi bi-tag me-1"></i> Nom</label>
+                        {{ form_widget(form.name, {'attr': {'class': 'form-control', 'placeholder': 'Nom du produit'}}) }}
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold"><i class="bi bi-film me-1"></i> Anime</label>
+                        {{ form_widget(form.animeName, {'attr': {'class': 'form-control', 'placeholder': 'Nom de l\'anime'}}) }}
+                    </div>
+                </div>
+
+                <!-- Description -->
+                <div class="mb-3">
+                    <label class="form-label fw-bold"><i class="bi bi-card-text me-1"></i> Description</label>
+                    {{ form_widget(form.description, {'attr': {'class': 'form-control', 'rows': 5}}) }}
+                </div>
+
+                <!-- Ligne 2 : Prix + Stock + Catégorie -->
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label fw-bold"><i class="bi bi-currency-euro me-1"></i> Prix</label>
+                        {{ form_widget(form.price, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label fw-bold"><i class="bi bi-boxes me-1"></i> Stock</label>
+                        {{ form_widget(form.stock, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label fw-bold"><i class="bi bi-folder me-1"></i> Catégorie</label>
+                        {{ form_widget(form.category, {'attr': {'class': 'form-select'}}) }}
+                    </div>
+                </div>
+
+                <!-- En avant -->
+                <div class="mb-3">
+                    <div class="form-check form-switch">
+                        {{ form_widget(form.featured, {'attr': {'class': 'form-check-input'}}) }}
+                        <label class="form-check-label fw-bold" for="{{ form.featured.vars.id }}">
+                            <i class="bi bi-star me-1"></i> Mettre en avant
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Colonne droite : image -->
+            <div class="col-md-4">
+                <label class="form-label fw-bold"><i class="bi bi-image me-1"></i> Image produit</label>
+
+                {% if product.image %}
+                    <div class="position-relative mb-3">
+                        <img src="{{ asset('uploads/products/' ~ product.image) }}" alt="{{ product.name }}" class="img-fluid rounded shadow-sm">
+                        <div class="position-absolute top-0 end-0 m-2">
+                            <a href="{{ asset('uploads/products/' ~ product.image) }}" class="btn btn-sm btn-light me-1" download title="Télécharger">
+                                <i class="bi bi-download"></i>
+                            </a>
+                            <button type="submit" formaction="{{ path('admin_product_image_delete', {id: product.id}) }}" formmethod="post" class="btn btn-sm btn-danger" title="Supprimer" onclick="return confirm('Supprimer l’image ?');">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="bg-light rounded d-flex align-items-center justify-content-center mb-3" style="height: 200px;">
+                        <span class="text-muted"><i class="bi bi-card-image display-6"></i><br>Aperçu après téléchargement</span>
+                    </div>
+                {% endif %}
+
+                {{ form_row(form.imageFile, {'attr': {'class': 'form-control'}}) }}
+            </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="d-flex gap-3 mt-4">
+            <button class="btn btn-lg {{ product.id ? 'btn-warning' : 'btn-success' }} px-4">
+                <i class="bi bi-check-circle me-2"></i> {{ product.id ? 'Modifier' : 'Créer' }}
+            </button>
+            <a href="{{ path('admin_product_index') }}" class="btn btn-lg btn-outline-secondary px-4">
+                <i class="bi bi-x-circle me-2"></i> Annuler
+            </a>
+        </div>
+
+        {{ form_end(form) }}
+    </div>
+</div>
 {% endblock %}

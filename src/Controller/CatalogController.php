@@ -57,9 +57,9 @@ class CatalogController extends AbstractController
         $products = $paginator->paginate(
         $queryBuilder,
         $request->query->getInt('page', 1),
-        12,
+        6,
         [
-            'sortFieldParameterName' => 'fake-sort', // ← désactive le tri automatique
+            'sortFieldParameterName' => 'fake-sort', 
         ]
 );
 

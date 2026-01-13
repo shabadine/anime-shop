@@ -1,0 +1,74 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Déclaration d'accessibilité{% endblock %}
+
+{% block body %}
+<div class="container py-5">
+    <h1>Déclaration d'accessibilité</h1>
+    
+    <section class="mt-4">
+        <h2>Conformité</h2>
+        <p>
+            Le site Anime Goodies Shop s'efforce d'être conforme aux 
+            <abbr title="Web Content Accessibility Guidelines">WCAG</abbr> 2.1 niveau AA.
+        </p>
+    </section>
+
+    <section class="mt-4">
+        <h2>Technologies utilisées</h2>
+        <ul>
+            <li>HTML5</li>
+            <li>CSS3</li>
+            <li>JavaScript</li>
+            <li>ARIA (Accessible Rich Internet Applications)</li>
+        </ul>
+    </section>
+
+    <section class="mt-4">
+        <h2>Fonctionnalités d'accessibilité</h2>
+        <ul>
+            <li>Navigation au clavier complète</li>
+            <li>Contrastes de couleurs respectés</li>
+            <li>Textes alternatifs sur les images</li>
+            <li>Formulaires accessibles avec labels</li>
+            <li>Focus visible sur tous les éléments interactifs</li>
+            <li>Structure sémantique HTML5</li>
+            <li>Support des lecteurs d'écran</li>
+        </ul>
+    </section>
+
+    <section class="mt-4">
+        <h2>Raccourcis clavier</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Touche</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><kbd>Tab</kbd></td>
+                    <td>Naviguer entre les éléments interactifs</td>
+                </tr>
+                <tr>
+                    <td><kbd>Entrée</kbd> ou <kbd>Espace</kbd></td>
+                    <td>Activer un bouton ou un lien</td>
+                </tr>
+                <tr>
+                    <td><kbd>Échap</kbd></td>
+                    <td>Fermer les modales</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <section class="mt-4">
+        <h2>Contact</h2>
+        <p>
+            Pour signaler un problème d'accessibilité : 
+            <a href="mailto:contact@anime-shop.fr">contact@anime-shop.fr</a>
+        </p>
+    </section>
+</div>
+{% endblock %}

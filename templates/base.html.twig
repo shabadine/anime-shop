@@ -37,25 +37,39 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_home') }}" {% if app.request.get('_route') == 'app_home' %}aria-current="page"{% endif %}> 
-                         <i class="bi bi-shop"></i>
-                        Accueil</a>
+                        <a class="nav-link" href="{{ path('app_home') }}" 
+                        {% if app.request.attributes.get('_route') == 'app_home' %}aria-current="page"{% endif %}> 
+                        <i class="bi bi-shop"></i> Accueil
+                        </a>
                     </li>
+
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_catalog') }}" {% if app.request.get('_route') starts with 'app_catalog' %}aria-current="page"{% endif %}>
-                            <i class="bi bi-card-list"></i>
-                        Catalogue</a>
+                        <a class="nav-link" href="{{ path('app_catalog') }}" 
+                        {% if app.request.attributes.get('_route') starts with 'app_catalog' %}aria-current="page"{% endif %}>
+                        <i class="bi bi-card-list"></i> Catalogue
+                        </a>
                     </li>
+
+                    {# Ajout du lien Contact #}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_contact') }}" 
+                        {% if app.request.attributes.get('_route') == 'app_contact' %}aria-current="page"{% endif %}>
+                        <i class="bi bi-envelope"></i> Contact
+                        </a>
+                    </li>
+
                     {% if app.user %}
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ path('app_account') }}" {% if app.request.get('_route') starts with 'app_account' %}aria-current="page"{% endif %}>
-                              <i class="bi bi-person-circle"></i> Mon compte
+                            <a class="nav-link" href="{{ path('app_account') }}" 
+                            {% if app.request.attributes.get('_route') starts with 'app_account' %}aria-current="page"{% endif %}>
+                            <i class="bi bi-person-circle"></i> Mon compte
                             </a>
                         </li>
                         {% if is_granted('ROLE_ADMIN') %}
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ path('admin_dashboard') }}" {% if app.request.get('_route') starts with 'admin' %}aria-current="page"{% endif %}>
-                                  <i class="bi bi-gear-fill"></i> Admin
+                                <a class="nav-link" href="{{ path('admin_dashboard') }}" 
+                                {% if app.request.attributes.get('_route') starts with 'admin' %}aria-current="page"{% endif %}>
+                                <i class="bi bi-gear-fill"></i> Admin
                                 </a>
                             </li>
                         {% endif %}

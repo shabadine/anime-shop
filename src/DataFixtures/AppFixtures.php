@@ -28,6 +28,8 @@ class AppFixtures extends Fixture
         $admin->setLastName('Anime Shop');
         $admin->setRoles(['ROLE_ADMIN']);
         $admin->setPassword($this->passwordHasher->hashPassword($admin, 'admin123'));
+        $admin->setIsVerified(true);
+
         $manager->persist($admin);
 
         // Créer un utilisateur test
@@ -37,7 +39,7 @@ class AppFixtures extends Fixture
         $user->setLastName('Dupont');
         $user->setPhone('0612345678');
         $user->setPassword($this->passwordHasher->hashPassword($user, 'user123'));
-        $user->setCreatedAt(new \DateTimeImmutable());
+         $user->setIsVerified(true);
         $manager->persist($user);
 
         // Créer une adresse pour l'utilisateur
