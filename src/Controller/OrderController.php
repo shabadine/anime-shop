@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Order;
 use App\Entity\OrderItem;
 use App\Service\CartService;
+use App\Service\OrderService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -54,46 +55,22 @@ class OrderController extends AbstractController
 
     #[Route('/confirmer', name: 'app_order_confirm', methods: ['POST'])]
     public function confirm(
-        CartService $cartService,
-        EntityManagerInterface $em
+        OrderService $orderService, 
+        CartService $cartService
     ): Response {
-        $items = $cartService->getFullCart();
-
-        if (empty($items)) {
+        if (empty($cartService->getFullCart())) {
             $this->addFlash('error', 'Votre panier est vide');
             return $this->redirectToRoute('app_cart_index');
         }
 
-        // Créer la commande
-        $order = new Order();
-        $order->setUser($this->getUser());
-        $order->setTotalAmount($cartService->getTotal() + 5); // + frais de port
-        $order->setStatus('en_attente');
-
-        // Ajouter les items
-        foreach ($items as $item) {
-            $orderItem = new OrderItem();
-            $orderItem->setProduct($item['product']);
-            $orderItem->setQuantity($item['quantity']);
-            $orderItem->setUnitPrice($item['product']->getPrice());
-            $orderItem->setOrder($order);
-
-            $em->persist($orderItem);
-
-            // Décrémenter le stock
-            $product = $item['product'];
-            $product->setStock($product->getStock() - $item['quantity']);
-        }
-
-        $em->persist($order);
-        $em->flush();
-
-        // Vider le panier
-        $cartService->clear();
+      
+        $order = $orderService->createOrder($this->getUser());
 
         $this->addFlash('success', 'Commande validée avec succès !');
 
-        return $this->redirectToRoute('app_order_success', ['orderNumber' => $order->getOrderNumber()]);
+        return $this->redirectToRoute('app_order_success', [
+            'orderNumber' => $order->getOrderNumber()
+        ]);
     }
 
     #[Route('/succes/{orderNumber}', name: 'app_order_success')]
