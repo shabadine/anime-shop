@@ -11,9 +11,8 @@
 
 /* Base & Typographie */
 body {
-    font-family: 'Roboto', sans-serif;
-    color: var(--dark-color);
-    background-color: var(--light-bg);
+    background-color: #f8f9fa; 
+    background-image: url('https://www.transparenttextures.com/patterns/cubes.png'); 
 }
 
 h1, h2, h3, h4, h5, h6 {

@@ -76,20 +76,23 @@
         <div class="row g-4">
             {% for product in bestSellers %}
                 <div class="col-md-3">
-                    <article class="card shadow-sm h-100 position-relative">
+                    <article class="card shadow-sm h-100 position-relative product-card">
                         {% if product.pricePromotion %}
-                            <span class="badge bg-danger position-absolute top-0 start-0 m-2 z-1">PROMO</span>
+                            <span class="badge bg-danger position-absolute top-0 start-0 m-2 z-1">
+                                -{{ ((1 - (product.pricePromotion / product.price)) * 100)|round }}%
+                            </span>
                         {% endif %}
 
                         <img src="{{ asset('uploads/products/' ~ product.image) }}" 
                              alt="{{ product.name }}" 
                              class="card-img-top" 
-                             style="height: 200px; object-fit: cover;">
+                             width="300" height="300"
+                             style="height: 200px; object-fit: contain; background: white;">
                         
                         <div class="card-body text-center d-flex flex-column">
                             <h3 class="h5 card-title mb-2">{{ product.name }}</h3>
                             
-                            <div class="mb-3">
+                            <div class="mb-3 mt-auto">
                                 {% if product.pricePromotion %}
                                     <p class="mb-0 text-muted text-decoration-line-through small">{{ product.price }} €</p>
                                     <p class="text-danger fw-bold fs-5 mb-0">{{ product.pricePromotion }} €</p>
@@ -99,7 +102,7 @@
                             </div>
 
                              <a href="{{ path('app_product_show', {slug: product.slug}) }}" 
-                                class="btn btn-danger btn-sm mt-auto"
+                                class="btn btn-danger btn-sm"
                                 aria-label="Voir l'article {{ product.name }}">Voir l'article</a>
                         </div>
                     </article>
