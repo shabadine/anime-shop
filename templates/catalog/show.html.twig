@@ -4,11 +4,11 @@
 
 {% block body %}
 <div class="container py-5">
-    <nav aria-label="Fil d'Ariane">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ path('app_home') }}">Accueil</a></li>
-            <li class="breadcrumb-item"><a href="{{ path('app_catalog') }}">Catalogue</a></li>
-            <li class="breadcrumb-item"><a href="{{ path('app_catalog', {category: product.category.id}) }}">{{ product.category.name }}</a></li>
+    <nav aria-label="fil d'Ariane" class="mb-4">
+        <ol class="breadcrumb bg-transparent p-0">
+            <li class="breadcrumb-item"><a href="{{ path('app_home') }}" class="text-danger text-decoration-none">Accueil</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('app_catalog') }}" class="text-danger text-decoration-none">Catalogue</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('app_catalog', {category: product.category.id}) }}" class="text-danger text-decoration-none">{{ product.category.name }}</a></li>
             <li class="breadcrumb-item active" aria-current="page">{{ product.name }}</li>
         </ol>
     </nav>
@@ -36,7 +36,7 @@
                 
                 <span class="badge bg-dark fs-6">{{ product.category.name }}</span>
                 {% if product.featured %}
-                    <span class="badge bg-danger fs-6">Coup de cœur <i class="bi bi-heart-fill" aria-hidden="true"></i></span>
+                    <span class="badge bg-danger fs-6">Coup de cœur <i class="bi bi-heart-fill ms-2"" aria-hidden="true"></i></span>
                 {% endif %}
             </div>
 

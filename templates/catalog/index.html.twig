@@ -22,7 +22,7 @@
                         </div>
                        
                         <button type="submit" class="btn btn-dark w-100">
-                            Rechercher <i class="bi bi-search"></i>
+                            Rechercher <i class="bi bi-search ms-2"></i>
                         </button>
                     </form>
 
@@ -148,8 +148,8 @@
             {% endfor %}
             </div>
 
-            <nav class="d-flex justify-content-center" aria-label="Pagination des produits">
-                {{ knp_pagination_render(products) }}
+            <nav class="d-flex justify-content-center mt-5" aria-label="Pagination des produits">
+                {{ knp_pagination_render(products, '@KnpPaginator/Pagination/bootstrap_v5_pagination.html.twig') }}
             </nav>
         </main>
     </div>
