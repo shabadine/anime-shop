@@ -19,7 +19,7 @@ class OrderService
         $order->setUser($user);
         $order->setCreatedAt(new \DateTimeImmutable());
         $order->setOrderNumber(uniqid('CMD-'));
-        $order->setStatus('PENDING'); 
+        $order->setStatus('en_attente'); 
         $order->setTotalAmount($this->cartService->getTotal());
 
         foreach ($this->cartService->getFullCart() as $item) {

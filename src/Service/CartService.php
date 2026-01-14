@@ -8,8 +8,8 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 class CartService
 {
-    private $requestStack;
-    private $productRepository;
+    private RequestStack $requestStack;
+    private ProductRepository $productRepository;
 
     public function __construct(RequestStack $requestStack, ProductRepository $productRepository)
     {
