@@ -2,11 +2,11 @@
 
 namespace App\Controller;
 
-use App\Entity\Order;
-use App\Entity\OrderItem;
+
+use App\Entity\User;
 use App\Service\CartService;
 use App\Service\OrderService;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\OrderRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -26,7 +26,7 @@ class OrderController extends AbstractController
             return $this->redirectToRoute('app_cart_index');
         }
 
-        // Vérifier les adresses de l'utilisateur
+        /** @var User $user */
         $user = $this->getUser();
         $addresses = $user->getAddresses();
 
@@ -73,10 +73,11 @@ class OrderController extends AbstractController
         ]);
     }
 
-    #[Route('/succes/{orderNumber}', name: 'app_order_success')]
-    public function success(string $orderNumber, EntityManagerInterface $em): Response
+   #[Route('/succes/{orderNumber}', name: 'app_order_success')]
+    public function success(string $orderNumber, OrderRepository $orderRepository): Response
     {
-        $order = $em->getRepository(Order::class)->findOneBy(['orderNumber' => $orderNumber]);
+        // Utilisation directe du Repository injecté
+        $order = $orderRepository->findOneBy(['orderNumber' => $orderNumber]);
 
         if (!$order || $order->getUser() !== $this->getUser()) {
             throw $this->createNotFoundException('Commande introuvable');
