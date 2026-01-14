@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Address;
 use App\Form\AddressType;
 use App\Form\UserProfileType;
+use App\Entity\User;
 use App\Repository\OrderRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -32,6 +33,7 @@ class UserAccountController extends AbstractController
         EntityManagerInterface $em,
         UserPasswordHasherInterface $passwordHasher
     ): Response {
+        /** @var User $user */
         $user = $this->getUser();
         $form = $this->createForm(UserProfileType::class, $user);
         $form->handleRequest($request);
@@ -84,7 +86,7 @@ class UserAccountController extends AbstractController
 
     #[Route('/adresses', name: 'app_account_addresses')]
     public function addresses(): Response
-    {
+    {   /** @var User $user */
         $user = $this->getUser();
 
         return $this->render('user_account/addresses.html.twig', [
