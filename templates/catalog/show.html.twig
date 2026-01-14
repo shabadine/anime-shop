@@ -81,86 +81,85 @@
                         <div class="col-sm-4">
                             <label for="quantity" class="form-label fw-bold small text-uppercase">Quantité</label>
                             <div class="input-group">
-                                <button class="btn btn-white border" type="button" onclick="decreaseQty()" aria-label="Diminuer la quantité">
-                                    <i class="bi bi-dash"></i>
-                                </button>
-                                <input type="number" class="form-control text-center border-x-0" id="quantity" name="quantity" value="1" min="1" max="{{ product.stock }}" aria-label="Quantité sélectionnée">
-                                <button class="btn btn-white border" type="button" onclick="increaseQty()" aria-label="Augmenter la quantité">
-                                    <i class="bi bi-plus"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="col-sm-8">
-                            <button type="submit" class="btn btn-danger btn-lg w-100 rounded-pill fw-bold shadow-sm py-3">
-                                <i class="bi bi-cart-plus me-2"></i> Ajouter au panier
+                            <button class="btn btn-danger border px-3" type="button" aria-label="Diminuer la quantité">
+                                <i class="bi bi-dash-lg"></i>
+                            </button>
+                            
+                            <input type="number" 
+                                class="form-control text-center fw-bold" 
+                                id="quantity" 
+                                name="quantity" 
+                                value="1" 
+                                min="1" 
+                                max="{{ product.stock }}" 
+                                style="width: 70px !important; flex: none;" 
+                                aria-label="Quantité sélectionnée">
+                            
+                            <button class="btn btn-danger border px-3" type="button" aria-label="Augmenter la quantité">
+                                <i class="bi bi-plus-lg"></i>
                             </button>
                         </div>
-                    </div>
-                </form>
-            {% endif %}
+                                                </div>
+                                                <div class="col-sm-8">
+                                                    <button type="submit" class="btn btn-danger btn-lg w-100 rounded-pill fw-bold shadow-sm py-3">
+                                                        <i class="bi bi-cart-plus me-2"></i> Ajouter au panier
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    {% endif %}
 
-            <div class="accordion border-0" id="productDetails">
-                <div class="accordion-item border-0 border-bottom">
-                    <h2 class="accordion-header">
-                        <button class="accordion-button bg-transparent fw-bold px-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#descContent">
-                            Description du produit
-                        </button>
-                    </h2>
-                    <div id="descContent" class="accordion-collapse collapse show">
-                        <div class="accordion-body px-0 text-muted">
-                            {{ product.description }}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    {% if similarProducts %}
-        <section class="mt-5 pt-5">
-            <h2 class="section-title text-start mb-4">Vous aimerez aussi</h2>
-            <div class="row g-4">
-                {% for similarProduct in similarProducts %}
-                    <div class="col-md-3">
-                        <article class="card h-100 shadow-sm border-0 product-card">
-                            <div class="bg-dark text-white p-2 text-center">
-                                <span class="small fw-bold">{{ similarProduct.category.name }}</span>
-                            </div>
-                            <div class="card-img-top bg-light" style="height: 200px; overflow: hidden;">
-                                {% if similarProduct.image %}
-                                    <img src="{{ asset('uploads/products/' ~ similarProduct.image) }}" 
-                                         class="w-100 h-100" 
-                                         style="object-fit: cover;" 
-                                         alt="{{ similarProduct.name }}"
-                                         width="300"
-                                         height="200">
-                                {% endif %}
-                            </div>
-                            <div class="card-body d-flex flex-column p-3">
-                                <h3 class="h6 card-title mb-1">{{ similarProduct.name }}</h3>
-                                <p class="text-muted small mb-2">{{ similarProduct.animeName }}</p>
-                                <div class="mt-auto d-flex justify-content-between align-items-center">
-                                    <span class="fw-bold text-danger">{{ similarProduct.pricePromotion ?: similarProduct.price }}€</span>
-                                    <a href="{{ path('app_product_show', {slug: similarProduct.slug}) }}" class="btn btn-sm btn-outline-danger rounded-pill px-3">Voir</a>
+                                    <div class="accordion border-0" id="productDetails">
+                                        <div class="accordion-item border-0 border-bottom">
+                                            <h2 class="accordion-header">
+                                                <button class="accordion-button bg-transparent fw-bold px-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#descContent">
+                                                    Description du produit
+                                                </button>
+                                            </h2>
+                                            <div id="descContent" class="accordion-collapse collapse show">
+                                                <div class="accordion-body px-0 text-muted">
+                                                    {{ product.description }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </article>
-                    </div>
-                {% endfor %}
-            </div>
-        </section>
-    {% endif %}
-</div>
 
-<script>
-    function increaseQty() {
-        const input = document.getElementById('quantity');
-        const max = parseInt(input.getAttribute('max'));
-        if (parseInt(input.value) < max) input.value = parseInt(input.value) + 1;
-    }
-    function decreaseQty() {
-        const input = document.getElementById('quantity');
-        if (parseInt(input.value) > 1) input.value = parseInt(input.value) - 1;
-    }
-</script>
-{% endblock %}
+                            {% if similarProducts %}
+                                <section class="mt-5 pt-5">
+                                    <h2 class="section-title text-start mb-4">Vous aimerez aussi</h2>
+                                    <div class="row g-4">
+                                        {% for similarProduct in similarProducts %}
+                                            <div class="col-md-3">
+                                                <article class="card h-100 shadow-sm border-0 product-card">
+                                                    <div class="bg-dark text-white p-2 text-center">
+                                                        <span class="small fw-bold">{{ similarProduct.category.name }}</span>
+                                                    </div>
+                                                    <div class="card-img-top bg-light" style="height: 200px; overflow: hidden;">
+                                                        {% if similarProduct.image %}
+                                                            <img src="{{ asset('uploads/products/' ~ similarProduct.image) }}" 
+                                                                class="w-100 h-100" 
+                                                                style="object-fit: cover;" 
+                                                                alt="{{ similarProduct.name }}"
+                                                                width="300"
+                                                                height="200">
+                                                        {% endif %}
+                                                    </div>
+                                                    <div class="card-body d-flex flex-column p-3">
+                                                        <h3 class="h6 card-title mb-1">{{ similarProduct.name }}</h3>
+                                                        <p class="text-muted small mb-2">{{ similarProduct.animeName }}</p>
+                                                        <div class="mt-auto d-flex justify-content-between align-items-center">
+                                                            <span class="fw-bold text-danger">{{ similarProduct.pricePromotion ?: similarProduct.price }}€</span>
+                                                            <a href="{{ path('app_product_show', {slug: similarProduct.slug}) }}" class="btn btn-sm btn-outline-danger rounded-pill px-3">Voir</a>
+                                                        </div>
+                                                    </div>
+                                                </article>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </section>
+                            {% endif %}
+                       </div>
+
+            {% endblock %}

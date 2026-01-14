@@ -36,6 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (decreaseBtn && decreaseBtn.tagName === 'BUTTON') {
             decreaseBtn.addEventListener('click', function(e) {
                 e.preventDefault();
+                e.stopImmediatePropagation()
                 const currentValue = parseInt(input.value) || min;
                 if (currentValue > min) {
                     input.value = currentValue - 1;
@@ -48,6 +49,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (increaseBtn && increaseBtn.tagName === 'BUTTON') {
             increaseBtn.addEventListener('click', function(e) {
                 e.preventDefault();
+                e.stopImmediatePropagation();
                 const currentValue = parseInt(input.value) || min;
                 if (currentValue < max) {
                     input.value = currentValue + 1;

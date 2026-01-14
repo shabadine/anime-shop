@@ -38,8 +38,7 @@
                                                     {% if item.product.image %}
                                                         <img src="{{ asset('uploads/products/' ~ item.product.image) }}" 
                                                              alt="{{ item.product.name }}" 
-                                                             class="img-fluid rounded cart-table-img"
-                                                             >
+                                                             class="img-fluid rounded cart-table-img">
                                                     {% else %}
                                                         <div class="bg-light rounded d-flex align-items-center justify-content-center cart-no-image">
                                                             <span class="text-muted small">Pas d'image</span>
@@ -61,27 +60,25 @@
                                         </td>
                                         <td class="text-center">
                                             <form method="post" action="{{ path('app_cart_update', {id: item.product.id}) }}" class="d-inline">
-                                                <div class="input-group" style="max-width: 120px; margin: 0 auto;">
-                                                    <button type="button" class="btn btn-outline-secondary btn-sm" onclick="decreaseQty{{ item.product.id }}()">-</button>
-                                                    <input type="number" name="quantity" id="qty{{ item.product.id }}" value="{{ item.quantity }}" min="1" max="{{ item.product.stock }}" class="form-control text-center" style="max-width: 50px;">
-                                                    <button type="button" class="btn btn-outline-secondary btn-sm" onclick="increaseQty{{ item.product.id }}()">+</button>
+                                                    <div class="input-group shadow-sm" style="max-width: 130px; margin: 0 auto;">
+                                                    <button type="button" class="btn btn-danger border-0 px-2" style="border-radius: 8px 0 0 8px;">
+                                                        <i class="bi bi-dash-lg"></i>
+                                                    </button>
+                                                    
+                                                    <input type="number" 
+                                                        name="quantity" 
+                                                        value="{{ item.quantity }}" 
+                                                        min="1" 
+                                                        max="{{ item.product.stock }}" 
+                                                        class="form-control text-center fw-bold border-primary-subtle" 
+                                                        style="width: 50px; pointer-events: none;">
+                                                        
+                                                    <button type="button" class="btn btn-danger border-0 px-2" style="border-radius: 0 8px 8px 0;">
+                                                        <i class="bi bi-plus-lg"></i>
+                                                    </button>
                                                 </div>
-                                                <button type="submit" class="btn btn-link btn-sm text-decoration-none">Mettre à jour</button>
+                                              <button type="submit" class="btn btn-link btn-sm text-decoration-none mt-1">Mettre à jour</button>
                                             </form>
-                                            <script>
-                                                function increaseQty{{ item.product.id }}() {
-                                                    const input = document.getElementById('qty{{ item.product.id }}');
-                                                    if (parseInt(input.value) < parseInt(input.max)) {
-                                                        input.value = parseInt(input.value) + 1;
-                                                    }
-                                                }
-                                                function decreaseQty{{ item.product.id }}() {
-                                                    const input = document.getElementById('qty{{ item.product.id }}');
-                                                    if (parseInt(input.value) > 1) {
-                                                        input.value = parseInt(input.value) - 1;
-                                                    }
-                                                }
-                                            </script>
                                         </td>
                                         <td class="text-center">
                                            <strong class="cart-total-price">{{ (item.product.price * item.quantity)|number_format(2, '.', '') }}€</strong>
@@ -117,7 +114,7 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between mb-2">
                             <span>Sous-total :</span>
-                            <strong class="cart-summary-total">{{ (total + 5)|number_format(2, '.', '') }}€</strong>
+                            <strong class="cart-summary-total">{{ total|number_format(2, '.', '') }}€</strong>
                         </div>
                         <div class="d-flex justify-content-between mb-2">
                             <span>Livraison :</span>
