@@ -127,7 +127,7 @@
                             </div>
 
                             {% if similarProducts %}
-                                <section class="mt-5 pt-5">
+                              <section class="mt-5 pt-5">
                                     <h2 class="section-title text-start mb-4">Vous aimerez aussi</h2>
                                     <div class="row g-4">
                                         {% for similarProduct in similarProducts %}
@@ -141,17 +141,28 @@
                                                             <img src="{{ asset('uploads/products/' ~ similarProduct.image) }}" 
                                                                 class="w-100 h-100" 
                                                                 style="object-fit: cover;" 
-                                                                alt="{{ similarProduct.name }}"
-                                                                width="300"
-                                                                height="200">
+                                                                alt="{{ similarProduct.name }}">
                                                         {% endif %}
                                                     </div>
                                                     <div class="card-body d-flex flex-column p-3">
                                                         <h3 class="h6 card-title mb-1">{{ similarProduct.name }}</h3>
                                                         <p class="text-muted small mb-2">{{ similarProduct.animeName }}</p>
-                                                        <div class="mt-auto d-flex justify-content-between align-items-center">
-                                                            <span class="fw-bold text-danger">{{ similarProduct.pricePromotion ?: similarProduct.price }}€</span>
-                                                            <a href="{{ path('app_product_show', {slug: similarProduct.slug}) }}" class="btn btn-sm btn-outline-danger rounded-pill px-3">Voir</a>
+                                                        
+                                                        <div class="mt-auto">
+                                                            {# Bloc Promo ajouté ici #}
+                                                            <div class="d-flex align-items-center gap-2 mb-2 flex-wrap">
+                                                                {% if similarProduct.pricePromotion %}
+                                                                    <span class="fw-bold text-danger">{{ similarProduct.pricePromotion }}€</span>
+                                                                    <span class="text-muted text-decoration-line-through x-small" style="font-size: 0.75rem;">{{ similarProduct.price }}€</span>
+                                                                    <span class="badge bg-warning text-dark p-1" style="font-size: 0.65rem;">
+                                                                        -{{ ((1 - (similarProduct.pricePromotion / similarProduct.price)) * 100)|round }}%
+                                                                    </span>
+                                                                {% else %}
+                                                                    <span class="fw-bold text-danger">{{ similarProduct.price }}€</span>
+                                                                {% endif %}
+                                                            </div>
+                                                            
+                                                            <a href="{{ path('app_product_show', {slug: similarProduct.slug}) }}" class="btn btn-sm btn-outline-danger rounded-pill w-100">Voir</a>
                                                         </div>
                                                     </div>
                                                 </article>
