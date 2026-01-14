@@ -91,7 +91,7 @@
                     <div class="card-img-top p-0" style="height: 250px; overflow: hidden; position: relative;">
                         {% if product.image %}
                             <img src="{{ asset('uploads/products/' ~ product.image) }}" 
-                                alt="{{ product.name }}" 
+                                alt="Photo de :{{ product.name }}" 
                                 class="w-100 h-100" 
                                 style="object-fit: cover;"
                                 loading="lazy">
