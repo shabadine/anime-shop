@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Entity\Product;
 use App\Repository\ProductRepository;
 use Symfony\Component\HttpFoundation\RequestStack;
 
@@ -110,4 +111,9 @@ class CartService
             $this->requestStack->getSession()->remove('cart');
         }
     }
+
+    public function hasEnoughStock(Product $product, int $requestedQuantity): bool
+{
+    return $product->getStock() >= $requestedQuantity;
+}
 }
