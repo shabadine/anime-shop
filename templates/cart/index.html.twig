@@ -6,16 +6,16 @@
 <div class="container py-5">
     <h1 class="mb-4"> Mon Panier</h1>
 
+    {# État vide : Redirection catalogue #}
     {% if items is empty %}
         <div class="alert alert-info text-center py-5 cart-empty-alert">
             <h3>Votre panier est vide</h3>
             <p class="lead">Découvrez nos produits et ajoutez vos coups de cœur !</p>
-            <a href="{{ path('app_catalog') }}" class="btn btn-primary btn-lg mt-3">
-                Voir le catalogue
-            </a>
+            <a href="{{ path('app_catalog') }}" class="btn btn-primary btn-lg mt-3">Voir le catalogue</a>
         </div>
     {% else %}
         <div class="row">
+            {# Colonne Gauche : Liste des articles #}
             <div class="col-lg-8">
                 <div class="card shadow-sm mb-4">
                     <div class="card-body">
@@ -32,13 +32,12 @@
                             <tbody>
                                 {% for item in items %}
                                     <tr>
+                                        {# Produit : Image (fallback inclus) + Meta-données #}
                                         <td>
                                             <div class="d-flex align-items-center">
                                                 <div class="me-3" style="width: 80px; height: 80px;">
                                                     {% if item.product.image %}
-                                                        <img src="{{ asset('uploads/products/' ~ item.product.image) }}" 
-                                                             alt="{{ item.product.name }}" 
-                                                             class="img-fluid rounded cart-table-img">
+                                                        <img src="{{ asset('uploads/products/' ~ item.product.image) }}" alt="{{ item.product.name }}" class="img-fluid rounded cart-table-img">
                                                     {% else %}
                                                         <div class="bg-light rounded d-flex align-items-center justify-content-center cart-no-image">
                                                             <span class="text-muted small">Pas d'image</span>
@@ -47,45 +46,35 @@
                                                 </div>
                                                 <div>
                                                     <h6 class="mb-1">
-                                                        <a href="{{ path('app_product_show', {slug: item.product.slug}) }}" class="text-decoration-none text-dark">
-                                                            {{ item.product.name }}
-                                                        </a>
+                                                        <a href="{{ path('app_product_show', {slug: item.product.slug}) }}" class="text-decoration-none text-dark">{{ item.product.name }}</a>
                                                     </h6>
                                                     <small class="text-muted">{{ item.product.animeName }}</small>
                                                 </div>
                                             </div>
                                         </td>
-                                        <td class="text-center">
-                                            <strong>{{ item.product.price }}€</strong>
-                                        </td>
+                                        <td class="text-center"><strong>{{ item.product.price }}€</strong></td>
+
+                                        {# Mise à jour quantité : Input restreint (lecture seule) via JS #}
                                         <td class="text-center">
                                             <form method="post" action="{{ path('app_cart_update', {id: item.product.id}) }}" class="d-inline">
-                                                    <div class="input-group shadow-sm" style="max-width: 130px; margin: 0 auto;">
-                                                    <button type="button" class="btn btn-danger border-0 px-2" style="border-radius: 8px 0 0 8px;">
-                                                        <i class="bi bi-dash-lg"></i>
-                                                    </button>
-                                                    
-                                                    <input type="number" 
-                                                        name="quantity" 
-                                                        value="{{ item.quantity }}" 
-                                                        min="1" 
-                                                        max="{{ item.product.stock }}" 
-                                                        class="form-control text-center fw-bold border-primary-subtle" 
-                                                        style="width: 50px; pointer-events: none;">
-                                                        
-                                                    <button type="button" class="btn btn-danger border-0 px-2" style="border-radius: 0 8px 8px 0;">
-                                                        <i class="bi bi-plus-lg"></i>
-                                                    </button>
+                                                <div class="input-group shadow-sm" style="max-width: 130px; margin: 0 auto;">
+                                                    <button type="button" class="btn btn-danger border-0 px-2"><i class="bi bi-dash-lg"></i></button>
+                                                    <input type="number" name="quantity" value="{{ item.quantity }}" min="1" max="{{ item.product.stock }}" class="form-control text-center fw-bold" style="pointer-events: none;">
+                                                    <button type="button" class="btn btn-danger border-0 px-2"><i class="bi bi-plus-lg"></i></button>
                                                 </div>
-                                              <button type="submit" class="btn btn-link btn-sm text-decoration-none mt-1">Mettre à jour</button>
+                                                <button type="submit" class="btn btn-link btn-sm mt-1">Mettre à jour</button>
                                             </form>
                                         </td>
+
+                                        {# Sous-total ligne #}
                                         <td class="text-center">
-                                           <strong class="cart-total-price">{{ (item.product.price * item.quantity)|number_format(2, '.', '') }}€</strong>
+                                            <strong class="cart-total-price">{{ (item.product.price * item.quantity)|number_format(2, '.', '') }}€</strong>
                                         </td>
+
+                                        {# Suppression unitaire #}
                                         <td class="text-center">
-                                            <a href="{{ path('app_cart_remove', {id: item.product.id}) }}" class="btn btn-outline-danger btn-sm" onclick="return confirm('Retirer ce produit du panier ?')">
-                                                <i class="bi bi-trash"></i> Supprimer
+                                            <a href="{{ path('app_cart_remove', {id: item.product.id}) }}" class="btn btn-outline-danger btn-sm" onclick="return confirm('Retirer ce produit ?')">
+                                                <i class="bi bi-trash"></i>
                                             </a>
                                         </td>
                                     </tr>
@@ -93,19 +82,16 @@
                             </tbody>
                         </table>
 
+                        {# Purge globale du panier #}
                         <div class="text-end mt-3">
-                            <a href="{{ path('app_cart_clear') }}" class="btn btn-outline-secondary" onclick="return confirm('Vider le panier ?')">
-                                Vider le panier
-                            </a>
+                            <a href="{{ path('app_cart_clear') }}" class="btn btn-outline-secondary" onclick="return confirm('Vider le panier ?')">Vider le panier</a>
                         </div>
                     </div>
                 </div>
-
-                <a href="{{ path('app_catalog') }}" class="btn btn-outline-primary">
-                    ← Continuer mes achats
-                </a>
+                <a href="{{ path('app_catalog') }}" class="btn btn-outline-primary">← Continuer mes achats</a>
             </div>
 
+            {# Colonne Droite : Calculs et Checkout #}
             <div class="col-lg-4">
                 <div class="card shadow-sm sticky-top" style="top: 20px;">
                     <div class="card-header cart-summary-header">
@@ -126,14 +112,11 @@
                             <strong style="font-size: 1.2rem; color: #FF6B6B;">{{ (total + 5)|number_format(2, '.', '') }}€</strong>
                         </div>
 
+                        {# Logique d'accès au tunnel d'achat selon authentification #}
                         {% if app.user %}
-                            <a href="{{ path('app_order_prepare') }}" class="btn btn-primary w-100 btn-lg">
-                                Passer commande →
-                            </a>
+                            <a href="{{ path('app_order_prepare') }}" class="btn btn-primary w-100 btn-lg">Passer commande →</a>
                         {% else %}
-                            <a href="{{ path('app_login') }}" class="btn btn-primary w-100 btn-lg">
-                                Se connecter pour commander
-                            </a>
+                            <a href="{{ path('app_login') }}" class="btn btn-primary w-100 btn-lg">Se connecter pour commander</a>
                             <p class="text-center mt-2 mb-0 small text-muted">
                                 Pas de compte ? <a href="{{ path('app_register') }}">S'inscrire</a>
                             </p>
@@ -143,7 +126,7 @@
 
                 <div class="card shadow-sm mt-3">
                     <div class="card-body cart-payment-info">
-                        <h6> Modes de paiement acceptés</h6>
+                        <h6> Modes de paiement</h6>
                         <p class="text-muted small mb-0">Carte bancaire (simulation)</p>
                     </div>
                 </div>

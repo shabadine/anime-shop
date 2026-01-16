@@ -27,17 +27,17 @@ class OrderRepository extends ServiceEntityRepository
 
     return $result ?? 0;
 }
-    public function findTopSelling(int $max = 5): array
-    {
-        return $this->createQueryBuilder('o')
-            ->select('p as product', 'SUM(oi.quantity) as qty')
-            ->join('o.items', 'oi')
-            ->join('oi.product', 'p')
-            ->groupBy('p.id')
-            ->orderBy('qty', 'DESC')
-            ->setMaxResults($max)
-            ->getQuery()
-            ->getResult();
-    }
+   public function findTopSelling(int $max = 5): array
+{
+    return $this->createQueryBuilder('o')
+        ->select('p as product', 'SUM(oi.quantity) as qty')
+        ->join('o.orderItems', 'oi') // Correction du nom ici
+        ->join('oi.product', 'p')
+        ->groupBy('p.id')
+        ->orderBy('qty', 'DESC')
+        ->setMaxResults($max)
+        ->getQuery()
+        ->getResult();
+}
 
 }

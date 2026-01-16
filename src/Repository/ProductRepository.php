@@ -91,4 +91,24 @@ class ProductRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    /**
+     * Pour la page d'accueil : Produits mis en avant
+     */
+    public function findFeatured(int $limit = 8): array
+    {
+        return $this->findBy(['featured' => true], null, $limit);
+    }
+
+    /**
+     * Pour la page d'accueil : Produits en promotion
+     */
+    public function findPromotions(int $limit = 4): array
+    {
+        return $this->createQueryBuilder('p')
+            ->where('p.pricePromotion IS NOT NULL')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }
 }

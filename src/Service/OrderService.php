@@ -15,25 +15,37 @@ class OrderService
 
     public function createOrder(User $user): Order
     {
+        $items = $this->cartService->getFullCart();
+        
+        if (empty($items)) {
+            throw new \RuntimeException('Le panier est vide.');
+        }
+
         $order = new Order();
         $order->setUser($user);
-        $order->setCreatedAt(new \DateTimeImmutable());
-        $order->setOrderNumber(uniqid('CMD-'));
-        $order->setStatus('en_attente'); 
         $order->setTotalAmount($this->cartService->getTotal());
+        $order->setStatus('en_attente'); 
 
-        foreach ($this->cartService->getFullCart() as $item) {
+        foreach ($items as $item) {
             $product = $item['product'];
+            $quantity = $item['quantity'];
+
+            if (!$this->cartService->hasEnoughStock($product, $quantity)) {
+                throw new \RuntimeException('Stock insuffisant pour le produit : ' . $product->getName());
+            }
             
             $orderItem = new OrderItem();
             $orderItem->setProduct($product);
-            $orderItem->setQuantity($item['quantity']);
+            $orderItem->setQuantity($quantity);
             
-            $price = $product->getPricePromotion() ?? $product->getPrice();
+           
+            $price = $product->getPricePromotion() ?: $product->getPrice();
             $orderItem->setUnitPrice($price);
             
             $order->addOrderItem($orderItem);
-            $this->em->persist($orderItem);
+            
+            
+            $product->setStock($product->getStock() - $quantity);
         }
 
         $this->em->persist($order);

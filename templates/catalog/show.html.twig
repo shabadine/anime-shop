@@ -4,6 +4,7 @@
 
 {% block body %}
 <div class="container py-5">
+    {# Fil d'ariane #}
     <nav aria-label="fil d'Ariane" class="mb-4">
         <ol class="breadcrumb bg-transparent p-0">
             <li class="breadcrumb-item"><a href="{{ path('app_home') }}" class="text-danger text-decoration-none">Accueil</a></li>
@@ -14,6 +15,7 @@
     </nav>
 
     <div class="row g-5">
+        {# Colonne Gauche : Visuel produit #}
         <div class="col-md-6">
             <div class="card shadow-sm border-0 product-card overflow-hidden">
                 <div class="card-body p-0">
@@ -35,6 +37,7 @@
             </div>
         </div>
 
+        {# Colonne Droite : Informations et Achat #}
         <div class="col-md-6">
             <div class="mb-3">
                 <span class="badge bg-dark rounded-pill px-3">{{ product.category.name }}</span>
@@ -49,6 +52,7 @@
                 <i class="bi bi-film me-2"></i>Univers : <strong class="text-dark">{{ product.animeName }}</strong>
             </p>
 
+            {# Prix et Promotions #}
             <div class="mb-4">
                 <div class="d-flex align-items-center flex-wrap gap-2 mb-3">
                     {% if product.pricePromotion %}
@@ -63,6 +67,7 @@
                 </div>
             </div>
 
+            {# État du stock #}
             <div class="mb-4">
                 {% if product.stock > 0 %}
                     <div class="d-inline-flex align-items-center text-success fw-bold">
@@ -75,102 +80,84 @@
                 {% endif %}
             </div>
 
+            {# Formulaire d'ajout au panier #}
             {% if product.stock > 0 %}
                 <form method="post" action="{{ path('app_cart_add', {id: product.id}) }}" class="bg-light p-4 rounded-4 shadow-sm mb-4">
                     <div class="row align-items-end g-3">
                         <div class="col-sm-4">
                             <label for="quantity" class="form-label fw-bold small text-uppercase">Quantité</label>
                             <div class="input-group">
-                            <button class="btn btn-danger border px-3" type="button" aria-label="Diminuer la quantité">
-                                <i class="bi bi-dash-lg"></i>
-                            </button>
-                            
-                            <input type="number" 
-                                class="form-control text-center fw-bold" 
-                                id="quantity" 
-                                name="quantity" 
-                                value="1" 
-                                min="1" 
-                                max="{{ product.stock }}" 
-                                style="width: 70px !important; flex: none;" 
-                                aria-label="Quantité sélectionnée">
-                            
-                            <button class="btn btn-danger border px-3" type="button" aria-label="Augmenter la quantité">
-                                <i class="bi bi-plus-lg"></i>
+                                <button class="btn btn-danger border px-3" type="button"><i class="bi bi-dash-lg"></i></button>
+                                <input type="number" class="form-control text-center fw-bold" id="quantity" name="quantity" value="1" min="1" max="{{ product.stock }}" style="width: 70px !important; flex: none;">
+                                <button class="btn btn-danger border px-3" type="button"><i class="bi bi-plus-lg"></i></button>
+                            </div>
+                        </div>
+                        <div class="col-sm-8">
+                            <button type="submit" class="btn btn-danger btn-lg w-100 rounded-pill fw-bold shadow-sm py-3">
+                                <i class="bi bi-cart-plus me-2"></i> Ajouter au panier
                             </button>
                         </div>
-                                                </div>
-                                                <div class="col-sm-8">
-                                                    <button type="submit" class="btn btn-danger btn-lg w-100 rounded-pill fw-bold shadow-sm py-3">
-                                                        <i class="bi bi-cart-plus me-2"></i> Ajouter au panier
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    {% endif %}
+                    </div>
+                </form>
+            {% endif %}
 
-                                    <div class="accordion border-0" id="productDetails">
-                                        <div class="accordion-item border-0 border-bottom">
-                                            <h2 class="accordion-header">
-                                                <button class="accordion-button bg-transparent fw-bold px-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#descContent">
-                                                    Description du produit
-                                                </button>
-                                            </h2>
-                                            <div id="descContent" class="accordion-collapse collapse show">
-                                                <div class="accordion-body px-0 text-muted">
-                                                    {{ product.description }}
-                                                </div>
-                                            </div>
-                                        </div>
+            {# Détails techniques #}
+            <div class="accordion border-0" id="productDetails">
+                <div class="accordion-item border-0 border-bottom">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button bg-transparent fw-bold px-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#descContent">
+                            Description du produit
+                        </button>
+                    </h2>
+                    <div id="descContent" class="accordion-collapse collapse show">
+                        <div class="accordion-body px-0 text-muted">
+                            {{ product.description }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {# Section produits similaires #}
+    {% if similarProducts %}
+        <section class="mt-5 pt-5">
+            <h2 class="section-title text-start mb-4">Vous aimerez aussi</h2>
+            <div class="row g-4">
+                {% for similarProduct in similarProducts %}
+                    <div class="col-md-3">
+                        <article class="card h-100 shadow-sm border-0 product-card">
+                            <div class="bg-dark text-white p-2 text-center">
+                                <span class="small fw-bold">{{ similarProduct.category.name }}</span>
+                            </div>
+                            <div class="card-img-top bg-light" style="height: 200px; overflow: hidden;">
+                                {% if similarProduct.image %}
+                                    <img src="{{ asset('uploads/products/' ~ similarProduct.image) }}" class="w-100 h-100" style="object-fit: cover;" alt="{{ similarProduct.name }}">
+                                {% endif %}
+                            </div>
+                            <div class="card-body d-flex flex-column p-3">
+                                <h3 class="h6 card-title mb-1">{{ similarProduct.name }}</h3>
+                                <p class="text-muted small mb-2">{{ similarProduct.animeName }}</p>
+                                <div class="mt-auto">
+                                    <div class="d-flex align-items-center gap-2 mb-2 flex-wrap">
+                                        {% if similarProduct.pricePromotion %}
+                                            <span class="fw-bold text-danger">{{ similarProduct.pricePromotion }}€</span>
+                                            <span class="text-muted text-decoration-line-through x-small" style="font-size: 0.75rem;">{{ similarProduct.price }}€</span>
+                                            <span class="badge bg-warning text-dark p-1" style="font-size: 0.65rem;">
+                                                -{{ ((1 - (similarProduct.pricePromotion / similarProduct.price)) * 100)|round }}%
+                                            </span>
+                                        {% else %}
+                                            <span class="fw-bold text-danger">{{ similarProduct.price }}€</span>
+                                        {% endif %}
                                     </div>
+                                    <a href="{{ path('app_product_show', {slug: similarProduct.slug}) }}" class="btn btn-sm btn-outline-danger rounded-pill w-100">Voir</a>
                                 </div>
                             </div>
-
-                            {% if similarProducts %}
-                              <section class="mt-5 pt-5">
-                                    <h2 class="section-title text-start mb-4">Vous aimerez aussi</h2>
-                                    <div class="row g-4">
-                                        {% for similarProduct in similarProducts %}
-                                            <div class="col-md-3">
-                                                <article class="card h-100 shadow-sm border-0 product-card">
-                                                    <div class="bg-dark text-white p-2 text-center">
-                                                        <span class="small fw-bold">{{ similarProduct.category.name }}</span>
-                                                    </div>
-                                                    <div class="card-img-top bg-light" style="height: 200px; overflow: hidden;">
-                                                        {% if similarProduct.image %}
-                                                            <img src="{{ asset('uploads/products/' ~ similarProduct.image) }}" 
-                                                                class="w-100 h-100" 
-                                                                style="object-fit: cover;" 
-                                                                alt="{{ similarProduct.name }}">
-                                                        {% endif %}
-                                                    </div>
-                                                    <div class="card-body d-flex flex-column p-3">
-                                                        <h3 class="h6 card-title mb-1">{{ similarProduct.name }}</h3>
-                                                        <p class="text-muted small mb-2">{{ similarProduct.animeName }}</p>
-                                                        
-                                                        <div class="mt-auto">
-                                                            {# Bloc Promo ajouté ici #}
-                                                            <div class="d-flex align-items-center gap-2 mb-2 flex-wrap">
-                                                                {% if similarProduct.pricePromotion %}
-                                                                    <span class="fw-bold text-danger">{{ similarProduct.pricePromotion }}€</span>
-                                                                    <span class="text-muted text-decoration-line-through x-small" style="font-size: 0.75rem;">{{ similarProduct.price }}€</span>
-                                                                    <span class="badge bg-warning text-dark p-1" style="font-size: 0.65rem;">
-                                                                        -{{ ((1 - (similarProduct.pricePromotion / similarProduct.price)) * 100)|round }}%
-                                                                    </span>
-                                                                {% else %}
-                                                                    <span class="fw-bold text-danger">{{ similarProduct.price }}€</span>
-                                                                {% endif %}
-                                                            </div>
-                                                            
-                                                            <a href="{{ path('app_product_show', {slug: similarProduct.slug}) }}" class="btn btn-sm btn-outline-danger rounded-pill w-100">Voir</a>
-                                                        </div>
-                                                    </div>
-                                                </article>
-                                            </div>
-                                        {% endfor %}
-                                    </div>
-                                </section>
-                            {% endif %}
-                       </div>
-
-            {% endblock %}
+                        </article>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+    {% endif %}
+</div>
+{% endblock %}

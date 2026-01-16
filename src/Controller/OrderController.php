@@ -76,7 +76,6 @@ class OrderController extends AbstractController
    #[Route('/succes/{orderNumber}', name: 'app_order_success')]
     public function success(string $orderNumber, OrderRepository $orderRepository): Response
     {
-        // Utilisation directe du Repository injecté
         $order = $orderRepository->findOneBy(['orderNumber' => $orderNumber]);
 
         if (!$order || $order->getUser() !== $this->getUser()) {

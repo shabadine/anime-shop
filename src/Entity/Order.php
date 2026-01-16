@@ -14,10 +14,10 @@ class Order
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id = null; 
+    private ?int $id = null;
 
     #[ORM\Column(nullable: true)]
-    private ?\DateTimeImmutable $updatedAt = null; 
+    private ?\DateTimeImmutable $updatedAt = null;
 
     #[ORM\Column(length: 50, unique: true)]
     private ?string $orderNumber = null;
@@ -26,7 +26,7 @@ class Order
     private ?float $totalAmount = null;
 
     #[ORM\Column(length: 50)]
-    private ?string $status = 'en_attente'; // en_attente, validee, expediee, livree, annulee
+    private ?string $status = 'en_attente';
 
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
@@ -38,18 +38,11 @@ class Order
     #[ORM\OneToMany(targetEntity: OrderItem::class, mappedBy: 'order', cascade: ['persist', 'remove'])]
     private Collection $orderItems;
 
-    /**
-     * @var Collection<int, OrderItem>
-     */
-    #[ORM\OneToMany(targetEntity: OrderItem::class, mappedBy: 'orderRef')]
-    private Collection $product;
-
     public function __construct()
     {
         $this->orderItems = new ArrayCollection();
         $this->createdAt = new \DateTimeImmutable();
         $this->orderNumber = $this->generateOrderNumber();
-        $this->product = new ArrayCollection();
     }
 
     private function generateOrderNumber(): string
@@ -57,7 +50,11 @@ class Order
         return 'CMD-' . strtoupper(uniqid());
     }
 
-    // Getters et setters
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
     public function getUpdatedAt(): ?\DateTimeImmutable
     {
         return $this->updatedAt;
@@ -67,10 +64,6 @@ class Order
     {
         $this->updatedAt = $updatedAt;
         return $this;
-    }
-    public function getId(): ?int
-    {
-        return $this->id;
     }
 
     public function getOrderNumber(): ?string
@@ -128,6 +121,9 @@ class Order
         return $this;
     }
 
+    /**
+     * @return Collection<int, OrderItem>
+     */
     public function getOrderItems(): Collection
     {
         return $this->orderItems;
@@ -155,35 +151,5 @@ class Order
     public function __toString(): string
     {
         return $this->orderNumber;
-    }
-
-    /**
-     * @return Collection<int, OrderItem>
-     */
-    public function getProduct(): Collection
-    {
-        return $this->product;
-    }
-
-    public function addProduct(OrderItem $product): static
-    {
-        if (!$this->product->contains($product)) {
-            $this->product->add($product);
-           $product->setOrderRef($this);
-        }
-
-        return $this;
-    }
-
-    public function removeProduct(OrderItem $product): static
-    {
-        if ($this->product->removeElement($product)) {
-            // set the owning side to null (unless already changed)
-           if ($product->getOrderRef() === $this) {
-                $product->setOrderRef(null);
-            }
-        }
-
-        return $this;
     }
 }
