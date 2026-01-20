@@ -18,7 +18,7 @@ class CartExtension extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            // C'est cette ligne qui définit le nom utilisable dans Twig
+            // cette ligne qui définit le nom utilisable dans Twig
             new TwigFunction('cart_item_count', [$this, 'getItemCount']),
         ];
     }

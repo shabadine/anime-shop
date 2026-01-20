@@ -40,11 +40,12 @@ class UserProfileType extends AbstractType
                 'required' => false,
                 'attr' => ['class' => 'form-control', 'autocomplete' => 'new-password'],
                 'constraints' => [
-                    new Length([
-                        'min' => 6,
-                        'minMessage' => 'Le mot de passe doit contenir au moins {{ limit }} caractères',
-                        'max' => 4096,
-                    ]),
+                    // Correction : Utilisation des arguments nommés sans les crochets []
+                    new Length(
+                        min: 6,
+                        minMessage: 'Le mot de passe doit contenir au moins {{ limit }} caractères',
+                        max: 4096
+                    ),
                 ],
             ])
         ;

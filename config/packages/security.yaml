@@ -27,7 +27,7 @@ security:
             lazy: true
             provider: app_user_provider
 
-            # 👉 Authenticator PERSONNALISÉ
+            # Authenticator PERSONNALISÉ
             custom_authenticator: App\Security\AppAuthenticator
 
             # Déconnexion
